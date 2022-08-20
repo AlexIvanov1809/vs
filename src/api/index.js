@@ -1,7 +1,9 @@
 import coffeeItems from "./fake.api/prise";
+import countries from "./fake.api/country";
 
 const api = {
-  coffeeItems
+  coffeeItems,
+  countries
 };
 
 export default api;

@@ -1,8 +1,10 @@
+import countries from "./country";
+
 const coffeeItems = [
   {
     id: 10001,
     image: "coffee-image",
-    country: "Brazil",
+    country: countries.brasil,
     sort: "Serrado",
     using: "Espresso",
     form: "Monosort",
@@ -15,7 +17,7 @@ const coffeeItems = [
   {
     id: 10002,
     image: "coffee-image",
-    country: "Brazil",
+    country: countries.brasil,
     sort: "Serrado",
     using: "Espresso",
     form: "Monosort",
@@ -28,7 +30,7 @@ const coffeeItems = [
   {
     id: 10003,
     image: "coffee-image",
-    country: "Brazil",
+    country: countries.brasil,
     sort: "Mojiana",
     using: "Espresso",
     form: "Monosort",
@@ -41,7 +43,7 @@ const coffeeItems = [
   {
     id: 10004,
     image: "coffee-image",
-    country: "Brazil",
+    country: countries.brasil,
     sort: "Mojiana",
     using: "Espresso",
     form: "Monosort",
@@ -54,7 +56,7 @@ const coffeeItems = [
   {
     id: 10005,
     image: "coffee-image",
-    country: "Ethiopia",
+    country: countries.ethiopia,
     sort: "Giggesa",
     using: "Espresso",
     form: "Monosort",
@@ -67,7 +69,7 @@ const coffeeItems = [
   {
     id: 10006,
     image: "coffee-image",
-    country: "Ethiopia",
+    country: countries.ethiopia,
     sort: "Giggesa",
     using: "Espresso",
     form: "Monosort",
@@ -80,7 +82,7 @@ const coffeeItems = [
   {
     id: 10007,
     image: "coffee-image",
-    country: "Natti",
+    country: countries.natti,
     sort: "",
     using: "Espresso",
     form: "Bland",
@@ -93,7 +95,7 @@ const coffeeItems = [
   {
     id: 10008,
     image: "coffee-image",
-    country: "Natti",
+    country: countries.natti,
     sort: "",
     using: "Espresso",
     form: "Bland",

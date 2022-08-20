@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import CoffeeItems from "./components/coffeeItems";
+import MarketPlace from "./components/marketPlace";
 import api from "./api";
+import Header from "./components/header";
 
 function App() {
   const [coffeeAssortment] = useState(api.coffeeItems);
   return (
-    <div className="m-2">
-      <CoffeeItems assortment={coffeeAssortment} />
-    </div>
+    <>
+      <Header />
+      <div className="m-2">
+        <MarketPlace assortment={coffeeAssortment} />
+      </div>
+    </>
   );
 }
 
