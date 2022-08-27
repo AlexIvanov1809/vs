@@ -10,15 +10,6 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.header {
-	position: relative;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #114eca;
-	height: 4rem;
-	padding: 0 1rem;
-}
 .logo {
 	position: relative;
 	height: 3rem;
@@ -26,3 +17,12 @@ code {
 .logo__main {
 	height: 100%;
 }
+.image-container {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+}
+/* .image-coffee {
+	transform: translateX(75px);
+} */

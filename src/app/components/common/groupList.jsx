@@ -2,28 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const GroupList = ({ countries, selectedCountry, onSelectCountry }) => {
+  let index = 0;
   return (
-    <>
+    <aside>
       <ul className="list-group">
-        {Object.keys(countries).map((item) => (
+        {countries.map((item) => (
           <li
-            key={countries[item]._id}
+            key={index++}
             className={
-              "list-group-item" +
-              (countries[item] === selectedCountry ? " active" : "")
+              "list-group-item" + (item === selectedCountry ? " active" : "")
             }
-            onClick={() => onSelectCountry(countries[item])}
+            onClick={() => onSelectCountry(item)}
             role="button"
           >
-            {countries[item].name}
+            {item}
           </li>
         ))}
       </ul>
-    </>
+    </aside>
   );
 };
 
 GroupList.propTypes = {
-  countries: PropTypes.object.isRequired
+  countries: PropTypes.array.isRequired
 };
 export default GroupList;
