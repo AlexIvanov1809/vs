@@ -9,6 +9,10 @@ const MarketPlace = () => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [keyFilter, setKeyFilter] = useState("");
+
+  const countriesItems = coffeeAssortment.map((item) => item.country);
+  const formItems = coffeeAssortment.map((item) => item.form);
 
   useEffect(() => {
     api.coffeeItems.fetchAll().then((data) => setCoffeeAssortment(data));
@@ -17,19 +21,13 @@ const MarketPlace = () => {
     setCurrentPage(1);
   }, [selectedCountry]);
 
-  const countriesItems = [];
-  coffeeAssortment.map((item) => countriesItems.push(item.country));
-  const countries = countriesItems
-    .filter((item, index) => countriesItems.indexOf(item) === index)
-    .filter(Boolean)
-    .sort();
-
   const handleCurrentPageSet = (page) => {
     setCurrentPage(page);
   };
 
-  const handleCountrySelect = (country) => {
-    setSelectedCountry(country);
+  const handleCountrySelect = (value, item) => {
+    setSelectedCountry(value);
+    setKeyFilter(item);
   };
 
   const handleToggleChengeweightItem = (id, weight) => {
@@ -48,11 +46,12 @@ const MarketPlace = () => {
       })
     );
   };
-
   const pageSize = 4;
+
   const filteredCountries = selectedCountry
-    ? coffeeAssortment.filter((item) => item.country === selectedCountry)
+    ? coffeeAssortment.filter((item) => item[keyFilter] === selectedCountry)
     : coffeeAssortment;
+
   const itemsQty = filteredCountries.length;
   const itemsOnPage = paginate(filteredCountries, currentPage, pageSize);
   const handleResetFilter = () => {
@@ -63,9 +62,16 @@ const MarketPlace = () => {
       <aside className="border h-100 mt-2 mx-2 text-center ">
         <div style={{ width: "15rem" }}>
           <GroupList
-            countries={countries}
+            groupItems={countriesItems}
             selectedCountry={selectedCountry}
             onSelectCountry={handleCountrySelect}
+            name="country"
+          />
+          <GroupList
+            groupItems={formItems}
+            selectedCountry={selectedCountry}
+            onSelectCountry={handleCountrySelect}
+            name="form"
           />
           <button className="btn btn-primary m-2" onClick={handleResetFilter}>
             Reset

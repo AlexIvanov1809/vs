@@ -1,9 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const GroupList = ({ countries, selectedCountry, onSelectCountry }) => {
-  const onChange = (e) => {
-    onSelectCountry(e.target.value);
+const GroupList = ({ groupItems, selectedCountry, onSelectCountry, name }) => {
+  const filtredItems = groupItems
+    .filter((item, index) => groupItems.indexOf(item) === index)
+    .filter(Boolean)
+    .sort();
+
+  const onChange = ({ target }) => {
+    onSelectCountry(target.value, target.name);
   };
   let index = 0;
   return (
@@ -11,10 +16,11 @@ const GroupList = ({ countries, selectedCountry, onSelectCountry }) => {
       className="form-select w-75 mx-auto mt-2"
       aria-label="Default select example"
       value={selectedCountry}
+      name={name}
       onChange={onChange}
     >
-      <option value="">choose country</option>
-      {countries.map((item) => (
+      <option value="">Choose</option>
+      {filtredItems.map((item) => (
         <option key={index++} value={item}>
           {item}
         </option>
@@ -40,6 +46,9 @@ const GroupList = ({ countries, selectedCountry, onSelectCountry }) => {
 };
 
 GroupList.propTypes = {
-  countries: PropTypes.array.isRequired
+  groupItems: PropTypes.array.isRequired,
+  selectedCountry: PropTypes.string.isRequired,
+  onSelectCountry: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired
 };
 export default GroupList;

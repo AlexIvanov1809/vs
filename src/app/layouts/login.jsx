@@ -1,7 +1,17 @@
 import React from "react";
+import LoginForm from "../components/ui/loginForm";
 
 const Login = () => {
-  return <h2>Login</h2>;
+  return (
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3 shadow p-4">
+          <h2>Login</h2>
+          <LoginForm />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Login;
