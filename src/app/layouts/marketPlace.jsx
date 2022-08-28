@@ -8,17 +8,21 @@ import GroupList from "../components/common/groupList";
 const MarketPlace = () => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCountry, setSelectedCountry] = useState();
+  const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
     api.coffeeItems.fetchAll().then((data) => setCoffeeAssortment(data));
   }, []);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCountry]);
 
   const countriesItems = [];
   coffeeAssortment.map((item) => countriesItems.push(item.country));
   const countries = countriesItems
     .filter((item, index) => countriesItems.indexOf(item) === index)
-    .filter(Boolean);
+    .filter(Boolean)
+    .sort();
 
   const handleCurrentPageSet = (page) => {
     setCurrentPage(page);
@@ -45,33 +49,35 @@ const MarketPlace = () => {
     );
   };
 
-  const pageSize = 3;
+  const pageSize = 4;
   const filteredCountries = selectedCountry
     ? coffeeAssortment.filter((item) => item.country === selectedCountry)
     : coffeeAssortment;
   const itemsQty = filteredCountries.length;
   const itemsOnPage = paginate(filteredCountries, currentPage, pageSize);
   const handleResetFilter = () => {
-    setSelectedCountry();
+    setSelectedCountry("");
   };
   return (
     <div className="d-flex">
-      <div className="w-25 mt-2 ms-2">
-        <GroupList
-          countries={countries}
-          selectedCountry={selectedCountry}
-          onSelectCountry={handleCountrySelect}
-        />
-        <button className="btn btn-primary m-2" onClick={handleResetFilter}>
-          Reset
-        </button>
-      </div>
-      <div>
+      <aside className="border h-100 mt-2 mx-2 text-center ">
+        <div style={{ width: "15rem" }}>
+          <GroupList
+            countries={countries}
+            selectedCountry={selectedCountry}
+            onSelectCountry={handleCountrySelect}
+          />
+          <button className="btn btn-primary m-2" onClick={handleResetFilter}>
+            Reset
+          </button>
+        </div>
+      </aside>
+      <div className="w-100">
         <CoffeePage
           assortment={itemsOnPage}
           onChange={handleToggleChengeweightItem}
         />
-        <div className="d-flex justify-content-center">
+        <div className="w-100">
           <Pagination
             itemsQty={itemsQty}
             pageSize={pageSize}

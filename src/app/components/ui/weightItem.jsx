@@ -11,6 +11,7 @@ const WeightItem = ({ item, onChange }) => {
             (item.weight.quarter ? "" : " text-black text-opacity-50")
           }
           onClick={() => onChange(item.id, "quarter")}
+          role="button"
         >
           250
         </span>
@@ -19,6 +20,7 @@ const WeightItem = ({ item, onChange }) => {
             "prise m-1" + (item.weight.kg ? "" : " text-black text-opacity-50")
           }
           onClick={() => onChange(item.id, "kg")}
+          role="button"
         >
           1000
         </span>

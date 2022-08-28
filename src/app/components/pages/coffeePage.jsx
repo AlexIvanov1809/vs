@@ -10,7 +10,8 @@ const CoffeePage = ({ assortment, onChange }) => {
         {assortment.map((item) => (
           <div
             key={item.id}
-            className="div m-2 w-25 h-50 text-center border p-2"
+            className="div m-2 h-100 text-center border p-2"
+            style={{ width: "350px" }}
           >
             <h4>{item.roasted}</h4>
             <p>{item.using}</p>
@@ -18,7 +19,7 @@ const CoffeePage = ({ assortment, onChange }) => {
               {item.country} {item.sort}
             </h2>
             <p>{item.form}</p>
-            <ItemImage image={item.image} />
+            <ItemImage item={item} />
             <p>{!item.grind ? "Beans" : "Grounded"}</p>
             <WeightItem item={item} onChange={onChange} />
           </div>
