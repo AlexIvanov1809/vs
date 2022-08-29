@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-const TextForm = ({ label, name, type, onChange }) => {
+const TextForm = ({ label, name, type, value, onChange, error }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const getInputClass = () => {
+    return "form-control" + (error ? " is-invalid" : " is-valid");
+  };
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value });
+  };
+  const toggleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
   return (
     <div className="md-4">
       <label htmlFor={name} className="form-label">
@@ -9,15 +21,30 @@ const TextForm = ({ label, name, type, onChange }) => {
       </label>
       <div className="input-group has-validation">
         <input
-          type={type}
+          type={showPassword ? "text" : type}
           name={name}
-          className="form-control is-invalid"
+          className={getInputClass()}
           id={name}
-          onChange={onChange}
+          value={value}
+          onChange={handleChange}
         />
-        <div id="validationServerUsernameFeedback" className="invalid-feedback">
-          Please choose a E-mail.
-        </div>
+        {type === "password" && (
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={toggleShowPassword}
+          >
+            <i className={"bi bi-eye" + (showPassword ? "-slash" : "")}></i>
+          </button>
+        )}
+        {error && (
+          <div
+            id="validationServerUsernameFeedback"
+            className="invalid-feedback"
+          >
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -29,8 +56,8 @@ TextForm.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
-  // value: PropTypes.string,
-  // error: PropTypes.string,
+  value: PropTypes.string,
+  error: PropTypes.string,
   onChange: PropTypes.func
 };
 
