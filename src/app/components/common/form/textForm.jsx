@@ -15,7 +15,7 @@ const TextForm = ({ label, name, type, value, onChange, error }) => {
     setShowPassword((prevState) => !prevState);
   };
   return (
-    <div className="md-4">
+    <div className="mb-2">
       <label htmlFor={name} className="form-label">
         {label}
       </label>
@@ -27,6 +27,13 @@ const TextForm = ({ label, name, type, value, onChange, error }) => {
           id={name}
           value={value}
           onChange={handleChange}
+          placeholder={
+            name === "email"
+              ? "example@exp.com"
+              : name === "phone"
+              ? "071XXXXXXX"
+              : ""
+          }
         />
         {type === "password" && (
           <button

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TextForm from "../common/form/textForm";
 import { validator } from "../../utils/validator";
+import CheckBoxField from "../common/form/checkBoxField";
 
 const LoginForm = () => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -35,7 +36,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form className="row g-3">
+    <form className="row g-3 mb-3">
       <TextForm
         label="Элекстронная почта"
         name="email"
@@ -52,6 +53,7 @@ const LoginForm = () => {
         onChange={handleChange}
         error={errors.password}
       />
+      <CheckBoxField label="Оставаться в сети" />
       <button className="btn btn-primary w-100 mx-auto" type="submit">
         submit
       </button>

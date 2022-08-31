@@ -14,6 +14,7 @@ module.exports = {
     indent: "off",
     "react/jsx-indent": "off",
     "react/jsx-indent-props": "off",
+    "multiline-ternary": "off",
     semi: [2, "always"],
     "react/prop-types": "off",
     "space-before-function-paren": [
