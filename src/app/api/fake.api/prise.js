@@ -117,7 +117,7 @@ const fetchAll = () =>
   new Promise((resolve) => {
     window.setTimeout(function () {
       resolve(coffeeItems);
-    }, 100);
+    }, 1400);
   });
 
 export default { fetchAll };

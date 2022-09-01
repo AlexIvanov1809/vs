@@ -78,20 +78,28 @@ const MarketPlace = () => {
           </button>
         </div>
       </aside>
-      <div className="w-100">
-        <CoffeePage
-          assortment={itemsOnPage}
-          onChange={handleToggleChengeweightItem}
-        />
+      {coffeeAssortment.length > 0 ? (
         <div className="w-100">
-          <Pagination
-            itemsQty={itemsQty}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={handleCurrentPageSet}
+          <CoffeePage
+            assortment={itemsOnPage}
+            onChange={handleToggleChengeweightItem}
           />
+          <div className="w-100">
+            <Pagination
+              itemsQty={itemsQty}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handleCurrentPageSet}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="d-flex justify-content-center w-100 mt-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
