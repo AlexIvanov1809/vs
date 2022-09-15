@@ -24,6 +24,15 @@ const NavBar = () => {
           </Link>
         </li>
         <li className="nav-item">
+          <Link
+            className="nav-link link-light"
+            aria-current="page"
+            to="/adminPanel"
+          >
+            Admin Panel
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link link-light" aria-current="page" to="/login">
             Login
           </Link>
