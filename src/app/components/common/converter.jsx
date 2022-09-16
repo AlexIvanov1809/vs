@@ -15,10 +15,10 @@ const Converter = ({ id, itemName }) => {
   };
   const data = items[itemName].filter((i) => i._id === id);
 
-  return <p>{data[0].name}</p>;
+  return <p>{data[0].value}</p>;
 };
 Converter.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   itemName: PropTypes.string.isRequired
 };
 

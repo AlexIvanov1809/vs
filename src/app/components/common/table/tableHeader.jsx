@@ -8,6 +8,7 @@ const TableHeader = (columns) => {
         {Object.keys(columns).map((column) => (
           <th key={column}>{columns[column].name}</th>
         ))}
+        <th></th>
       </tr>
     </thead>
   );

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 import methodService from "../service/method.service";
 
 const methodsSlice = createSlice({
@@ -19,12 +19,30 @@ const methodsSlice = createSlice({
     methodsRequestFeild: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    methodsCreated: (state, action) => {
+      if (!Array.isArray(state.entities)) {
+        state.entities = [];
+      }
+      state.entities.push(action.payload);
+    },
+    methodsRemoved: (state, action) => {
+      state.entities = state.entities.filter((i) => i._id !== action.payload);
     }
   }
 });
 
 const { reducer: methodsReducer, actions } = methodsSlice;
-const { methodsRequested, methodsReceived, methodsRequestFeild } = actions;
+const {
+  methodsRequested,
+  methodsReceived,
+  methodsRequestFeild,
+  methodsCreated,
+  methodsRemoved
+} = actions;
+
+const methodsCreateRequested = createAction("methods/methodsCreateRequested");
+const createMethodsFaild = createAction("methods/createMethodsFaild");
 
 export const loadmethodsList = () => async (dispatch) => {
   dispatch(methodsRequested());
@@ -33,6 +51,27 @@ export const loadmethodsList = () => async (dispatch) => {
     dispatch(methodsReceived(content));
   } catch (error) {
     dispatch(methodsRequestFeild(error.message));
+  }
+};
+
+export const methodsRemove = (itemId) => async (dispatch) => {
+  try {
+    const { content } = await methodService.remove(itemId);
+    if (content === null) {
+      dispatch(methodsRemoved());
+    }
+  } catch (error) {
+    dispatch(createMethodsFaild(error.message));
+  }
+};
+
+export const createNewMethodsItem = (payload) => async (dispatch) => {
+  dispatch(methodsCreateRequested());
+  try {
+    const { content } = await methodService.create(payload);
+    dispatch(methodsCreated(content));
+  } catch (error) {
+    dispatch(createMethodsFaild());
   }
 };
 

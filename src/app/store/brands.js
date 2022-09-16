@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 import brandService from "../service/brand.service";
 
 const brandsSlice = createSlice({
@@ -19,12 +19,30 @@ const brandsSlice = createSlice({
     brandsRequestFeild: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    brandsCreated: (state, action) => {
+      if (!Array.isArray(state.entities)) {
+        state.entities = [];
+      }
+      state.entities.push(action.payload);
+    },
+    brandsRemoved: (state, action) => {
+      state.entities = state.entities.filter((i) => i._id !== action.payload);
     }
   }
 });
 
 const { reducer: brandsReducer, actions } = brandsSlice;
-const { brandsRequested, brandsReceived, brandsRequestFeild } = actions;
+const {
+  brandsRequested,
+  brandsReceived,
+  brandsRequestFeild,
+  brandsCreated,
+  brandsRemoved
+} = actions;
+
+const brandCreateRequested = createAction("brands/brandCreateRequested");
+const createBrandFaild = createAction("brands/createBrandFaild");
 
 export const loadbrandsList = () => async (dispatch) => {
   dispatch(brandsRequested());
@@ -33,6 +51,27 @@ export const loadbrandsList = () => async (dispatch) => {
     dispatch(brandsReceived(content));
   } catch (error) {
     dispatch(brandsRequestFeild(error.message));
+  }
+};
+
+export const brandsRemove = (itemId) => async (dispatch) => {
+  try {
+    const { content } = await brandService.remove(itemId);
+    if (content === null) {
+      dispatch(brandsRemoved());
+    }
+  } catch (error) {
+    dispatch(brandsRequestFeild(error.message));
+  }
+};
+
+export const createNewBrandsItem = (payload) => async (dispatch) => {
+  dispatch(brandCreateRequested());
+  try {
+    const { content } = await brandService.create(payload);
+    dispatch(brandsCreated(content));
+  } catch (error) {
+    dispatch(createBrandFaild());
   }
 };
 

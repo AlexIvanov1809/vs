@@ -19,19 +19,37 @@ const coffeeItemsSlice = createSlice({
     coffeeItemsRequestFeild: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    itemRemoved: (state, action) => {
+      state.entities = state.entities.filter((i) => i._id !== action.payload);
     }
   }
 });
 
 const { reducer: coffeeItemsReducer, actions } = coffeeItemsSlice;
-const { coffeeItemsRequested, coffeeItemsReceived, coffeeItemsRequestFeild } =
-  actions;
+const {
+  coffeeItemsRequested,
+  coffeeItemsReceived,
+  coffeeItemsRequestFeild,
+  itemRemoved
+} = actions;
 
 export const loadCoffeeItemsList = () => async (dispatch) => {
   dispatch(coffeeItemsRequested());
   try {
     const { content } = await coffeeItemService.get();
     dispatch(coffeeItemsReceived(content));
+  } catch (error) {
+    dispatch(coffeeItemsRequestFeild(error.message));
+  }
+};
+
+export const coffeeItemRemove = (itemId) => async (dispatch) => {
+  try {
+    const { content } = await coffeeItemService.remove(itemId);
+    if (content === null) {
+      dispatch(itemRemoved());
+    }
   } catch (error) {
     dispatch(coffeeItemsRequestFeild(error.message));
   }

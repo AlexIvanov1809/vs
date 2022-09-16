@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 import countryService from "../service/country.service";
 
 const countriesSlice = createSlice({
@@ -19,13 +19,32 @@ const countriesSlice = createSlice({
     countriesRequestFeild: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    countriesCreated: (state, action) => {
+      if (!Array.isArray(state.entities)) {
+        state.entities = [];
+      }
+      state.entities.push(action.payload);
+    },
+    countriesRemoved: (state, action) => {
+      state.entities = state.entities.filter((i) => i._id !== action.payload);
     }
   }
 });
 
 const { reducer: countriesReducer, actions } = countriesSlice;
-const { countriesRequested, countriesReceived, countriesRequestFeild } =
-  actions;
+const {
+  countriesRequested,
+  countriesReceived,
+  countriesRequestFeild,
+  countriesCreated,
+  countriesRemoved
+} = actions;
+
+const countriesCreateRequested = createAction(
+  "countries/countriesCreateRequested"
+);
+const createCountriesFaild = createAction("countries/createCountriesFaild");
 
 export const loadCountriesList = () => async (dispatch) => {
   dispatch(countriesRequested());
@@ -34,6 +53,27 @@ export const loadCountriesList = () => async (dispatch) => {
     dispatch(countriesReceived(content));
   } catch (error) {
     dispatch(countriesRequestFeild(error.message));
+  }
+};
+
+export const countriesRemove = (itemId) => async (dispatch) => {
+  try {
+    const { content } = await countryService.remove(itemId);
+    if (content === null) {
+      dispatch(countriesRemoved());
+    }
+  } catch (error) {
+    dispatch(countriesRequestFeild(error.message));
+  }
+};
+
+export const createNewCountriesItem = (payload) => async (dispatch) => {
+  dispatch(countriesCreateRequested());
+  try {
+    const { content } = await countryService.create(payload);
+    dispatch(countriesCreated(content));
+  } catch (error) {
+    dispatch(createCountriesFaild());
   }
 };
 
