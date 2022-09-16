@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 import coffeeItemService from "../service/coffeeItem.service";
 
 const coffeeItemsSlice = createSlice({
@@ -20,7 +20,13 @@ const coffeeItemsSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
-    itemRemoved: (state, action) => {
+    coffeeItemCreated: (state, action) => {
+      if (!Array.isArray(state.entities)) {
+        state.entities = [];
+      }
+      state.entities.push(action.payload);
+    },
+    coffeeItemRemoved: (state, action) => {
       state.entities = state.entities.filter((i) => i._id !== action.payload);
     }
   }
@@ -31,8 +37,12 @@ const {
   coffeeItemsRequested,
   coffeeItemsReceived,
   coffeeItemsRequestFeild,
-  itemRemoved
+  coffeeItemRemoved,
+  coffeeItemCreated
 } = actions;
+
+const itemCreateRequested = createAction("coffeeItems/brandCreateRequested");
+const createItemFaild = createAction("coffeeItems/createItemFaild");
 
 export const loadCoffeeItemsList = () => async (dispatch) => {
   dispatch(coffeeItemsRequested());
@@ -44,11 +54,21 @@ export const loadCoffeeItemsList = () => async (dispatch) => {
   }
 };
 
+export const createNewCoffeeItem = (payload) => async (dispatch) => {
+  dispatch(itemCreateRequested());
+  try {
+    const { content } = await coffeeItemService.create(payload);
+    dispatch(coffeeItemCreated(content));
+  } catch (error) {
+    dispatch(createItemFaild());
+  }
+};
+
 export const coffeeItemRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await coffeeItemService.remove(itemId);
     if (content === null) {
-      dispatch(itemRemoved());
+      dispatch(coffeeItemRemoved(itemId));
     }
   } catch (error) {
     dispatch(coffeeItemsRequestFeild(error.message));

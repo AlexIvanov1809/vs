@@ -17,12 +17,12 @@ const SelectField = ({
   const getInputClasses = () => {
     return "form-select" + (error ? " is-invalid" : "");
   };
-  let optionsArray = [];
-  if (!Array.isArray(options) && typeof options === "object") {
-    Object.values(options).map((item) => optionsArray.push(item));
-  } else {
-    optionsArray = options;
-  }
+  // let optionsArray = [];
+  // if (!Array.isArray(options) && typeof options === "object") {
+  //   Object.values(options).map((item) => optionsArray.push(item));
+  // } else {
+  //   optionsArray = options;
+  // }
   return (
     <div className="mb-4">
       <label htmlFor={name} className="form-label">
@@ -38,10 +38,10 @@ const SelectField = ({
         <option value="" disabled>
           {defaultOption}
         </option>
-        {optionsArray &&
-          optionsArray.map((option) => (
+        {options &&
+          options.map((option) => (
             <option key={option._id} value={option._id}>
-              {option.name}
+              {option.value}
             </option>
           ))}
       </select>
@@ -52,12 +52,12 @@ const SelectField = ({
 
 SelectField.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func,
-  defaultOption: PropTypes.string,
+  defaultOption: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   error: PropTypes.string,
   name: PropTypes.string,
-  options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  options: PropTypes.array
 };
 
 export default SelectField;

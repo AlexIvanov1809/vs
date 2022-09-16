@@ -58,7 +58,7 @@ export const brandsRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await brandService.remove(itemId);
     if (content === null) {
-      dispatch(brandsRemoved());
+      dispatch(brandsRemoved(itemId));
     }
   } catch (error) {
     dispatch(brandsRequestFeild(error.message));

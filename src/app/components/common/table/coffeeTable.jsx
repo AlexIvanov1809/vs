@@ -15,11 +15,11 @@ const CoffeeTable = ({ coffeeItems }) => {
       path: "countries",
       name: "Страна",
       component: (item) => (
-        <Converter id={item.countries} itemName={"countries"} />
+        <Converter id={item.country} itemName={"countries"} />
       )
     },
-    grade: {
-      path: "grade",
+    sortName: {
+      path: "sortName",
       name: "Сорт, название смеси"
     },
     method: {
@@ -48,6 +48,11 @@ const CoffeeTable = ({ coffeeItems }) => {
       path: "price",
       name: "Стоимость",
       component: (item) => <Price price={item.price} />
+    },
+    active: {
+      path: "active",
+      name: "",
+      component: (item) => (item.active ? <p>Активный</p> : <p>Неактивен</p>)
     }
   };
   return <Table columns={columns} data={coffeeItems} />;

@@ -58,7 +58,7 @@ export const methodsRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await methodService.remove(itemId);
     if (content === null) {
-      dispatch(methodsRemoved());
+      dispatch(methodsRemoved(itemId));
     }
   } catch (error) {
     dispatch(createMethodsFaild(error.message));

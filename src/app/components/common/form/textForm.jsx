@@ -63,7 +63,7 @@ TextForm.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   error: PropTypes.string,
   onChange: PropTypes.func
 };

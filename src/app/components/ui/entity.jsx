@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextForm from "../common/form/textForm";
+import DeleteButton from "./deleteButton";
 
 const Entity = ({ items, onDelete, onSubmit, label, name }) => {
   const [data, setData] = useState({});
-  // const ItemName = name;
 
   const handleChange = (target) => {
     setData((prevState) => ({
@@ -40,12 +40,7 @@ const Entity = ({ items, onDelete, onSubmit, label, name }) => {
           ? items.map((item) => (
               <div key={item._id}>
                 {item.value}
-                <button
-                  className="btn btn-primary ms-2"
-                  onClick={() => onDelete(item._id, name)}
-                >
-                  <i className="bi bi-trash"></i>
-                </button>
+                <DeleteButton onDelete={onDelete} id={item._id} name={name} />
               </div>
             ))
           : "Нет данных"}

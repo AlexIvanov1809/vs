@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -39,17 +39,15 @@ import Entity from "../components/ui/entity";
 import { nanoid } from "@reduxjs/toolkit";
 
 const AdminPanel = () => {
-  const [updataed, setUpdataed] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadCoffeeItemsList());
-  }, []);
-  useEffect(() => {
     dispatch(loadbrandsList());
     dispatch(loadCountriesList());
     dispatch(loadmethodsList());
     dispatch(loadkindsList());
-  }, [updataed]);
+  }, []);
+
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
   const brands = useSelector(getBrandsList());
   const brandsLoadingStatus = useSelector(getBrandsLoadingStatus());
@@ -69,7 +67,6 @@ const AdminPanel = () => {
       methods: methodsRemove(id)
     };
     dispatch(items[name]);
-    setUpdataed(!updataed);
   };
 
   const handleSubmit = (value) => {

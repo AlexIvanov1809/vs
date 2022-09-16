@@ -60,7 +60,7 @@ export const countriesRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await countryService.remove(itemId);
     if (content === null) {
-      dispatch(countriesRemoved());
+      dispatch(countriesRemoved(itemId));
     }
   } catch (error) {
     dispatch(countriesRequestFeild(error.message));

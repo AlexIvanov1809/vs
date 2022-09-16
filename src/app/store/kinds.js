@@ -58,7 +58,7 @@ export const kindsRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await kindService.remove(itemId);
     if (content === null) {
-      dispatch(kindsRemoved());
+      dispatch(kindsRemoved(itemId));
     }
   } catch (error) {
     dispatch(createKindsFaild(error.message));

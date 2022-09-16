@@ -4,6 +4,7 @@ import _ from "lodash";
 import { useDispatch } from "react-redux";
 import { coffeeItemRemove } from "../../../store/coffeeItems";
 import { Link } from "react-router-dom";
+import DeleteButton from "../../ui/deleteButton";
 
 const TableBody = ({ data, columns }) => {
   const dispatch = useDispatch();
@@ -26,11 +27,13 @@ const TableBody = ({ data, columns }) => {
               <td key={column}>{renderContent(item, column)}</td>
             ))}
             <td>
-              <button onClick={() => dispatch(coffeeItemRemove(item._id))}>
-                delete
-              </button>
-              <button>
-                <Link to={`/adminPanel/${item._id}`}>edit</Link>
+              <DeleteButton
+                onClick={() => dispatch(coffeeItemRemove(item._id))}
+              />
+              <button className="btn btn-primary ms-2">
+                <Link className="text-white" to={`/adminPanel/${item._id}`}>
+                  <i className="bi bi-pencil-fill"></i>
+                </Link>
               </button>
             </td>
           </tr>
