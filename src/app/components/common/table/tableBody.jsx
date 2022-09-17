@@ -8,6 +8,9 @@ import DeleteButton from "../../ui/deleteButton";
 
 const TableBody = ({ data, columns }) => {
   const dispatch = useDispatch();
+  const handleDelete = (itemId) => {
+    dispatch(coffeeItemRemove(itemId));
+  };
   const renderContent = (item, column) => {
     if (columns[column].component) {
       const component = columns[column].component;
@@ -27,9 +30,7 @@ const TableBody = ({ data, columns }) => {
               <td key={column}>{renderContent(item, column)}</td>
             ))}
             <td>
-              <DeleteButton
-                onClick={() => dispatch(coffeeItemRemove(item._id))}
-              />
+              <DeleteButton onDelete={handleDelete} id={item._id} />
               <button className="btn btn-primary ms-2">
                 <Link className="text-white" to={`/adminPanel/${item._id}`}>
                   <i className="bi bi-pencil-fill"></i>

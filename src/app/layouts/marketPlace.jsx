@@ -1,22 +1,68 @@
 import React, { useState, useEffect } from "react";
 import CoffeePage from "../components/pages/coffeePage";
-import api from "../api";
 import Pagination from "../components/common/pagination";
 import { paginate } from "../utils/pagination";
-import GroupList from "../components/common/groupList";
+// import GroupList from "../components/common/groupList";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCoffeeItemsList,
+  // getCoffeeItemsLoadingStatus,
+  loadCoffeeItemsList
+} from "../store/coffeeItems";
+import {
+  // getCountriesList,
+  // getCountriesLoadingStatus,
+  loadCountriesList
+} from "../store/countries";
+import {
+  // getBrandsList,
+  // getBrandsLoadingStatus,
+  loadbrandsList
+} from "../store/brands";
+import {
+  // getMethodsList,
+  // getMethodsLoadingStatus,
+  loadmethodsList
+} from "../store/methods";
+import {
+  // getKindsList,
+  // getKindsLoadingStatus,
+  loadkindsList
+} from "../store/kinds";
 
 const MarketPlace = () => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [keyFilter, setKeyFilter] = useState("");
+  const [selectedCountry] = useState("");
+  const [keyFilter] = useState("");
 
-  const countriesItems = coffeeAssortment.map((item) => item.country);
-  const formItems = coffeeAssortment.map((item) => item.form);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadCoffeeItemsList());
+    dispatch(loadbrandsList());
+    dispatch(loadCountriesList());
+    dispatch(loadmethodsList());
+    dispatch(loadkindsList());
+  }, []);
+  const coffeeItems = useSelector(getCoffeeItemsList());
+  // const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
+  // const brands = useSelector(getBrandsList());
+  // const brandsLoadingStatus = useSelector(getBrandsLoadingStatus());
+  // const countries = useSelector(getCountriesList());
+  // const countriesLoadingStatus = useSelector(getCountriesLoadingStatus());
+  // const methods = useSelector(getMethodsList());
+  // const methodsLoadingStatus = useSelector(getMethodsLoadingStatus());
+  // const kinds = useSelector(getKindsList());
+  // const kindsLoadingStatus = useSelector(getKindsLoadingStatus());
+
+  // const countriesItems = coffeeItems.map((item) => item.country);
+  // const formItems = coffeeItems.map((item) => item.form);
 
   useEffect(() => {
-    api.coffeeItems.fetchAll().then((data) => setCoffeeAssortment(data));
-  }, []);
+    if (coffeeItems) {
+      setCoffeeAssortment(coffeeItems);
+    }
+  }, [coffeeItems]);
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCountry]);
@@ -25,21 +71,16 @@ const MarketPlace = () => {
     setCurrentPage(page);
   };
 
-  const handleCountrySelect = (value, item) => {
-    setSelectedCountry(value);
-    setKeyFilter(item);
-  };
+  // const handleCountrySelect = (value, item) => {
+  //   setSelectedCountry(value);
+  //   setKeyFilter(item);
+  // };
 
-  const handleToggleChengeweightItem = (id, weight) => {
+  const handleToggleChengeweightItem = (id, name) => {
     setCoffeeAssortment(
       coffeeAssortment.map((item) => {
-        if (item.id === id) {
-          if (!item.weight[weight]) {
-            return {
-              ...item,
-              weight: { quarter: !item.weight.quarter, kg: !item.weight.kg }
-            };
-          }
+        if (item._id === id) {
+          console.log(name);
         }
 
         return item;
@@ -55,13 +96,13 @@ const MarketPlace = () => {
   const itemsQty = filteredCountries.length;
   const itemsOnPage = paginate(filteredCountries, currentPage, pageSize);
   const handleResetFilter = () => {
-    setSelectedCountry("");
+    // setSelectedCountry("");
   };
   return (
     <div className="d-flex">
       <aside className="border h-100 mt-2 mx-2 text-center ">
         <div style={{ width: "15rem" }}>
-          <GroupList
+          {/* <GroupList
             groupItems={countriesItems}
             selectedCountry={selectedCountry}
             onSelectCountry={handleCountrySelect}
@@ -72,7 +113,7 @@ const MarketPlace = () => {
             selectedCountry={selectedCountry}
             onSelectCountry={handleCountrySelect}
             name="form"
-          />
+          /> */}
           <button className="btn btn-primary m-2" onClick={handleResetFilter}>
             Reset
           </button>

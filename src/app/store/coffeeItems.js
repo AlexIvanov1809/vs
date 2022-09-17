@@ -28,6 +28,12 @@ const coffeeItemsSlice = createSlice({
     },
     coffeeItemRemoved: (state, action) => {
       state.entities = state.entities.filter((i) => i._id !== action.payload);
+    },
+    coffeeItemUpdateSuccssed: (state, action) => {
+      const editedItemIndex = state.entities.findIndex(
+        (u) => u._id === action.payload._id
+      );
+      state.entities[editedItemIndex] = action.payload;
     }
   }
 });
@@ -38,11 +44,14 @@ const {
   coffeeItemsReceived,
   coffeeItemsRequestFeild,
   coffeeItemRemoved,
-  coffeeItemCreated
+  coffeeItemCreated,
+  coffeeItemUpdateSuccssed
 } = actions;
 
 const itemCreateRequested = createAction("coffeeItems/brandCreateRequested");
 const createItemFaild = createAction("coffeeItems/createItemFaild");
+const itemUpdateRequested = createAction("coffeeItems/itemUpdateRequested");
+const updateItemFaild = createAction("coffeeItems/updateItemFaild");
 
 export const loadCoffeeItemsList = () => async (dispatch) => {
   dispatch(coffeeItemsRequested());
@@ -54,11 +63,12 @@ export const loadCoffeeItemsList = () => async (dispatch) => {
   }
 };
 
-export const createNewCoffeeItem = (payload) => async (dispatch) => {
+export const createNewCoffeeItem = (payload, back) => async (dispatch) => {
   dispatch(itemCreateRequested());
   try {
     const { content } = await coffeeItemService.create(payload);
     dispatch(coffeeItemCreated(content));
+    back();
   } catch (error) {
     dispatch(createItemFaild());
   }
@@ -75,6 +85,22 @@ export const coffeeItemRemove = (itemId) => async (dispatch) => {
   }
 };
 
+export const editCoffeeItem = (payload, navigate) => async (dispatch) => {
+  dispatch(itemUpdateRequested());
+  try {
+    const { content } = await coffeeItemService.edit(payload);
+    dispatch(coffeeItemUpdateSuccssed(content));
+    navigate();
+  } catch (error) {
+    dispatch(updateItemFaild());
+  }
+};
+
+export const getCoffeeItemById = (itemId) => (state) => {
+  return state.coffeeItems.entities
+    ? state.coffeeItems.entities.find((i) => i._id === itemId)
+    : null;
+};
 export const getCoffeeItemsList = () => (state) => state.coffeeItems.entities;
 export const getCoffeeItemsLoadingStatus = () => (state) =>
   state.coffeeItems.isLoading;

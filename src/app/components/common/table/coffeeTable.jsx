@@ -32,6 +32,10 @@ const CoffeeTable = ({ coffeeItems }) => {
       name: "Метод обработки",
       component: (item) => <Converter id={item.kind} itemName={"kind"} />
     },
+    preparationMethod: {
+      path: "preparationMethod",
+      name: "Метод приготовления"
+    },
     description: {
       path: "description",
       name: "Описание"

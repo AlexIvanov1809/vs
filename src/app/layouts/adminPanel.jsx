@@ -120,7 +120,7 @@ const AdminPanel = () => {
             />
             <Entity
               items={methods}
-              label="Добавить Метод Приготовления"
+              label="Добавить Метод Обработки"
               name="methods"
               onDelete={handleDelete}
               onSubmit={handleSubmit}

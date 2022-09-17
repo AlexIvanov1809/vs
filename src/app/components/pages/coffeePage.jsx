@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import WeightItem from "../ui/weightItem";
-import ItemImage from "../ui/itemImage";
+// import ItemImage from "../ui/itemImage";
 
 const CoffeePage = ({ assortment, onChange }) => {
   return (
@@ -9,17 +9,17 @@ const CoffeePage = ({ assortment, onChange }) => {
       <div className="d-flex flex-wrap justify-content-center">
         {assortment.map((item) => (
           <div
-            key={item.id}
+            key={item._id}
             className="div m-2 h-100 text-center border p-2"
             style={{ width: "350px" }}
           >
-            <h4>{item.roasted}</h4>
-            <p>{item.using}</p>
+            <h4>{item.brand}</h4>
+            <p>{item.preparationMethod}</p>
             <h2>
-              {item.country} {item.sort}
+              {item.country} {item.sortName}
             </h2>
-            <p>{item.form}</p>
-            <ItemImage item={item} />
+            <p>{item.kind}</p>
+            {/* <ItemImage item={item} /> */}
             <p>{!item.grind ? "Beans" : "Grounded"}</p>
             <WeightItem item={item} onChange={onChange} />
           </div>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getBrandsList, loadbrandsList } from "../../../store/brands";
-import { getCountriesList, loadCountriesList } from "../../../store/countries";
-import { getMethodsList, loadmethodsList } from "../../../store/methods";
-import { getKindsList, loadkindsList } from "../../../store/kinds";
+import { getBrandsList } from "../../../store/brands";
+import { getCountriesList } from "../../../store/countries";
+import { getMethodsList } from "../../../store/methods";
+import { getKindsList } from "../../../store/kinds";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
 import { nanoid } from "@reduxjs/toolkit";
@@ -14,8 +14,6 @@ import CheckBoxField from "../../common/form/checkBoxField";
 const CreateCoffeeItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // const [errors, setErrors] = useState({});
   const [data, setData] = useState({
     _id: null,
     acidity: 0,
@@ -26,18 +24,15 @@ const CreateCoffeeItem = () => {
     sortName: "",
     kind: "",
     method: "",
-    priceQuarter: null,
-    priceKg: null,
-    priceDrip: null,
+    preparationMethod: "",
+    priceQuarter: "",
+    priceKg: "",
+    priceDrip: "",
     active: true
   });
 
-  useEffect(() => {
-    dispatch(loadbrandsList());
-    dispatch(loadCountriesList());
-    dispatch(loadmethodsList());
-    dispatch(loadkindsList());
-  }, []);
+  // const [errors, setErrors] = useState({});
+
   const brands = useSelector(getBrandsList());
   const countries = useSelector(getCountriesList());
   const methods = useSelector(getMethodsList());
@@ -61,7 +56,26 @@ const CreateCoffeeItem = () => {
   };
 
   const clearForm = () => {
-    setData({});
+    setData({
+      _id: null,
+      acidity: 0,
+      brand: "",
+      country: "",
+      density: 0,
+      description: "",
+      sortName: "",
+      kind: "",
+      method: "",
+      preparationMethod: "",
+      priceQuarter: "",
+      priceKg: "",
+      priceDrip: "",
+      active: true
+    });
+  };
+
+  const back = () => {
+    navigate(-1);
   };
 
   const handleSubmit = (e) => {
@@ -75,10 +89,9 @@ const CreateCoffeeItem = () => {
     delete data.priceDrip;
     delete data.priceKg;
     delete data.priceQuarter;
-    dispatch(createNewCoffeeItem(data));
+    dispatch(createNewCoffeeItem(data, back));
     clearForm();
   };
-
   return (
     <>
       <div className="container mt-5 position-relative">
@@ -95,7 +108,7 @@ const CreateCoffeeItem = () => {
                 onChange={handleChange}
               />
               <SelectField
-                label="Выберите метод приготовления"
+                label="Выберите метод обработки"
                 value={data.method}
                 defaultOption=""
                 name="method"
@@ -117,6 +130,13 @@ const CreateCoffeeItem = () => {
                 value={data.sortName || ""}
                 onChange={handleChange}
               />
+              <TextForm
+                label="Введите метод приготовления"
+                name="preparationMethod"
+                type="text"
+                value={data.preparationMethod || ""}
+                onChange={handleChange}
+              />
               <SelectField
                 label="Выберите сорт"
                 value={data.kind}
@@ -136,7 +156,7 @@ const CreateCoffeeItem = () => {
                 <SelectField
                   label="Выберите уровень кислотности"
                   value={data.acidity}
-                  defaultOption={0}
+                  defaultOption={data.acidity}
                   name="acidity"
                   options={level}
                   onChange={handleChange}
@@ -144,7 +164,7 @@ const CreateCoffeeItem = () => {
                 <SelectField
                   label="Выберите уровень плотности"
                   value={data.density}
-                  defaultOption={0}
+                  defaultOption={data.density}
                   name="density"
                   options={level}
                   onChange={handleChange}
