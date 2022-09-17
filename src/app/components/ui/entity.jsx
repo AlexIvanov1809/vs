@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextForm from "../common/form/textForm";
-import DeleteButton from "./deleteButton";
+import DeleteButton from "../common/deleteButton";
 
 const Entity = ({ items, onDelete, onSubmit, label, name }) => {
   const [data, setData] = useState({});

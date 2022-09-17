@@ -23,6 +23,19 @@ code {
 	position: relative;
 	overflow: hidden;
 }
-/* .image-coffee {
-	transform: translateX(75px);
-} */
+.scale {
+	position: relative;
+	height: 7px;
+	width: 10rem;
+	background-color: rgb(197, 194, 194);
+	border: 0.5px solid #000;
+	border-radius: 10px;
+}
+.scale-inside {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background-color: blue;
+	border-radius: 10px;
+}

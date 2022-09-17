@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useDispatch } from "react-redux";
 import { coffeeItemRemove } from "../../../store/coffeeItems";
 import { Link } from "react-router-dom";
-import DeleteButton from "../../ui/deleteButton";
+import DeleteButton from "../deleteButton";
 
 const TableBody = ({ data, columns }) => {
   const dispatch = useDispatch();

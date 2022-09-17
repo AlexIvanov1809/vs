@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const WeightItem = ({ item, onChange }) => {
-  const state = {
+const PriceItem = ({ item, onChange }) => {
+  const [opacity, setOpacity] = useState({
     quarter: true,
     kg: false,
     drip: false
-  };
-  const [opacity, setOpacity] = useState(state);
+  });
 
   const hiddenChecker = (item) => {
     if (!item) {
@@ -16,8 +15,8 @@ const WeightItem = ({ item, onChange }) => {
       return false;
     }
   };
-  const handleOpacity = (id, item) => {
-    onChange(id, item);
+  const handleOpacity = (item) => {
+    onChange(item);
     const trueItem = Object.keys(opacity).find((k) => opacity[k] === true);
     setOpacity({ ...opacity, [trueItem]: false, [item]: true });
   };
@@ -30,7 +29,7 @@ const WeightItem = ({ item, onChange }) => {
             (opacity.quarter ? "" : " text-black text-opacity-50 ")
           }
           hidden={hiddenChecker(item.price.quarter)}
-          onClick={() => handleOpacity(item._id, "quarter")}
+          onClick={() => handleOpacity("quarter")}
           role="button"
         >
           <h6>250</h6>
@@ -42,7 +41,7 @@ const WeightItem = ({ item, onChange }) => {
             (opacity.kg ? "" : " text-black text-opacity-50")
           }
           hidden={hiddenChecker(item.price.kg)}
-          onClick={() => handleOpacity(item._id, "kg")}
+          onClick={() => handleOpacity("kg")}
           role="button"
         >
           <h6>1000</h6>
@@ -54,7 +53,7 @@ const WeightItem = ({ item, onChange }) => {
             (opacity.drip ? "" : " text-black text-opacity-50")
           }
           hidden={hiddenChecker(item.price.drip)}
-          onClick={() => handleOpacity(item._id, "drip")}
+          onClick={() => handleOpacity("drip")}
           role="button"
         >
           <h6>шт</h6>
@@ -65,9 +64,9 @@ const WeightItem = ({ item, onChange }) => {
   );
 };
 
-WeightItem.propTypes = {
+PriceItem.propTypes = {
   item: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired
 };
 
-export default WeightItem;
+export default PriceItem;
