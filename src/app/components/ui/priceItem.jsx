@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 const PriceItem = ({ item, onChange }) => {
@@ -7,6 +7,28 @@ const PriceItem = ({ item, onChange }) => {
     kg: false,
     drip: false
   });
+
+  useEffect(() => {
+    if (item.price.quarter) {
+      setOpacity({
+        quarter: true,
+        kg: false,
+        drip: false
+      });
+    } else if (item.price.kg) {
+      setOpacity({
+        quarter: false,
+        kg: true,
+        drip: false
+      });
+    } else if (item.price.drip) {
+      setOpacity({
+        quarter: false,
+        kg: false,
+        drip: true
+      });
+    }
+  }, []);
 
   const hiddenChecker = (item) => {
     if (!item) {

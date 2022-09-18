@@ -38,7 +38,6 @@ const CreateCoffeeItem = () => {
   const methods = useSelector(getMethodsList());
   const kinds = useSelector(getKindsList());
   const level = [
-    { _id: 0, value: 0 },
     { _id: 1, value: 1 },
     { _id: 2, value: 2 },
     { _id: 3, value: 3 },
@@ -156,7 +155,7 @@ const CreateCoffeeItem = () => {
                 <SelectField
                   label="Выберите уровень кислотности"
                   value={data.acidity}
-                  defaultOption={data.acidity}
+                  defaultOption={"0"}
                   name="acidity"
                   options={level}
                   onChange={handleChange}
@@ -164,7 +163,7 @@ const CreateCoffeeItem = () => {
                 <SelectField
                   label="Выберите уровень плотности"
                   value={data.density}
-                  defaultOption={data.density}
+                  defaultOption={"0"}
                   name="density"
                   options={level}
                   onChange={handleChange}

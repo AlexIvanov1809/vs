@@ -25,11 +25,10 @@ code {
 }
 .scale {
 	position: relative;
-	height: 7px;
+	height: 6px;
 	width: 10rem;
 	background-color: rgb(197, 194, 194);
-	border: 0.5px solid #000;
-	border-radius: 10px;
+	border-radius: 40px;
 }
 .scale-inside {
 	position: absolute;
@@ -37,5 +36,5 @@ code {
 	left: 0;
 	height: 100%;
 	background-color: blue;
-	border-radius: 10px;
+	border-radius: 40px;
 }

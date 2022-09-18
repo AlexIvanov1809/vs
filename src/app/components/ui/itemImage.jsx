@@ -9,20 +9,20 @@ const ItemImage = ({ item }) => {
         className="carousel slide"
         data-bs-ride="carousel"
       >
-        <div className="carousel-inner">
+        <div className="carousel-inner ">
           <div
             className={"carousel-item" + (item === "quarter" ? +" active" : "")}
           >
             <img
               src={"img/quarter.png"}
-              className="d-block w-100"
+              className="d-block w-75 mx-auto"
               alt="Coffee 250"
             />
           </div>
           <div className={"carousel-item" + (item === "kg" ? +" active" : "")}>
             <img
               src={"img/kg.png"}
-              className="d-block w-100"
+              className="d-block w-75 mx-auto"
               alt="Coffee 1000"
             />
           </div>
@@ -31,7 +31,7 @@ const ItemImage = ({ item }) => {
           >
             <img
               src={"img/drip.png"}
-              className="d-block w-100"
+              className="d-block w-75 mx-auto"
               alt="Coffee drip"
             />
           </div>

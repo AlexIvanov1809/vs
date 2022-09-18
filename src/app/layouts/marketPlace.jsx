@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CoffeeCardItem from "../components/pages/coffeePage";
+import CoffeeCardItem from "../components/pages/coffeeCardItem";
 import Pagination from "../components/common/pagination";
 import { paginate } from "../utils/pagination";
 // import GroupList from "../components/common/groupList";
@@ -16,12 +16,14 @@ import {
 import { getBrandsLoadingStatus, loadbrandsList } from "../store/brands";
 import { getMethodsLoadingStatus, loadmethodsList } from "../store/methods";
 import { getKindsLoadingStatus, loadkindsList } from "../store/kinds";
+import CountersList from "../components/common/counters/countersList";
 
 const MarketPlace = () => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCountry] = useState("");
   const [keyFilter] = useState("");
+  const [orderItems, setOrderItems] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,6 +57,24 @@ const MarketPlace = () => {
     setCurrentPage(page);
   };
 
+  const handleOrderItems = (item) => {
+    let same = false;
+    orderItems.map((i) => {
+      if (i._id === item._id && i.price === item.price) {
+        same = true;
+      }
+      return i;
+    });
+    if (!same) {
+      orderItems.push(item);
+    } else {
+      const index = orderItems.findIndex(
+        (i) => i._id === item._id && i.price === item.price
+      );
+      orderItems[index] = item;
+    }
+    setOrderItems(orderItems);
+  };
   // const handleCountrySelect = (value, item) => {
   //   setSelectedCountry(value);
   //   setKeyFilter(item);
@@ -68,9 +88,9 @@ const MarketPlace = () => {
 
   const itemsQty = filteredCountries.length;
   const itemsOnPage = paginate(filteredCountries, currentPage, pageSize);
-  const handleResetFilter = () => {
-    // setSelectedCountry("");
-  };
+  // const handleResetFilter = () => {
+  //   setSelectedCountry("");
+  // };
   if (
     !coffeeItemsLoading ||
     !brandsLoadingStatus ||
@@ -81,7 +101,8 @@ const MarketPlace = () => {
     return (
       <div className="d-flex">
         <aside className="border h-100 mt-2 mx-2 text-center ">
-          <div style={{ width: "15rem" }}>
+          <div style={{ width: "25rem" }}>
+            <CountersList orderItems={orderItems} />
             {/* <GroupList
             groupItems={countriesItems}
             selectedCountry={selectedCountry}
@@ -94,14 +115,19 @@ const MarketPlace = () => {
             onSelectCountry={handleCountrySelect}
             name="form"
           /> */}
-            <button className="btn btn-primary m-2" onClick={handleResetFilter}>
+            {/* <button className="btn btn-primary m-2" onClick={handleResetFilter}>
               Reset
-            </button>
+            </button> */}
           </div>
         </aside>
-        <div className="w-100 d-flex flex-wrap justify-content-center">
+
+        <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
           {itemsOnPage.map((item) => (
-            <CoffeeCardItem key={item._id} coffeeItem={item} />
+            <CoffeeCardItem
+              key={item._id}
+              coffeeItem={item}
+              onChange={handleOrderItems}
+            />
           ))}
           <div className="w-100">
             <Pagination
