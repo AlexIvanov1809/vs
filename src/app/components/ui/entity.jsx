@@ -34,7 +34,9 @@ const Entity = ({ items, onDelete, onSubmit, label, name }) => {
             value={data[name] || ""}
             onChange={handleChange}
           />
-          <button className="btn btn-primary ms-2 mb-2 h-25">Создать</button>
+          <button className="btn btn-white text-primary fs-6 ms-2 mb-2 h-25">
+            <i className="bi bi-plus-circle"></i>
+          </button>
         </form>
         {items
           ? items.map((item) => (

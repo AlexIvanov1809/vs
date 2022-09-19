@@ -5,7 +5,7 @@ const DeleteButton = ({ onDelete, id, name }) => {
   return (
     <>
       <button
-        className="btn btn-danger ms-2"
+        className="btn btn-white text-danger ms-2"
         onClick={() => onDelete(id, name)}
       >
         <i className="bi bi-trash"></i>

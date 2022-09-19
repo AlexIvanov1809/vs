@@ -31,8 +31,8 @@ const TableBody = ({ data, columns }) => {
             ))}
             <td>
               <DeleteButton onDelete={handleDelete} id={item._id} />
-              <button className="btn btn-primary ms-2">
-                <Link className="text-white" to={`/adminPanel/${item._id}`}>
+              <button className="btn btn-white ms-2">
+                <Link className="text-primary" to={`/adminPanel/${item._id}`}>
                   <i className="bi bi-pencil-fill"></i>
                 </Link>
               </button>

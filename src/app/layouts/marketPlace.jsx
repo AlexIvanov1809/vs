@@ -23,7 +23,6 @@ const MarketPlace = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCountry] = useState("");
   const [keyFilter] = useState("");
-  const [orderItems, setOrderItems] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -57,24 +56,6 @@ const MarketPlace = () => {
     setCurrentPage(page);
   };
 
-  const handleOrderItems = (item) => {
-    let same = false;
-    orderItems.map((i) => {
-      if (i._id === item._id && i.price === item.price) {
-        same = true;
-      }
-      return i;
-    });
-    if (!same) {
-      orderItems.push(item);
-    } else {
-      const index = orderItems.findIndex(
-        (i) => i._id === item._id && i.price === item.price
-      );
-      orderItems[index] = item;
-    }
-    setOrderItems(orderItems);
-  };
   // const handleCountrySelect = (value, item) => {
   //   setSelectedCountry(value);
   //   setKeyFilter(item);
@@ -102,7 +83,7 @@ const MarketPlace = () => {
       <div className="d-flex">
         <aside className="border h-100 mt-2 mx-2 text-center ">
           <div style={{ width: "25rem" }}>
-            <CountersList orderItems={orderItems} />
+            <CountersList />
             {/* <GroupList
             groupItems={countriesItems}
             selectedCountry={selectedCountry}
@@ -123,11 +104,7 @@ const MarketPlace = () => {
 
         <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
           {itemsOnPage.map((item) => (
-            <CoffeeCardItem
-              key={item._id}
-              coffeeItem={item}
-              onChange={handleOrderItems}
-            />
+            <CoffeeCardItem key={item._id} coffeeItem={item} />
           ))}
           <div className="w-100">
             <Pagination

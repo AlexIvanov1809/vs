@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import brandsReducer from "./brands";
 import coffeeItemsReducer from "./coffeeItems";
+import consumerBusketreducer from "./consumerBasket";
 import countriesReducer from "./countries";
 import kindsReducer from "./kinds";
 import methodsReducer from "./methods";
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
   coffeeItems: coffeeItemsReducer,
   methods: methodsReducer,
   brands: brandsReducer,
-  kinds: kindsReducer
+  kinds: kindsReducer,
+  consumerBusket: consumerBusketreducer
 });
 
 export function createStore() {

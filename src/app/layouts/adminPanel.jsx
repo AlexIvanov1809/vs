@@ -91,7 +91,13 @@ const AdminPanel = () => {
     kindsLoadingStatus ||
     coffeeItemsLoading
   ) {
-    return "Loading...";
+    return (
+      <div className="d-flex justify-content-center w-100 mt-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   } else {
     return (
       <>
@@ -126,9 +132,9 @@ const AdminPanel = () => {
               onSubmit={handleSubmit}
             />
           </div>
-          <button className="btn btn-primary me-5 h-25">
+          <button className="btn btn-white me-5 h-25">
             <Link
-              className="text-white fs-3"
+              className="text-primary fs-3"
               to={"/adminPanel/createCoffeeItem"}
             >
               <i className="bi bi-file-earmark-plus-fill"></i>

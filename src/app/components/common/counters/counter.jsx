@@ -1,44 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
+import DeleteButton from "../buttons/deleteButton";
 
-const Counter = ({ orderItems, onIncrement, onDecrement, onDelete }) => {
-  const { id, quantity, country, sort, price } = orderItems;
-
-  const formatValue = () => {
-    return quantity === 0 ? "empty" : quantity;
-  };
-
-  const getBageClasses = () => {
-    let classes = "badge m-2 ";
-    classes += quantity === 0 ? "bg-warning" : "bg-primary";
-    return classes;
-  };
+const Counter = ({ orderItems, onChange, onDelete }) => {
+  const { _id: id, quantity, country, sort, price } = orderItems;
 
   return (
     <div>
-      <span className="m-2">
+      <span className="m-2 fw-bold">
         {country} {sort}
       </span>
-      <span>{price * quantity}</span>
-      <span className={getBageClasses()}>{formatValue()}</span>
+      <span className="me-2 fw-bold text-primary">
+        {price * quantity} &#8381;
+      </span>
+      <span className="fs-6">{quantity} шт</span>
       <button
-        className="btn btn-primary btn-sm m-2"
-        onClick={() => onIncrement(id)}
+        className="btn btn-white text-primary fs-6 btn-sm m-1"
+        onClick={() => onChange(id, 1)}
       >
-        +
+        <i className="bi bi-plus-lg"></i>
       </button>
       <button
-        className="btn btn-primary btn-sm m-2"
-        onClick={() => (quantity > 1 ? onDecrement(id) : onDelete(id))}
+        className="btn btn-white text-primary fs-6 btn-sm m-1"
+        onClick={() => (quantity > 1 ? onChange(id, -1) : onDelete(id))}
       >
-        -
+        <i className="bi bi-dash-lg"></i>
       </button>
-      <button
-        className="btn btn-danger btn-sm m-2"
-        onClick={() => onDelete(id)}
-      >
-        Delete
-      </button>
+      <DeleteButton onDelete={onDelete} id={id} />
     </div>
   );
 };
@@ -46,8 +34,7 @@ const Counter = ({ orderItems, onIncrement, onDecrement, onDelete }) => {
 Counter.propTypes = {
   orderItems: PropTypes.object,
   onDelete: PropTypes.func,
-  onDecrement: PropTypes.func,
-  onIncrement: PropTypes.func
+  onChange: PropTypes.func
 };
 
 export default Counter;

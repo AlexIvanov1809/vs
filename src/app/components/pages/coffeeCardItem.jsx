@@ -4,10 +4,25 @@ import ItemImage from "../ui/itemImage";
 import Scale from "../common/scale";
 import PriceItem from "../ui/priceItem";
 import BuyButton from "../common/buttons/buyButton";
-import { nanoid } from "@reduxjs/toolkit";
+import SelectField from "../common/form/selectField";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  editItemBasket,
+  getStore,
+  storeAdding
+} from "../../store/consumerBasket";
 
-const CoffeeCardItem = ({ coffeeItem, onChange }) => {
+const CoffeeCardItem = ({ coffeeItem }) => {
+  const dispatch = useDispatch();
+  const basket = useSelector(getStore());
+
   const [name, setName] = useState();
+  const [bean, setBean] = useState({ name: "beans", value: "Зерно" });
+  const beans = [
+    { _id: 1, value: "под чашку" },
+    { _id: 2, value: "под фильтр" },
+    { _id: 3, value: "под эспрессо" }
+  ];
   useEffect(() => {
     if (!coffeeItem.price.quarter) {
       if (!coffeeItem.price.kg) {
@@ -29,15 +44,30 @@ const CoffeeCardItem = ({ coffeeItem, onChange }) => {
   };
 
   const handleChange = (item) => {
+    setBean(item);
+  };
+
+  const handleSubmit = (item) => {
+    let same = false;
     const order = {
-      id: nanoid(),
-      _id: coffeeItem._id,
+      _id: coffeeItem._id + name,
+      [bean.name]: bean.value,
       country: coffeeItem.country,
       sort: coffeeItem.sortName,
       quantity: item,
       price: coffeeItem.price[name]
     };
-    onChange(order);
+    basket.map((i) => {
+      if (i._id === order._id) {
+        same = true;
+      }
+      return i;
+    });
+    if (!same) {
+      dispatch(storeAdding(order));
+    } else {
+      dispatch(editItemBasket(order));
+    }
   };
   return (
     <>
@@ -61,10 +91,19 @@ const CoffeeCardItem = ({ coffeeItem, onChange }) => {
           <Scale value={coffeeItem.acidity} name="Кислотность" />
           <Scale value={coffeeItem.density} name="Плотность" />
         </div>
-        <p>{!coffeeItem.grind ? "Beans" : "Grounded"}</p>
+        <div className="w-50">
+          <SelectField
+            label=""
+            value="Зерно"
+            defaultOption="Зерно"
+            name="beans"
+            options={beans}
+            onChange={handleChange}
+          />
+        </div>
         <div className="d-flex justify-content-between align-items-center">
           <PriceItem item={coffeeItem} onChange={HandleChangeImg} />
-          <BuyButton onChange={handleChange} />
+          <BuyButton onChange={handleSubmit} />
         </div>
       </div>
     </>
@@ -72,8 +111,7 @@ const CoffeeCardItem = ({ coffeeItem, onChange }) => {
 };
 
 CoffeeCardItem.propTypes = {
-  coffeeItem: PropTypes.object,
-  onChange: PropTypes.func
+  coffeeItem: PropTypes.object
 };
 
 export default CoffeeCardItem;

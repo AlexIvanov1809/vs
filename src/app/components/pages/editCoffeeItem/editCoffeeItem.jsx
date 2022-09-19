@@ -186,7 +186,7 @@ const EditCoffeeItem = () => {
                 </CheckBoxField>
 
                 <button className="btn btn-primary ms-2 mb-2 h-25">
-                  Создать
+                  Изменить
                 </button>
               </form>
 
