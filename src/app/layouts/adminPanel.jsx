@@ -84,67 +84,63 @@ const AdminPanel = () => {
 
     dispatch(items[ItemName]);
   };
-  if (
-    brandsLoadingStatus ||
-    countriesLoadingStatus ||
-    methodsLoadingStatus ||
-    kindsLoadingStatus ||
-    coffeeItemsLoading
-  ) {
-    return (
-      <div className="d-flex justify-content-center w-100 mt-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
+  return (
+    <>
+      <div className="d-flex justify-content-between align-items-end">
+        <div className="d-flex">
+          <Entity
+            loading={brandsLoadingStatus}
+            items={brands}
+            label="Добавить Бренд"
+            name="brands"
+            onDelete={handleDelete}
+            onSubmit={handleSubmit}
+          />
+          <Entity
+            loading={countriesLoadingStatus}
+            items={countries}
+            label="Добавить Страну"
+            name="countries"
+            onDelete={handleDelete}
+            onSubmit={handleSubmit}
+          />
+          <Entity
+            loading={kindsLoadingStatus}
+            items={kinds}
+            label="Добавить Сорт"
+            name="kinds"
+            onDelete={handleDelete}
+            onSubmit={handleSubmit}
+          />
+          <Entity
+            loading={methodsLoadingStatus}
+            items={methods}
+            label="Добавить Метод Обработки"
+            name="methods"
+            onDelete={handleDelete}
+            onSubmit={handleSubmit}
+          />
         </div>
+        <button className="btn btn-white me-5 h-25">
+          <Link
+            className="text-primary fs-3"
+            to={"/adminPanel/createCoffeeItem"}
+          >
+            <i className="bi bi-file-earmark-plus-fill"></i>
+          </Link>
+        </button>
       </div>
-    );
-  } else {
-    return (
-      <>
-        <div className="d-flex justify-content-between align-items-end">
-          <div className="d-flex">
-            <Entity
-              items={brands}
-              label="Добавить Бренд"
-              name="brands"
-              onDelete={handleDelete}
-              onSubmit={handleSubmit}
-            />
-            <Entity
-              items={countries}
-              label="Добавить Страну"
-              name="countries"
-              onDelete={handleDelete}
-              onSubmit={handleSubmit}
-            />
-            <Entity
-              items={kinds}
-              label="Добавить Сорт"
-              name="kinds"
-              onDelete={handleDelete}
-              onSubmit={handleSubmit}
-            />
-            <Entity
-              items={methods}
-              label="Добавить Метод Обработки"
-              name="methods"
-              onDelete={handleDelete}
-              onSubmit={handleSubmit}
-            />
-          </div>
-          <button className="btn btn-white me-5 h-25">
-            <Link
-              className="text-primary fs-3"
-              to={"/adminPanel/createCoffeeItem"}
-            >
-              <i className="bi bi-file-earmark-plus-fill"></i>
-            </Link>
-          </button>
-        </div>
+      {!coffeeItemsLoading ? (
         <CoffeeTable coffeeItems={coffeeItems} />
-      </>
-    );
-  }
+      ) : (
+        <div className="d-flex justify-content-center w-100 mt-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default AdminPanel;

@@ -45,7 +45,8 @@ const MarketPlace = () => {
 
   useEffect(() => {
     if (coffeeItems) {
-      setCoffeeAssortment(coffeeItems);
+      const activeCoffeeItems = coffeeItems.filter((i) => i.active);
+      setCoffeeAssortment(activeCoffeeItems);
     }
   }, [coffeeItems]);
   useEffect(() => {

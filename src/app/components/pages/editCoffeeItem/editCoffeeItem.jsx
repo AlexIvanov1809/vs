@@ -67,6 +67,9 @@ const EditCoffeeItem = () => {
       kg: data.priceKg,
       drip: data.priceDrip
     };
+    data.name = data.country
+      ? data.country + " " + data.sortName
+      : data.sortName;
     delete data.priceDrip;
     delete data.priceKg;
     delete data.priceQuarter;

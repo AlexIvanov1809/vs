@@ -8,10 +8,12 @@ import {
   getStore,
   resetBasket
 } from "../../../store/consumerBasket";
+import OrderSubmit from "../../ui/orderSubmit";
 
 const CountersList = () => {
   const dispatch = useDispatch();
   const orderItems = useSelector(getStore());
+  const [hiddenItem, setHidden] = useState(true);
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState();
   useEffect(() => {
@@ -41,6 +43,12 @@ const CountersList = () => {
     const newItem = { ...item, quantity: item.quantity + counter };
     dispatch(editItemBasket(newItem));
   };
+  const handleSubmit = (costumerData) => {
+    const dataToSand = { ...costumerData, items, total, _id: Date.now() };
+    console.log(dataToSand);
+    handleReset();
+    setHidden(true);
+  };
   if (items.length > 0) {
     return (
       <>
@@ -58,8 +66,16 @@ const CountersList = () => {
             {total} &#8381;
           </span>
         </h5>
+        <OrderSubmit hid={hiddenItem} onSubmit={handleSubmit} />
         <button className="btn btn-primary btn-sm m-2" onClick={handleReset}>
           Reset
+        </button>
+        <button
+          className="btn btn-primary btn-sm m-2"
+          onClick={() => setHidden(false)}
+          hidden={!hiddenItem}
+        >
+          Оформить заказ
         </button>
       </>
     );

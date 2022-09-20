@@ -49,13 +49,25 @@ const CoffeeCardItem = ({ coffeeItem }) => {
 
   const handleSubmit = (item) => {
     let same = false;
+    let weight;
+    switch (name) {
+      case "quarter":
+        weight = "250 г.";
+        break;
+      case "kg":
+        weight = "1 кг.";
+        break;
+      case "drip":
+        weight = "дрип пакет";
+        break;
+    }
     const order = {
       _id: coffeeItem._id + name,
       [bean.name]: bean.value,
-      country: coffeeItem.country,
-      sort: coffeeItem.sortName,
+      name: coffeeItem.name,
       quantity: item,
-      price: coffeeItem.price[name]
+      price: coffeeItem.price[name],
+      weight
     };
     basket.map((i) => {
       if (i._id === order._id) {
@@ -77,15 +89,13 @@ const CoffeeCardItem = ({ coffeeItem }) => {
       >
         <h4>{coffeeItem.brand}</h4>
         <p>{coffeeItem.preparationMethod}</p>
-        <h2>
-          {coffeeItem.country} {coffeeItem.sortName}
-        </h2>
+        <h2>{coffeeItem.name}</h2>
         <p>{coffeeItem.method}</p>
 
         <ItemImage item={name} visibility={coffeeItem.price} />
         <p>{coffeeItem.kind}</p>
 
-        <p>{coffeeItem.description}</p>
+        <p className="text-start px-3">{coffeeItem.description}</p>
 
         <div className="d-flex justify-content-between">
           <Scale value={coffeeItem.acidity} name="Кислотность" />

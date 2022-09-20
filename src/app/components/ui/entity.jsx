@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TextForm from "../common/form/textForm";
 import DeleteButton from "../common/buttons/deleteButton";
 
-const Entity = ({ items, onDelete, onSubmit, label, name }) => {
+const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
   const [data, setData] = useState({});
 
   const handleChange = (target) => {
@@ -38,14 +38,25 @@ const Entity = ({ items, onDelete, onSubmit, label, name }) => {
             <i className="bi bi-plus-circle"></i>
           </button>
         </form>
-        {items
-          ? items.map((item) => (
+
+        {!loading ? (
+          items ? (
+            items.map((item) => (
               <div key={item._id}>
                 {item.value}
                 <DeleteButton onDelete={onDelete} id={item._id} name={name} />
               </div>
             ))
-          : "Нет данных"}
+          ) : (
+            "Нет данных"
+          )
+        ) : (
+          <div className="d-flex justify-content-center w-100 mt-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
@@ -56,7 +67,8 @@ Entity.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   onSubmit: PropTypes.func,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default Entity;
