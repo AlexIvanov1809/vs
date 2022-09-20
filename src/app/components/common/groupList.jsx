@@ -1,54 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import CheckBoxField from "./form/checkBoxField";
 
-const GroupList = ({ groupItems, selectedCountry, onSelectCountry, name }) => {
-  const filtredItems = groupItems
-    .filter((item, index) => groupItems.indexOf(item) === index)
-    .filter(Boolean)
-    .sort();
+const GroupList = ({ onFilter, items }) => {
+  const [choose, setChoose] = useState({});
+  const [filtredItems, setFiltredItems] = useState(true);
 
-  const onChange = ({ target }) => {
-    onSelectCountry(target.value, target.name);
+  useEffect(() => {
+    const a = [];
+    items && items.forEach((i) => a.push({ [i.value]: false }));
+    a.forEach((i) =>
+      setChoose((prevState) => ({
+        ...prevState,
+        [Object.keys(i)[0]]: Object.values(i)[0]
+      }))
+    );
+  }, []);
+  useEffect(() => {
+    const b = Object.keys(choose).filter((i) => choose[i]);
+    onFilter(b);
+  }, [filtredItems]);
+
+  // const filtredItem = groupItems
+  //   .filter((item, index) => groupItems.indexOf(item) === index)
+  //   .filter(Boolean)
+  //   .sort();
+
+  // const onChange = ({ target }) => {
+  //   onSelectCountry(target.value, target.name);
+  // };
+  const handleChange = (target) => {
+    setChoose((prevState) => ({
+      ...prevState,
+      [target.name]: target.value
+    }));
+    setFiltredItems(!filtredItems);
   };
-  let index = 0;
-  return (
-    <select
-      className="form-select w-75 mx-auto mt-2"
-      aria-label="Default select example"
-      value={selectedCountry}
-      name={name}
-      onChange={onChange}
-    >
-      <option value="">Choose</option>
-      {filtredItems.map((item) => (
-        <option key={index++} value={item}>
-          {item}
-        </option>
-      ))}
-    </select>
 
-    // <ul className="list-group mt-2" style={{ width: "200px" }}>
-    //   {countries.map((item) => (
-    //     <li
-    //       key={index++}
-    //       className={
-    //         "text-center w-75 list-group-item mx-auto" +
-    //         (item === selectedCountry ? " active" : "")
-    //       }
-    //       onClick={() => onSelectCountry(item)}
-    //       role="button"
-    //     >
-    //       {item}
-    //     </li>
-    //   ))}
-    // </ul>
+  return (
+    <div style={{ width: "130px", marginLeft: "20px" }}>
+      {items &&
+        items.map((i) => (
+          <CheckBoxField
+            key={i._id}
+            named={i.value}
+            value={choose[i.value]}
+            onChange={handleChange}
+          >
+            {i.value}
+          </CheckBoxField>
+        ))}
+    </div>
   );
 };
 
 GroupList.propTypes = {
-  groupItems: PropTypes.array.isRequired,
-  selectedCountry: PropTypes.string.isRequired,
-  onSelectCountry: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired
+  onFilter: PropTypes.func,
+  items: PropTypes.array
 };
 export default GroupList;
