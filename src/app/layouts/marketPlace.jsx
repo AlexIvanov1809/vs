@@ -13,7 +13,11 @@ import {
   getCountriesLoadingStatus,
   loadCountriesList
 } from "../store/countries";
-import { getBrandsLoadingStatus, loadbrandsList } from "../store/brands";
+import {
+  getBrandsList,
+  getBrandsLoadingStatus,
+  loadbrandsList
+} from "../store/brands";
 import { getMethodsLoadingStatus, loadmethodsList } from "../store/methods";
 import { getKindsLoadingStatus, loadkindsList } from "../store/kinds";
 // import CountersList from "../components/common/counters/countersList";
@@ -24,6 +28,8 @@ const MarketPlace = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState([]);
+  const [brandfilter, setBrandFilter] = useState();
+  const [countryfilter, setCountryFilter] = useState();
   const pageSize = 6;
 
   const dispatch = useDispatch();
@@ -42,6 +48,7 @@ const MarketPlace = () => {
   const methodsLoadingStatus = useSelector(getMethodsLoadingStatus());
   const kindsLoadingStatus = useSelector(getKindsLoadingStatus());
   const countries = useSelector(getCountriesList());
+  const brands = useSelector(getBrandsList());
 
   // const countriesItems = coffeeItems.map((item) => item.country);
   // const formItems = coffeeItems.map((item) => item.form);
@@ -55,6 +62,17 @@ const MarketPlace = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
+  useEffect(() => {
+    setFilter([]);
+    const num = [brandfilter, countryfilter].filter((i) => i !== undefined);
+    if (num.length === 2) {
+      setFilter(countryfilter.filter((a) => brandfilter.some((b) => a === b)));
+    }
+    // if (num.length === 1) {
+    //   return num;
+    // }
+    console.log(num);
+  }, [brandfilter, countryfilter]);
 
   const handleCurrentPageSet = (page) => {
     setCurrentPage(page);
@@ -64,15 +82,22 @@ const MarketPlace = () => {
     setSearchQuery(target.value);
   };
 
-  const handleFilteredItems = (items) => {
-    setFilter([]);
+  const handleFilteredCountries = (items) => {
+    setCountryFilter();
     items.forEach((item) =>
-      setFilter((p) => [
+      setCountryFilter(...coffeeAssortment.filter((i) => i.country === item))
+    );
+  };
+  const handleFilteredBrands = (items) => {
+    setBrandFilter();
+    items.forEach((item) =>
+      setBrandFilter((p) => [
         ...p,
-        ...coffeeAssortment.filter((i) => i.country === item)
+        ...coffeeAssortment.filter((i) => i.brand === item)
       ])
     );
   };
+
   // filter.length > 0? data.filter((item) => item.country === filter[0]
   function searchItems(data) {
     const filtredData = searchQuery
@@ -102,7 +127,12 @@ const MarketPlace = () => {
       <div className="d-flex">
         {!countriesLoadingStatus && (
           <div>
-            <GroupList onFilter={handleFilteredItems} items={countries} />
+            <GroupList onFilter={handleFilteredCountries} items={countries} />
+          </div>
+        )}
+        {!brandsLoadingStatus && (
+          <div>
+            <GroupList onFilter={handleFilteredBrands} items={brands} />
           </div>
         )}
         <aside className="border h-100 mt-2 mx-2 text-center ">

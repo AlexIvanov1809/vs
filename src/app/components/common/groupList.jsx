@@ -22,7 +22,6 @@ const GroupList = ({ onFilter, items }) => {
     onFilter(b);
     setLoad(true);
   }, [filtredItems]);
-  console.log(choose);
 
   // const filtredItem = groupItems
   //   .filter((item, index) => groupItems.indexOf(item) === index)
