@@ -35,13 +35,13 @@ const MarketPlace = () => {
     dispatch(loadkindsList());
   }, []);
   const coffeeItems = useSelector(getCoffeeItemsList());
-  const countries = useSelector(getCountriesList());
 
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
   const brandsLoadingStatus = useSelector(getBrandsLoadingStatus());
   const countriesLoadingStatus = useSelector(getCountriesLoadingStatus());
   const methodsLoadingStatus = useSelector(getMethodsLoadingStatus());
   const kindsLoadingStatus = useSelector(getKindsLoadingStatus());
+  const countries = useSelector(getCountriesList());
 
   // const countriesItems = coffeeItems.map((item) => item.country);
   // const formItems = coffeeItems.map((item) => item.form);
@@ -73,7 +73,6 @@ const MarketPlace = () => {
       ])
     );
   };
-  console.log(filter);
   // filter.length > 0? data.filter((item) => item.country === filter[0]
   function searchItems(data) {
     const filtredData = searchQuery
@@ -93,17 +92,19 @@ const MarketPlace = () => {
   const itemsOnPage = paginate(filtereditems, currentPage, pageSize);
 
   if (
-    !coffeeItemsLoading ||
-    !brandsLoadingStatus ||
-    !countriesLoadingStatus ||
-    !methodsLoadingStatus ||
+    !coffeeItemsLoading &&
+    !brandsLoadingStatus &&
+    !countriesLoadingStatus &&
+    !methodsLoadingStatus &&
     !kindsLoadingStatus
   ) {
     return (
       <div className="d-flex">
-        <div>
-          <GroupList onFilter={handleFilteredItems} items={countries} />
-        </div>
+        {!countriesLoadingStatus && (
+          <div>
+            <GroupList onFilter={handleFilteredItems} items={countries} />
+          </div>
+        )}
         <aside className="border h-100 mt-2 mx-2 text-center ">
           {/* <div style={{ width: "25rem" }}>
             <CountersList /> */}

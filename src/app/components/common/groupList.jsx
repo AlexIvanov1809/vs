@@ -5,6 +5,7 @@ import CheckBoxField from "./form/checkBoxField";
 const GroupList = ({ onFilter, items }) => {
   const [choose, setChoose] = useState({});
   const [filtredItems, setFiltredItems] = useState(true);
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     const a = [];
@@ -19,7 +20,9 @@ const GroupList = ({ onFilter, items }) => {
   useEffect(() => {
     const b = Object.keys(choose).filter((i) => choose[i]);
     onFilter(b);
+    setLoad(true);
   }, [filtredItems]);
+  console.log(choose);
 
   // const filtredItem = groupItems
   //   .filter((item, index) => groupItems.indexOf(item) === index)
@@ -39,7 +42,7 @@ const GroupList = ({ onFilter, items }) => {
 
   return (
     <div style={{ width: "130px", marginLeft: "20px" }}>
-      {items &&
+      {load &&
         items.map((i) => (
           <CheckBoxField
             key={i._id}
