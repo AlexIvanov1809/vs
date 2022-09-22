@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import ItemImage from "../ui/itemImage";
+import ItemImage from "./itemImage";
 import Scale from "../common/scale";
-import PriceItem from "../ui/priceItem";
+import PriceItem from "./priceItem";
 import BuyButton from "../common/buttons/buyButton";
 import SelectField from "../common/form/selectField";
 import { useDispatch, useSelector } from "react-redux";

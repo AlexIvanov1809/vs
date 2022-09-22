@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import CheckBoxField from "./form/checkBoxField";
 
-const GroupList = ({ value, name, onFilter, items }) => {
+const GroupList = ({ value, name, onFilter, items, reset }) => {
   const [choose, setChoose] = useState({});
-  const [filtredItems, setFiltredItems] = useState(true);
+  const [filtredItems, setFiltredItems] = useState(false);
   const [load, setLoad] = useState(false);
-
   useEffect(() => {
     const itemValues = [];
     items && items.forEach((i) => itemValues.push({ [i.value]: false }));
@@ -16,21 +15,13 @@ const GroupList = ({ value, name, onFilter, items }) => {
         [Object.keys(i)[0]]: Object.values(i)[0]
       }))
     );
-  }, []);
+  }, [reset]);
   useEffect(() => {
     const selected = Object.keys(choose).filter((i) => choose[i]);
     onFilter({ [name]: selected });
     setLoad(true);
   }, [filtredItems]);
 
-  // const filtredItem = groupItems
-  //   .filter((item, index) => groupItems.indexOf(item) === index)
-  //   .filter(Boolean)
-  //   .sort();
-
-  // const onChange = ({ target }) => {
-  //   onSelectCountry(target.value, target.name);
-  // };
   const handleChange = (target) => {
     setChoose((prevState) => ({
       ...prevState,
@@ -61,6 +52,7 @@ GroupList.propTypes = {
   onFilter: PropTypes.func,
   items: PropTypes.array,
   name: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  reset: PropTypes.bool
 };
 export default GroupList;
