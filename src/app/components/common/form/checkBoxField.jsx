@@ -9,7 +9,7 @@ const CheckBoxField = ({ named, value, onChange, children, error }) => {
     return "form-check-input" + (error ? " is-invalid" : "");
   };
   return (
-    <div className="form-check mb-4">
+    <div className="form-check mb-2">
       <input
         className={getInputClasses()}
         type="checkbox"
