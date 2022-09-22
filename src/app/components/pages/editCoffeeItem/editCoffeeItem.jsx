@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getBrandsList } from "../../../store/brands";
-import { getCountriesList } from "../../../store/countries";
-import { getMethodsList } from "../../../store/methods";
-import { getKindsList } from "../../../store/kinds";
+import { getBrandsList } from "../../../store/coffeeItems/brands";
+import { getCountriesList } from "../../../store/coffeeItems/countries";
+import { getMethodsList } from "../../../store/coffeeItems/methods";
+import { getKindsList } from "../../../store/coffeeItems/kinds";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
 import {
   editCoffeeItem,
   getCoffeeItemById
-  // getCoffeeItemsList,
-  // loadCoffeeItemsList
-} from "../../../store/coffeeItems";
+} from "../../../store/coffeeItems/coffeeItems";
 import CheckBoxField from "../../common/form/checkBoxField";
 
 const EditCoffeeItem = () => {

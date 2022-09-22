@@ -2,13 +2,22 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import GroupList from "./groupList";
 import { useSelector } from "react-redux";
-import { getBrandsList, getBrandsLoadingStatus } from "../../store/brands";
+import {
+  getBrandsList,
+  getBrandsLoadingStatus
+} from "../../store/coffeeItems/brands";
 import {
   getCountriesList,
   getCountriesLoadingStatus
-} from "../../store/countries";
-import { getMethodsList, getMethodsLoadingStatus } from "../../store/methods";
-import { getKindsList, getKindsLoadingStatus } from "../../store/kinds";
+} from "../../store/coffeeItems/countries";
+import {
+  getMethodsList,
+  getMethodsLoadingStatus
+} from "../../store/coffeeItems/methods";
+import {
+  getKindsList,
+  getKindsLoadingStatus
+} from "../../store/coffeeItems/kinds";
 
 const SideBar = ({ onSelect }) => {
   const [reset, setReset] = useState(false);

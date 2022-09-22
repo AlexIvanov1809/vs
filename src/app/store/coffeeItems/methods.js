@@ -1,5 +1,5 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
-import methodService from "../service/method.service";
+import methodService from "../../service/coffeeItems/method.service";
 
 const methodsSlice = createSlice({
   name: "methods",

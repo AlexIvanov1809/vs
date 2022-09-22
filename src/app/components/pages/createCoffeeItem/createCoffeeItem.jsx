@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getBrandsList } from "../../../store/brands";
-import { getCountriesList } from "../../../store/countries";
-import { getMethodsList } from "../../../store/methods";
-import { getKindsList } from "../../../store/kinds";
+import { getBrandsList } from "../../../store/coffeeItems/brands";
+import { getCountriesList } from "../../../store/coffeeItems/countries";
+import { getMethodsList } from "../../../store/coffeeItems/methods";
+import { getKindsList } from "../../../store/coffeeItems/kinds";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
 import { nanoid } from "@reduxjs/toolkit";
-import { createNewCoffeeItem } from "../../../store/coffeeItems";
+import { createNewCoffeeItem } from "../../../store/coffeeItems/coffeeItems";
 import CheckBoxField from "../../common/form/checkBoxField";
 
 const CreateCoffeeItem = () => {

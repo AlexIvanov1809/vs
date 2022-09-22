@@ -1,5 +1,5 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
-import kindService from "../service/kind.service";
+import kindService from "../../service/coffeeItems/kind.service";
 
 const kindsSlice = createSlice({
   name: "kinds",

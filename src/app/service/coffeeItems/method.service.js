@@ -1,30 +1,30 @@
-import httpService from "./http.service";
+import httpService from "../http.service";
 
-const brandEndpoint = "coffeeBrand/";
+const methodEndpoint = "method/";
 
-const brandService = {
+const methodService = {
   get: async () => {
-    const { data } = await httpService.get(brandEndpoint);
+    const { data } = await httpService.get(methodEndpoint);
     return data;
   },
   create: async (payload) => {
     const { data } = await httpService.put(
-      brandEndpoint + payload._id,
+      methodEndpoint + payload._id,
       payload
     );
     return data;
   },
   edit: async (payload) => {
     const { data } = await httpService.patch(
-      brandEndpoint + payload._id,
+      methodEndpoint + payload._id,
       payload
     );
     return data;
   },
   remove: async (id) => {
-    const { data } = await httpService.delete(brandEndpoint + id);
+    const { data } = await httpService.delete(methodEndpoint + id);
     return data;
   }
 };
 
-export default brandService;
+export default methodService;

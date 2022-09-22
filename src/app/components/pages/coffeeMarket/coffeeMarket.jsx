@@ -7,11 +7,11 @@ import {
   getCoffeeItemsList,
   getCoffeeItemsLoadingStatus,
   loadCoffeeItemsList
-} from "../../../store/coffeeItems";
-import { loadCountriesList } from "../../../store/countries";
-import { loadbrandsList } from "../../../store/brands";
-import { loadmethodsList } from "../../../store/methods";
-import { loadkindsList } from "../../../store/kinds";
+} from "../../../store/coffeeItems/coffeeItems";
+import { loadCountriesList } from "../../../store/coffeeItems/countries";
+import { loadbrandsList } from "../../../store/coffeeItems/brands";
+import { loadmethodsList } from "../../../store/coffeeItems/methods";
+import { loadkindsList } from "../../../store/coffeeItems/kinds";
 import SideBar from "../../common/sidebar";
 
 const CoffeeMarket = () => {

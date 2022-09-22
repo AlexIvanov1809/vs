@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import Converter from "../converter";
 import Price from "../price";
 import Table from "./table";
 
@@ -9,14 +8,10 @@ const CoffeeTable = ({ coffeeItems }) => {
     brand: {
       path: "brand",
       name: "Бренд"
-      // component: (item) => <Converter id={item.brand} itemName={"brand"} />
     },
     countries: {
       path: "countries",
       name: "Страна"
-      // component: (item) => (
-      //   <Converter id={item.country} itemName={"countries"} />
-      // )
     },
     sortName: {
       path: "sortName",
@@ -25,12 +20,10 @@ const CoffeeTable = ({ coffeeItems }) => {
     method: {
       path: "method",
       name: "Метод обработки"
-      // component: (item) => <Converter id={item.method} itemName={"method"} />
     },
     kind: {
       path: "kind",
       name: "Метод обработки"
-      // component: (item) => <Converter id={item.kind} itemName={"kind"} />
     },
     preparationMethod: {
       path: "preparationMethod",
@@ -59,7 +52,7 @@ const CoffeeTable = ({ coffeeItems }) => {
       component: (item) => (item.active ? <p>Активный</p> : <p>Неактивен</p>)
     }
   };
-  return <Table columns={columns} data={coffeeItems} />;
+  return <Table columns={columns} data={coffeeItems} type="coffee" />;
 };
 
 CoffeeTable.propTypes = {

@@ -1,5 +1,5 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
-import countryService from "../service/country.service";
+import countryService from "../../service/coffeeItems/country.service";
 
 const countriesSlice = createSlice({
   name: "countries",
