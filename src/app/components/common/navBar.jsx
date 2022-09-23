@@ -18,7 +18,7 @@ const NavBar = () => {
           <Link
             className="nav-link link-light"
             aria-current="page"
-            to="/market"
+            to="/market/coffee"
           >
             Market
           </Link>
@@ -27,7 +27,7 @@ const NavBar = () => {
           <Link
             className="nav-link link-light"
             aria-current="page"
-            to="/adminPanel"
+            to="/adminPanel/coffee"
           >
             Admin Panel
           </Link>

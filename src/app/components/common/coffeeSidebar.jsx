@@ -19,7 +19,7 @@ import {
   getKindsLoadingStatus
 } from "../../store/coffeeItems/kinds";
 
-const SideBar = ({ onSelect }) => {
+const CoffeeSideBar = ({ onSelect }) => {
   const [reset, setReset] = useState(false);
   const [selectedItems, setSelectedItems] = useState({
     brand: [],
@@ -112,8 +112,8 @@ const SideBar = ({ onSelect }) => {
   );
 };
 
-SideBar.propTypes = {
+CoffeeSideBar.propTypes = {
   onSelect: PropTypes.func
 };
 
-export default SideBar;
+export default CoffeeSideBar;

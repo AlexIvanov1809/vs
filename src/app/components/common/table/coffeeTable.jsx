@@ -10,7 +10,7 @@ const CoffeeTable = ({ coffeeItems }) => {
       name: "Бренд"
     },
     countries: {
-      path: "countries",
+      path: "country",
       name: "Страна"
     },
     sortName: {

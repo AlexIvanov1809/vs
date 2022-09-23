@@ -5,14 +5,13 @@ import { paginate } from "../../../utils/pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCoffeeItemsList,
-  getCoffeeItemsLoadingStatus,
-  loadCoffeeItemsList
+  getCoffeeItemsLoadingStatus
 } from "../../../store/coffeeItems/coffeeItems";
 import { loadCountriesList } from "../../../store/coffeeItems/countries";
 import { loadbrandsList } from "../../../store/coffeeItems/brands";
 import { loadmethodsList } from "../../../store/coffeeItems/methods";
 import { loadkindsList } from "../../../store/coffeeItems/kinds";
-import SideBar from "../../common/sidebar";
+import CoffeeSideBar from "../../common/coffeeSidebar";
 
 const CoffeeMarket = () => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
@@ -29,7 +28,6 @@ const CoffeeMarket = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadCoffeeItemsList());
     dispatch(loadbrandsList());
     dispatch(loadCountriesList());
     dispatch(loadmethodsList());
@@ -128,7 +126,7 @@ const CoffeeMarket = () => {
 
   return (
     <div className="d-flex">
-      <SideBar onSelect={handleSelectedItems} />
+      <CoffeeSideBar onSelect={handleSelectedItems} />
       <div>
         <input
           type="text"

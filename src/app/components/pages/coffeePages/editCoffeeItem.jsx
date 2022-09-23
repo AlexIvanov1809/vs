@@ -53,7 +53,6 @@ const EditCoffeeItem = () => {
     }
   }, []);
   if (data) {
-    console.log(data);
     delete data.price;
   }
   const validatorConfig = {

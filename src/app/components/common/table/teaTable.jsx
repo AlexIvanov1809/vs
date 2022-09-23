@@ -10,7 +10,7 @@ const TeaTable = ({ teaItems }) => {
       name: "Бренд"
     },
     teaTypes: {
-      path: "teaTypes",
+      path: "type",
       name: "Вид"
     },
     name: {

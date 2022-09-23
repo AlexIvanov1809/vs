@@ -14,14 +14,14 @@ const ItemImage = ({ item }) => {
             className={"carousel-item" + (item === "quarter" ? +" active" : "")}
           >
             <img
-              src={"img/quarter.png"}
+              src={"../img/quarter.png"}
               className="d-block w-75 mx-auto"
               alt="Coffee 250"
             />
           </div>
           <div className={"carousel-item" + (item === "kg" ? +" active" : "")}>
             <img
-              src={"img/kg.png"}
+              src={"../img/kg.png"}
               className="d-block w-75 mx-auto"
               alt="Coffee 1000"
             />
@@ -30,7 +30,7 @@ const ItemImage = ({ item }) => {
             className={"carousel-item" + (item === "drip" ? +" active" : "")}
           >
             <img
-              src={"img/drip.png"}
+              src={"../img/drip.png"}
               className="d-block w-75 mx-auto"
               alt="Coffee drip"
             />
