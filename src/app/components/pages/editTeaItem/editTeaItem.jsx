@@ -8,6 +8,8 @@ import { getTeaTypesList } from "../../../store/teaItems/teaType";
 import { editTeaItem, getTeaItemById } from "../../../store/teaItems/teaItems";
 import { getTeaPackagesList } from "../../../store/teaItems/teaPackages";
 import { getTeaBrandsList } from "../../../store/teaItems/teaBrands";
+import TextAreaField from "../../common/form/textAreaField";
+import { validator } from "../../../utils/validator";
 
 const EditTeaItem = () => {
   const navigate = useNavigate();
@@ -26,7 +28,40 @@ const EditTeaItem = () => {
     { _id: 5, value: "шт" }
   ];
   const [data, setData] = useState();
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+  const validatorConfig = {
+    brand: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    type: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    package: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    name: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    description: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    weight: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    price: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    }
+  };
+
+  useEffect(() => {
+    validate();
+  }, [data]);
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+    // return Object.keys(errors).length === 0;
+  };
 
   // const coffeeItems = useSelector(getCoffeeItemsList());
 
@@ -44,6 +79,8 @@ const EditTeaItem = () => {
   const back = () => {
     navigate(-1);
   };
+
+  const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,6 +101,7 @@ const EditTeaItem = () => {
                   name="brand"
                   options={brands}
                   onChange={handleChange}
+                  error={errors.brand}
                 />
                 <SelectField
                   label="Выберите Вид"
@@ -72,6 +110,7 @@ const EditTeaItem = () => {
                   name="type"
                   options={teaTypes}
                   onChange={handleChange}
+                  error={errors.type}
                 />
                 <SelectField
                   label="Выберите Упаковку"
@@ -80,6 +119,7 @@ const EditTeaItem = () => {
                   name="package"
                   options={teaPackages}
                   onChange={handleChange}
+                  error={errors.package}
                 />
                 <TextForm
                   label="Введите Название"
@@ -87,12 +127,19 @@ const EditTeaItem = () => {
                   type="text"
                   value={data.name || ""}
                   onChange={handleChange}
+                  error={errors.name}
                 />
-                <TextForm
+                <TextAreaField
                   label="Введите описание"
                   name="description"
-                  type="text"
                   value={data.description || ""}
+                  onChange={handleChange}
+                  error={errors.description}
+                />
+                <TextAreaField
+                  label="Введите способ приготовления (если имеется)"
+                  name="recipe"
+                  value={data.recipe || ""}
                   onChange={handleChange}
                 />
                 <SelectField
@@ -102,6 +149,7 @@ const EditTeaItem = () => {
                   name="weight"
                   options={weight}
                   onChange={handleChange}
+                  error={errors.weight}
                 />
                 <TextForm
                   className="w-25"
@@ -110,6 +158,7 @@ const EditTeaItem = () => {
                   type="text"
                   value={data.price || ""}
                   onChange={handleChange}
+                  error={errors.price}
                 />
                 <CheckBoxField
                   named="active"
@@ -119,7 +168,10 @@ const EditTeaItem = () => {
                   Активность
                 </CheckBoxField>
 
-                <button className="btn btn-primary ms-2 mb-2 h-25">
+                <button
+                  disabled={!isValid}
+                  className="btn btn-primary ms-2 mb-2 h-25"
+                >
                   Изменить
                 </button>
               </form>

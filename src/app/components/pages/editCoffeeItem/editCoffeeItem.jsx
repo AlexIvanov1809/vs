@@ -12,6 +12,8 @@ import {
   getCoffeeItemById
 } from "../../../store/coffeeItems/coffeeItems";
 import CheckBoxField from "../../common/form/checkBoxField";
+import TextAreaField from "../../common/form/textAreaField";
+import { validator } from "../../../utils/validator";
 
 const EditCoffeeItem = () => {
   const navigate = useNavigate();
@@ -36,20 +38,56 @@ const EditCoffeeItem = () => {
     { _id: 10, value: 10 }
   ];
   const [data, setData] = useState();
-  // const [errors, setErrors] = useState({});
-
-  // const coffeeItems = useSelector(getCoffeeItemsList());
-
+  const [errors, setErrors] = useState({});
   useEffect(() => {
     if (currentCoffeeItem) {
-      setData({
-        ...currentCoffeeItem,
+      const price = {
         priceQuarter: currentCoffeeItem.price.quarter,
         priceKg: currentCoffeeItem.price.kg,
         priceDrip: currentCoffeeItem.price.drip
+      };
+      setData({
+        ...currentCoffeeItem,
+        ...price
       });
     }
   }, []);
+  if (data) {
+    console.log(data);
+    delete data.price;
+  }
+  const validatorConfig = {
+    brand: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    method: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    sortName: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    description: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    preparationMethod: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    kind: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    price: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    }
+  };
+
+  useEffect(() => {
+    validate();
+  }, [data]);
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+  };
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
@@ -57,6 +95,8 @@ const EditCoffeeItem = () => {
   const back = () => {
     navigate(-1);
   };
+
+  const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,6 +128,7 @@ const EditCoffeeItem = () => {
                   name="brand"
                   options={brands}
                   onChange={handleChange}
+                  error={errors.brand}
                 />
                 <SelectField
                   label="Выберите метод обработки"
@@ -96,6 +137,7 @@ const EditCoffeeItem = () => {
                   name="method"
                   options={methods}
                   onChange={handleChange}
+                  error={errors.method}
                 />
                 <SelectField
                   label="Выберите Страну"
@@ -111,6 +153,7 @@ const EditCoffeeItem = () => {
                   type="text"
                   value={data.sortName || ""}
                   onChange={handleChange}
+                  error={errors.sortName}
                 />
                 <TextForm
                   label="Введите метод приготовления"
@@ -118,6 +161,7 @@ const EditCoffeeItem = () => {
                   type="text"
                   value={data.preparationMethod || ""}
                   onChange={handleChange}
+                  error={errors.preparationMethod}
                 />
                 <SelectField
                   label="Выберите сорт"
@@ -126,13 +170,14 @@ const EditCoffeeItem = () => {
                   name="kind"
                   options={kinds}
                   onChange={handleChange}
+                  error={errors.kind}
                 />
-                <TextForm
+                <TextAreaField
                   label="Введите описание"
                   name="description"
-                  type="text"
                   value={data.description || ""}
                   onChange={handleChange}
+                  error={errors.description}
                 />
                 <div className="d-flex justify-content-between">
                   <SelectField
@@ -186,7 +231,10 @@ const EditCoffeeItem = () => {
                   Активность
                 </CheckBoxField>
 
-                <button className="btn btn-primary ms-2 mb-2 h-25">
+                <button
+                  disabled={!isValid}
+                  className="btn btn-primary ms-2 mb-2 h-25"
+                >
                   Изменить
                 </button>
               </form>

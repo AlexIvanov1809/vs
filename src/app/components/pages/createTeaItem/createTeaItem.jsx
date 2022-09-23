@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
 import { nanoid } from "@reduxjs/toolkit";
+import { validator } from "../../../utils/validator";
 import CheckBoxField from "../../common/form/checkBoxField";
 import { getTeaTypesList } from "../../../store/teaItems/teaType";
 import { createNewTeaItem } from "../../../store/teaItems/teaItems";
 import { getTeaPackagesList } from "../../../store/teaItems/teaPackages";
 import { getTeaBrandsList } from "../../../store/teaItems/teaBrands";
+import TextAreaField from "../../common/form/textAreaField";
 
 const CreateTeaItem = () => {
   const navigate = useNavigate();
@@ -21,11 +23,11 @@ const CreateTeaItem = () => {
     description: "",
     name: "",
     weight: "",
+    recipe: "",
     price: "",
     active: true
   });
-
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   const brands = useSelector(getTeaBrandsList());
   const teaPackages = useSelector(getTeaPackagesList());
@@ -42,6 +44,39 @@ const CreateTeaItem = () => {
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
+  const validatorConfig = {
+    brand: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    type: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    package: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    name: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    description: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    weight: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    price: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    }
+  };
+
+  useEffect(() => {
+    validate();
+  }, [data]);
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+    // return Object.keys(errors).length === 0;
+  };
 
   const clearForm = () => {
     setData({
@@ -52,6 +87,7 @@ const CreateTeaItem = () => {
       description: "",
       name: "",
       price: "",
+      recipe: "",
       weight: "",
       active: true
     });
@@ -61,6 +97,8 @@ const CreateTeaItem = () => {
     navigate(-1);
     clearForm();
   };
+
+  const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,6 +119,7 @@ const CreateTeaItem = () => {
                 name="brand"
                 options={brands}
                 onChange={handleChange}
+                error={errors.brand}
               />
               <SelectField
                 label="Выберите Вид"
@@ -89,6 +128,7 @@ const CreateTeaItem = () => {
                 name="type"
                 options={teaTypes}
                 onChange={handleChange}
+                error={errors.type}
               />
               <SelectField
                 label="Выберите Упаковку"
@@ -97,6 +137,7 @@ const CreateTeaItem = () => {
                 name="package"
                 options={teaPackages}
                 onChange={handleChange}
+                error={errors.package}
               />
               <TextForm
                 label="Введите Название"
@@ -104,12 +145,19 @@ const CreateTeaItem = () => {
                 type="text"
                 value={data.name || ""}
                 onChange={handleChange}
+                error={errors.name}
               />
-              <TextForm
+              <TextAreaField
                 label="Введите описание"
                 name="description"
-                type="text"
                 value={data.description || ""}
+                onChange={handleChange}
+                error={errors.description}
+              />
+              <TextAreaField
+                label="Введите способ приготовления (если имеется)"
+                name="recipe"
+                value={data.recipe || ""}
                 onChange={handleChange}
               />
               <SelectField
@@ -119,6 +167,7 @@ const CreateTeaItem = () => {
                 name="weight"
                 options={weight}
                 onChange={handleChange}
+                error={errors.weight}
               />
               <TextForm
                 className="w-25"
@@ -127,6 +176,7 @@ const CreateTeaItem = () => {
                 type="text"
                 value={data.price || ""}
                 onChange={handleChange}
+                error={errors.price}
               />
               <CheckBoxField
                 named="active"
@@ -136,7 +186,10 @@ const CreateTeaItem = () => {
                 Активность
               </CheckBoxField>
 
-              <button className="btn btn-primary ms-2 mb-2 h-25">
+              <button
+                disabled={!isValid}
+                className="btn btn-primary ms-2 mb-2 h-25"
+              >
                 Создать
               </button>
             </form>

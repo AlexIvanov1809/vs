@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBrandsList } from "../../../store/coffeeItems/brands";
@@ -10,6 +10,8 @@ import TextForm from "../../common/form/textForm";
 import { nanoid } from "@reduxjs/toolkit";
 import { createNewCoffeeItem } from "../../../store/coffeeItems/coffeeItems";
 import CheckBoxField from "../../common/form/checkBoxField";
+import TextAreaField from "../../common/form/textAreaField";
+import { validator } from "../../../utils/validator";
 
 const CreateCoffeeItem = () => {
   const navigate = useNavigate();
@@ -30,8 +32,40 @@ const CreateCoffeeItem = () => {
     priceDrip: "",
     active: true
   });
+  const [errors, setErrors] = useState({});
+  const validatorConfig = {
+    brand: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    method: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    sortName: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    description: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    preparationMethod: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    kind: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    price: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    }
+  };
 
-  // const [errors, setErrors] = useState({});
+  useEffect(() => {
+    validate();
+  }, [data]);
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+    // return Object.keys(errors).length === 0;
+  };
 
   const brands = useSelector(getBrandsList());
   const countries = useSelector(getCountriesList());
@@ -77,6 +111,8 @@ const CreateCoffeeItem = () => {
     navigate(-1);
   };
 
+  const isValid = Object.keys(errors).length === 0;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     data._id = nanoid();
@@ -108,6 +144,7 @@ const CreateCoffeeItem = () => {
                 name="brand"
                 options={brands}
                 onChange={handleChange}
+                error={errors.brand}
               />
               <SelectField
                 label="Выберите метод обработки"
@@ -116,6 +153,7 @@ const CreateCoffeeItem = () => {
                 name="method"
                 options={methods}
                 onChange={handleChange}
+                error={errors.method}
               />
               <SelectField
                 label="Выберите Страну"
@@ -131,6 +169,7 @@ const CreateCoffeeItem = () => {
                 type="text"
                 value={data.sortName || ""}
                 onChange={handleChange}
+                error={errors.sortName}
               />
               <TextForm
                 label="Введите метод приготовления"
@@ -138,6 +177,7 @@ const CreateCoffeeItem = () => {
                 type="text"
                 value={data.preparationMethod || ""}
                 onChange={handleChange}
+                error={errors.preparationMethod}
               />
               <SelectField
                 label="Выберите сорт"
@@ -146,13 +186,14 @@ const CreateCoffeeItem = () => {
                 name="kind"
                 options={kinds}
                 onChange={handleChange}
+                error={errors.kind}
               />
-              <TextForm
+              <TextAreaField
                 label="Введите описание"
                 name="description"
-                type="text"
                 value={data.description || ""}
                 onChange={handleChange}
+                error={errors.description}
               />
               <div className="d-flex justify-content-between">
                 <SelectField
@@ -206,7 +247,10 @@ const CreateCoffeeItem = () => {
                 Активность
               </CheckBoxField>
 
-              <button className="btn btn-primary ms-2 mb-2 h-25">
+              <button
+                disabled={!isValid}
+                className="btn btn-primary ms-2 mb-2 h-25"
+              >
                 Создать
               </button>
             </form>

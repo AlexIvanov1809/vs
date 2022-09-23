@@ -120,10 +120,7 @@ const AdminCoffeePage = () => {
           />
         </div>
         <button className="btn btn-white me-5 h-25">
-          <Link
-            className="text-primary fs-3"
-            to={"/AdminCoffeePage/coffee/create"}
-          >
+          <Link className="text-primary fs-3" to={"/adminPanel/coffee/create"}>
             <i className="bi bi-file-earmark-plus-fill"></i>
           </Link>
         </button>
