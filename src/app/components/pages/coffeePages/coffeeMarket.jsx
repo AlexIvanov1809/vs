@@ -128,25 +128,28 @@ const CoffeeMarket = () => {
     <div className="d-flex">
       <CoffeeSideBar onSelect={handleSelectedItems} />
       <div>
-        <input
-          type="text"
-          name="searchQuery"
-          placeholder="Search..."
-          onChange={handleSearchQuery}
-          value={searchQuery}
-        />
         {!coffeeItemsLoading ? (
-          <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
-            {itemsOnPage.map((item) => (
-              <CoffeeCardItem key={item._id} coffeeItem={item} />
-            ))}
-            <div className="w-100">
-              <Pagination
-                itemsQty={itemsQty}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={handleCurrentPageSet}
-              />
+          <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
+            <input
+              className="w-50 mt-2"
+              type="text"
+              name="searchQuery"
+              placeholder="Search..."
+              onChange={handleSearchQuery}
+              value={searchQuery}
+            />
+            <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
+              {itemsOnPage.map((item) => (
+                <CoffeeCardItem key={item._id} coffeeItem={item} />
+              ))}
+              <div className="w-100">
+                <Pagination
+                  itemsQty={itemsQty}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={handleCurrentPageSet}
+                />
+              </div>
             </div>
           </div>
         ) : (

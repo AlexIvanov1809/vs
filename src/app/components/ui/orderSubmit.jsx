@@ -18,7 +18,6 @@ const OrderSubmit = ({ hid, onSubmit }) => {
       value: "+7949"
     }
   ];
-  console.log(hiddenItem, hid);
   useEffect(() => {
     hid ? setHidden(true) : setHidden(false);
   }, [hid]);
@@ -39,7 +38,7 @@ const OrderSubmit = ({ hid, onSubmit }) => {
   };
 
   return (
-    <div hidden={hiddenItem}>
+    <div className="mx-2" hidden={hiddenItem}>
       <form onSubmit={handleSubmit}>
         <TextForm
           label="Имя"
@@ -75,7 +74,7 @@ const OrderSubmit = ({ hid, onSubmit }) => {
           onChange={handleChange}
           // error={errors.email}
         />
-        <button className="btn btn-primary">Оформить</button>
+        <button className="btn btn-primary w-100">Оформить</button>
       </form>
     </div>
   );

@@ -114,25 +114,27 @@ const TeaMarket = () => {
         <TeaSideBar onSelect={handleSelectedItems} />
       </div>
       <div>
-        <input
-          type="text"
-          name="searchQuery"
-          placeholder="Search..."
-          onChange={handleSearchQuery}
-          value={searchQuery}
-        />
         {!teaItemsLoading ? (
-          <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
-            {itemsOnPage.map((item) => (
-              <TeaCardItem key={item._id} teaItem={item} />
-            ))}
-            <div className="w-100">
-              <Pagination
-                itemsQty={itemsQty}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={handleCurrentPageSet}
-              />
+          <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
+            <input
+              type="text"
+              name="searchQuery"
+              placeholder="Search..."
+              onChange={handleSearchQuery}
+              value={searchQuery}
+            />
+            <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
+              {itemsOnPage.map((item) => (
+                <TeaCardItem key={item._id} teaItem={item} />
+              ))}
+              <div className="w-100">
+                <Pagination
+                  itemsQty={itemsQty}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={handleCurrentPageSet}
+                />
+              </div>
             </div>
           </div>
         ) : (

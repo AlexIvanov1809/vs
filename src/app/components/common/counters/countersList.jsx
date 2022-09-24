@@ -51,7 +51,7 @@ const CountersList = () => {
   };
   if (items.length > 0) {
     return (
-      <>
+      <div className="card p-2">
         {items.map((count) => (
           <Counter
             key={count._id}
@@ -60,7 +60,7 @@ const CountersList = () => {
             orderItems={count}
           />
         ))}
-        <h5>
+        <h5 className="ms-2">
           Общая стоимость:{" "}
           <span style={{ fontWeight: "900", color: "blue" }}>
             {total} &#8381;
@@ -77,7 +77,7 @@ const CountersList = () => {
         >
           Оформить заказ
         </button>
-      </>
+      </div>
     );
   }
 };
