@@ -1,12 +1,12 @@
 const express = require("express");
-const Country = require("../../models/coffeeItems/Country");
+const Kind = require("../../models/coffeeItems/Kind");
 const router = express.Router({ mergeParams: true });
 
 router
   .route("/")
   .get(async (req, res) => {
     try {
-      const list = await Country.find();
+      const list = await Kind.find();
       res.status(200).send(list);
     } catch (error) {
       res.status(500).json({
@@ -16,10 +16,10 @@ router
   })
   .post(async (req, res) => {
     try {
-      const newCountry = await Country.create({
+      const newKind = await Kind.create({
         ...req.body,
       });
-      res.status(201).send(newCountry);
+      res.status(201).send(newKind);
     } catch (error) {
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
@@ -27,12 +27,12 @@ router
     }
   });
 
-router.delete("/:countryId", async (req, res) => {
+router.delete("/:kindId", async (req, res) => {
   try {
-    const { countryId } = req.params;
-    const removedCountry = await Country.findById(countryId);
+    const { kindId } = req.params;
+    const removedKind = await Kind.findById(kindId);
 
-    await removedCountry.remove();
+    await removedKind.remove();
     return res.send(null);
   } catch (error) {
     res.status(500).json({

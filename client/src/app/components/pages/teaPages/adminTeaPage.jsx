@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Entity from "../../ui/entity";
-import { nanoid } from "@reduxjs/toolkit";
 import {
   createNewTeaTypesItem,
   getTeaTypesList,
@@ -58,7 +57,6 @@ const AdminTeaPage = () => {
   const handleSubmit = (value) => {
     const ItemName = Object.keys(value);
     const addItem = {
-      _id: nanoid(),
       value: value[ItemName[0]]
     };
     const items = {

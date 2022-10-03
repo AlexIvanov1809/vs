@@ -7,7 +7,7 @@ import { getMethodsList } from "../../../store/coffeeItems/methods";
 import { getKindsList } from "../../../store/coffeeItems/kinds";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
-import { nanoid } from "@reduxjs/toolkit";
+// import { nanoid } from "@reduxjs/toolkit";
 import { createNewCoffeeItem } from "../../../store/coffeeItems/coffeeItems";
 import CheckBoxField from "../../common/form/checkBoxField";
 import TextAreaField from "../../common/form/textAreaField";
@@ -17,7 +17,7 @@ const CreateCoffeeItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState({
-    _id: null,
+    // _id: null,
     acidity: 0,
     brand: "",
     country: "",
@@ -90,7 +90,7 @@ const CreateCoffeeItem = () => {
 
   const clearForm = () => {
     setData({
-      _id: null,
+      // _id: null,
       acidity: 0,
       brand: "",
       country: "",
@@ -115,7 +115,7 @@ const CreateCoffeeItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    data._id = nanoid();
+    // data._id = nanoid();
     data.price = {
       quarter: data.priceQuarter,
       kg: data.priceKg,

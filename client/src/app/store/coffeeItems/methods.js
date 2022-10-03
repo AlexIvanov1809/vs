@@ -57,7 +57,7 @@ export const loadmethodsList = () => async (dispatch) => {
 export const methodsRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await methodService.remove(itemId);
-    if (content === null) {
+    if (!content) {
       dispatch(methodsRemoved(itemId));
     }
   } catch (error) {

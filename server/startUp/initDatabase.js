@@ -1,5 +1,5 @@
-const Country = require("../models/Country");
-const Brand = require("../models/Brand");
+const Country = require("../models/coffeeItems/Country");
+const Brand = require("../models/coffeeItems/Brand");
 const countryMock = require("../mock/counties.json");
 const brandMock = require("../mock/brands.json");
 

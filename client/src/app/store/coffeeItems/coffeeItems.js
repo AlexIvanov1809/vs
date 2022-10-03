@@ -77,7 +77,7 @@ export const createNewCoffeeItem = (payload, back) => async (dispatch) => {
 export const coffeeItemRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await coffeeItemService.remove(itemId);
-    if (content === null) {
+    if (!content) {
       dispatch(coffeeItemRemoved(itemId));
     }
   } catch (error) {

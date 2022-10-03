@@ -1,6 +1,6 @@
 import httpService from "../http.service";
 
-const methodEndpoint = "method/";
+const methodEndpoint = "coffeeMethods/";
 
 const methodService = {
   get: async () => {
@@ -8,10 +8,7 @@ const methodService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.put(
-      methodEndpoint + payload._id,
-      payload
-    );
+    const { data } = await httpService.post(methodEndpoint, payload);
     return data;
   },
   edit: async (payload) => {

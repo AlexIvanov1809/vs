@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
-import { nanoid } from "@reduxjs/toolkit";
+// import { nanoid } from "@reduxjs/toolkit";
 import { validator } from "../../../utils/validator";
 import CheckBoxField from "../../common/form/checkBoxField";
 import { getTeaTypesList } from "../../../store/teaItems/teaType";
@@ -16,7 +16,7 @@ const CreateTeaItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState({
-    _id: null,
+    // _id: null,
     brand: "",
     package: "",
     type: "",
@@ -80,7 +80,7 @@ const CreateTeaItem = () => {
 
   const clearForm = () => {
     setData({
-      _id: null,
+      // _id: null,
       brand: "",
       package: "",
       type: "",
@@ -102,7 +102,7 @@ const CreateTeaItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    data._id = nanoid();
+    // data._id = nanoid();
     dispatch(createNewTeaItem(data, back));
   };
   return (

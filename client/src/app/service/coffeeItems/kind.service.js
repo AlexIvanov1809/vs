@@ -1,6 +1,6 @@
 import httpService from "../http.service";
 
-const kindEndpoint = "kind/";
+const kindEndpoint = "coffeeKinds/";
 
 const kindService = {
   get: async () => {
@@ -8,7 +8,7 @@ const kindService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.put(kindEndpoint + payload._id, payload);
+    const { data } = await httpService.post(kindEndpoint, payload);
     return data;
   },
   edit: async (payload) => {

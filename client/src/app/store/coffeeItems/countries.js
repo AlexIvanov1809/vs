@@ -59,7 +59,7 @@ export const loadCountriesList = () => async (dispatch) => {
 export const countriesRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await countryService.remove(itemId);
-    if (content === null) {
+    if (!content) {
       dispatch(countriesRemoved(itemId));
     }
   } catch (error) {

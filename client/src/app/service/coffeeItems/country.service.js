@@ -1,6 +1,6 @@
 import httpService from "../http.service";
 
-const countryEndpoint = "countries/";
+const countryEndpoint = "coffeeCounties/";
 
 const countryService = {
   get: async () => {
@@ -8,10 +8,7 @@ const countryService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.put(
-      countryEndpoint + payload._id,
-      payload
-    );
+    const { data } = await httpService.post(countryEndpoint, payload);
     return data;
   },
   edit: async (payload) => {

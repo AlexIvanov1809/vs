@@ -1,6 +1,6 @@
 import httpService from "../http.service";
 
-const brandEndpoint = "coffeeBrand/";
+const brandEndpoint = "coffeeBrands/";
 
 const brandService = {
   get: async () => {
@@ -8,10 +8,7 @@ const brandService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.put(
-      brandEndpoint + payload._id,
-      payload
-    );
+    const { data } = await httpService.post(brandEndpoint, payload);
     return data;
   },
   edit: async (payload) => {

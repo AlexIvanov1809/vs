@@ -59,7 +59,7 @@ export const loadTeaTypesList = () => async (dispatch) => {
 export const teaTypesRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await teaTypeService.remove(itemId);
-    if (content === null) {
+    if (!content) {
       dispatch(teaTypesRemoved(itemId));
     }
   } catch (error) {

@@ -1,4 +1,4 @@
 {
-	"apiEndpoint":"https://fast-company-firebase-e9785-default-rtdb.europe-west1.firebasedatabase.app/venditore/",
-	"isFireBase": true
+	"apiEndpoint":"http://localhost:8080/venditore",
+	"isFireBase": false
 }

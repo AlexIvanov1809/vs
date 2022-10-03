@@ -8,10 +8,7 @@ const teaItemService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.put(
-      teaItemEndpoint + payload._id,
-      payload
-    );
+    const { data } = await httpService.post(teaItemEndpoint, payload);
     return data;
   },
   edit: async (payload) => {

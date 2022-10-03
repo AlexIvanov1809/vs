@@ -61,7 +61,7 @@ export const loadTeaPackagesList = () => async (dispatch) => {
 export const teaPackagesRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await teaPackagesService.remove(itemId);
-    if (content === null) {
+    if (!content) {
       dispatch(teaPackagesRemoved(itemId));
     }
   } catch (error) {

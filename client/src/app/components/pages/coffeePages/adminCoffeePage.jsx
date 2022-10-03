@@ -35,7 +35,6 @@ import {
 } from "../../../store/coffeeItems/kinds";
 import CoffeeTable from "../../common/table/coffeeTable";
 import Entity from "../../ui/entity";
-import { nanoid } from "@reduxjs/toolkit";
 
 const AdminCoffeePage = () => {
   const dispatch = useDispatch();
@@ -70,7 +69,6 @@ const AdminCoffeePage = () => {
   const handleSubmit = (value) => {
     const ItemName = Object.keys(value);
     const addItem = {
-      _id: nanoid(),
       value: value[ItemName[0]]
     };
     const items = {

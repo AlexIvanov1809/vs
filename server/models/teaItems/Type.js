@@ -12,4 +12,4 @@ const schema = new Schema(
   }
 );
 
-module.exports = model("coffeeBrands", schema);
+module.exports = model("TeaTypes", schema);

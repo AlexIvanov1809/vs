@@ -57,7 +57,7 @@ export const loadkindsList = () => async (dispatch) => {
 export const kindsRemove = (itemId) => async (dispatch) => {
   try {
     const { content } = await kindService.remove(itemId);
-    if (content === null) {
+    if (!content) {
       dispatch(kindsRemoved(itemId));
     }
   } catch (error) {
