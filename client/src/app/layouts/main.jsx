@@ -1,7 +1,8 @@
 import React from "react";
+import ImageLoaderField from "../components/common/form/imageLoaderField";
 
 const Main = () => {
-  return <h1>Main</h1>;
+  return <ImageLoaderField />;
 };
 
 export default Main;
