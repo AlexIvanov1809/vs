@@ -1,49 +1,78 @@
 const Router = require("express");
 const router = new Router();
+const fs = require("fs");
 const Image = require("../models/Image");
-// const fileController = require("../controllers/fileController");
 
-// router.post('', async (req, res)=> {
-// 	try {
-// 			const {name, type, parent} = req.body
-// 			const file = new File({name, type, parent})
-// 			const parentFile = await File.findOne({_id: parent})
-// 			if(!parentFile) {
-// 					file.path = name
-// 					await fileService.createDir(file)
-// 			} else {
-// 					file.path = `${parentFile.path}\\${file.name}`
-// 					await fileService.createDir(file)
-// 					parentFile.childs.push(file._id)
-// 					await parentFile.save()
-// 			}
-// 			await file.save()
-// 			return res.json(file)
-// 	} catch (e) {
-// 			console.log(e)
-// 			return res.status(400).json(e)
-// 	}
-// })
-router.post("/kg", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     if (!req.files) {
       return res.status(400).json({ message: "Файл не был загружен" });
     }
-    const path = `${__dirname}/../../client/public/img/coffeeItems/`;
+    const { folder } = req.headers;
+    const path = `${__dirname}/../../client/public/img/marketItems/${folder}/`;
     const file = req.files.file;
     newFileName = Date.now() + "." + file.name.split(".")[1];
-    file.mv(path + "kg/" + newFileName);
+    file.mv(path + newFileName);
     const newImage = await Image.create({
       name: newFileName,
-      path,
+      straightPath: path,
+      htmlPath: `img/marketItems/${folder}/${newFileName}`,
     });
-    res.status(201).send(newImage);
+    res.status(200).send(newImage);
   } catch (error) {
     res.status(500).json({
       message: "На сервере произошла ошибка. Попробуйте позже",
     });
   }
 });
-// router.get('', fileController.getFiles)
+router.patch("/", async (req, res) => {
+  try {
+    if (!req.files) {
+      return res.status(400).json({ message: "Файл не был загружен" });
+    }
+    const { data } = req.headers;
+    const file = req.files.file;
+    const image = await Image.findById(data);
+    const newFileName = Date.now() + "." + file.name.split(".")[1];
+
+    await fs.unlink(image.straightPath + image.name, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    file.mv(image.straightPath + newFileName);
+    image.name = newFileName;
+    const updatedImage = await Image.findByIdAndUpdate(image._id, image, {
+      new: true,
+    });
+    res.send(updatedImage);
+  } catch (error) {
+    res.status(500).json({
+      message: "На сервере произошла ошибка. Попробуйте позже",
+    });
+  }
+});
+
+router.delete("/", async (req, res) => {
+  try {
+    const { data } = req.body;
+    const removedImage = await Image.findById(data);
+    console.log(removedImage);
+    await removedImage.remove();
+
+    fs.unlink(removedImage.straightPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    res.status(201).json({ message: "Файл удалён" });
+  } catch (error) {
+    res.status(500).json({
+      message: "На сервере произошла ошибка. Попробуйте позже",
+    });
+  }
+});
 
 module.exports = router;

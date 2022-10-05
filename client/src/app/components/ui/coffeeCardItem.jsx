@@ -92,7 +92,11 @@ const CoffeeCardItem = ({ coffeeItem }) => {
         <h2>{coffeeItem.name}</h2>
         <p>{coffeeItem.method}</p>
 
-        <ItemImage item={name} visibility={coffeeItem.price} />
+        <ItemImage
+          images={coffeeItem.images}
+          item={name}
+          visibility={coffeeItem.price}
+        />
         <p>{coffeeItem.kind}</p>
 
         <p className="text-start px-3">{coffeeItem.description}</p>

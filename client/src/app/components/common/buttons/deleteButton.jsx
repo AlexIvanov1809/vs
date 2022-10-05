@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const DeleteButton = ({ onDelete, id, name }) => {
+const DeleteButton = ({ onDelete, item, name }) => {
   return (
     <>
       <button
         className="btn btn-white text-danger ms-2"
-        onClick={() => onDelete(id, name)}
+        onClick={() => onDelete(item, name)}
       >
         <i className="bi bi-trash"></i>
       </button>
@@ -15,7 +15,7 @@ const DeleteButton = ({ onDelete, id, name }) => {
 };
 
 DeleteButton.propTypes = {
-  id: PropTypes.string,
+  item: PropTypes.object,
   onDelete: PropTypes.func,
   name: PropTypes.string
 };

@@ -7,17 +7,23 @@ import { getMethodsList } from "../../../store/coffeeItems/methods";
 import { getKindsList } from "../../../store/coffeeItems/kinds";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
-// import { nanoid } from "@reduxjs/toolkit";
 import { createNewCoffeeItem } from "../../../store/coffeeItems/coffeeItems";
 import CheckBoxField from "../../common/form/checkBoxField";
 import TextAreaField from "../../common/form/textAreaField";
 import { validator } from "../../../utils/validator";
+import ImageLoaderField from "../../common/form/imageLoaderField";
+import fileService from "../../../service/file.service";
 
 const CreateCoffeeItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [image, setImage] = useState();
   const [data, setData] = useState({
-    // _id: null,
+    images: {
+      quarter: { name: "1664977125457.png", path: "img/coffeeItems/quarter/" },
+      kg: {},
+      drip: {}
+    },
     acidity: 0,
     brand: "",
     country: "",
@@ -64,7 +70,6 @@ const CreateCoffeeItem = () => {
   const validate = () => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
-    // return Object.keys(errors).length === 0;
   };
 
   const brands = useSelector(getBrandsList());
@@ -88,9 +93,13 @@ const CreateCoffeeItem = () => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
+  const handleGetImage = (file, type) => {
+    setImage((prevState) => ({ ...prevState, [type]: file }));
+  };
+
   const clearForm = () => {
     setData({
-      // _id: null,
+      images: { quarter: {}, kg: {}, drip: {} },
       acidity: 0,
       brand: "",
       country: "",
@@ -113,9 +122,12 @@ const CreateCoffeeItem = () => {
 
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // data._id = nanoid();
+    for (const key in image) {
+      const newImage = await fileService.create(image[key], key);
+      data.images[key] = newImage;
+    }
     data.price = {
       quarter: data.priceQuarter,
       kg: data.priceKg,
@@ -127,6 +139,8 @@ const CreateCoffeeItem = () => {
     delete data.priceDrip;
     delete data.priceKg;
     delete data.priceQuarter;
+    console.log(data);
+
     dispatch(createNewCoffeeItem(data, back));
     clearForm();
   };
@@ -137,6 +151,23 @@ const CreateCoffeeItem = () => {
           <div className="col-md-9 offset-md-3 shadow p-4">
             <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
             <form onSubmit={handleSubmit}>
+              <div className="d-flex">
+                <ImageLoaderField
+                  mainImagePath="img/noFoto/noImg.jpg"
+                  type="quarter"
+                  onChange={handleGetImage}
+                />
+                <ImageLoaderField
+                  mainImagePath="img/noFoto/noImg.jpg"
+                  type="kg"
+                  onChange={handleGetImage}
+                />
+                <ImageLoaderField
+                  mainImagePath="img/noFoto/noImg.jpg"
+                  type="drip"
+                  onChange={handleGetImage}
+                />
+              </div>
               <SelectField
                 label="Выберите Бренд"
                 value={data.brand}

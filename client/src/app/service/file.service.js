@@ -1,26 +1,38 @@
-import httpService from "./http.service";
-
-const fileEndpoint = "files/kg";
+const hostURL = "http://localhost:8080/venditore/files/";
+const params = new URLSearchParams();
 
 const fileService = {
-  get: async () => {
-    const { data } = await httpService.get(fileEndpoint);
-    return data;
+  create: async (payload, folder) => {
+    const formData = new FormData();
+    formData.append("file", payload);
+
+    const res = await fetch(hostURL, {
+      method: "POST",
+      body: formData,
+      headers: { folder }
+    });
+
+    return await res.json();
   },
-  create: async (payload) => {
-    const { data } = await httpService.post(fileEndpoint, payload);
-    return data;
+  edit: async (payload, data) => {
+    const formData = new FormData();
+    formData.append("file", payload);
+
+    const res = await fetch(hostURL, {
+      method: "PATCH",
+      body: formData,
+      headers: { data: data._id }
+    });
+
+    return await res.json();
   },
-  edit: async (payload) => {
-    const { data } = await httpService.patch(
-      fileEndpoint + payload._id,
-      payload
-    );
-    return data;
-  },
-  remove: async (id) => {
-    const { data } = await httpService.delete(fileEndpoint + id);
-    return data;
+  remove: async (payload) => {
+    params.set("data", payload._id);
+    const res = await fetch(hostURL, {
+      method: "DELETE",
+      body: params
+    });
+    return await res.json();
   }
 };
 

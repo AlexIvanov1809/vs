@@ -12,7 +12,7 @@ const Scale = ({ value, name }) => {
   );
 };
 Scale.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.number,
   name: PropTypes.string
 };
 export default Scale;

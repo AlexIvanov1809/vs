@@ -3,6 +3,7 @@ const { Schema, model } = require("mongoose");
 const schema = new Schema(
   {
     name: { type: String, required: true },
+    images: { type: Object },
     brand: { type: String, required: true },
     sortName: { type: String, required: true },
     country: { type: String },

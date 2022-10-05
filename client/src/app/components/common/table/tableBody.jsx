@@ -9,9 +9,9 @@ import { teaItemRemove } from "../../../store/teaItems/teaItems";
 
 const TableBody = ({ data, columns, type }) => {
   const dispatch = useDispatch();
-  const handleDelete = (itemId) => {
+  const handleDelete = (item) => {
     if (type === "coffee") {
-      dispatch(coffeeItemRemove(itemId));
+      dispatch(coffeeItemRemove(item._id));
     }
     if (type === "tea") {
       dispatch(teaItemRemove(itemId));
@@ -36,7 +36,7 @@ const TableBody = ({ data, columns, type }) => {
               <td key={column}>{renderContent(item, column)}</td>
             ))}
             <td>
-              <DeleteButton onDelete={handleDelete} id={item._id} />
+              <DeleteButton onDelete={handleDelete} item={item} />
               <button className="btn btn-white ms-2">
                 <Link
                   className="text-primary"

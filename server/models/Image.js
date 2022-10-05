@@ -6,7 +6,11 @@ const schema = new Schema(
       type: String,
       require: true,
     },
-    path: {
+    straightPath: {
+      type: String,
+      require: true,
+    },
+    htmlPath: {
       type: String,
       require: true,
     },
