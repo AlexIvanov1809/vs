@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import fileService from "../../../service/file.service";
 
-const ImageLoaderField = ({ mainImagePath, type, onChange }) => {
-  // const [loadedImg, setLoadedImg] = useState();
+const ImageLoaderField = ({ mainImagePath, type, onChange, remove }) => {
   const [imgUrl, setImgUrl] = useState();
   const reader = new FileReader();
   reader.onloadend = () => {
@@ -20,22 +18,14 @@ const ImageLoaderField = ({ mainImagePath, type, onChange }) => {
     onChange(file, type);
     reader.readAsDataURL(file);
   };
-  // const handleUpload = async () => {
-  //   const newImage = await fileService.create(img, "kg");
-  //   setLoadedImg(newImage);
-  // };
-  // const handleUpdate = async () => {
-  //   console.log(img);
-  //   const updatedImage = await fileService.edit(img, loadedImg);
-  //   console.log(updatedImage);
-  // };
-  // const handleRemove = async () => {
-  //   const { message } = await fileService.remove(loadedImg);
-  //   console.log(message);
-  // };
+  const handleRemoveImage = () => {
+    setImgUrl("../../../img/noFoto/noImg.jpg");
+    onChange("", type);
+  };
+
   return (
     <div className="container mt-4 mb-4">
-      <div className="card p-3">
+      <div className="card p-3 position-relative">
         <label htmlFor={type} className="">
           <img
             src={!imgUrl ? "../../" + mainImagePath : imgUrl}
@@ -50,6 +40,15 @@ const ImageLoaderField = ({ mainImagePath, type, onChange }) => {
           onChange={handleChange}
           accept="image/*,.png,.jpg,.jpeg,.webp,"
         />
+        {remove && (
+          <div
+            role="button"
+            onClick={handleRemoveImage}
+            className="position-absolute top-0 end-0 m-1 px-2 bg-danger text-white text-center rounded"
+          >
+            x
+          </div>
+        )}
       </div>
     </div>
   );
@@ -58,7 +57,8 @@ const ImageLoaderField = ({ mainImagePath, type, onChange }) => {
 ImageLoaderField.propTypes = {
   mainImagePath: PropTypes.string,
   type: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  remove: PropTypes.bool
 };
 
 export default ImageLoaderField;

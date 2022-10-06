@@ -9,6 +9,7 @@ import EditCoffeeItem from "./components/pages/coffeePages/editCoffeeItem";
 import CreateCoffeeItem from "./components/pages/coffeePages/createCoffeeItem";
 import CreateTeaItem from "./components/pages/teaPages/createTeaItem";
 import EditTeaItem from "./components/pages/teaPages/editTeaItem";
+import CoffeeAdminCard from "./components/ui/coffeeAdminCard";
 
 function App() {
   return (
@@ -23,7 +24,14 @@ function App() {
           element={<CreateCoffeeItem />}
         />
         <Route path="/adminPanel/tea/create" element={<CreateTeaItem />} />
-        <Route path="/adminPanel/coffee/:itemId" element={<EditCoffeeItem />} />
+        <Route
+          path="/adminPanel/coffee/:itemId"
+          element={<CoffeeAdminCard />}
+        />
+        <Route
+          path="/adminPanel/coffee/:itemId/edit"
+          element={<EditCoffeeItem />}
+        />
         <Route path="/adminPanel/tea/:itemId" element={<EditTeaItem />} />
         {/* <Route path="/login" exact element={<Login />} /> */}
         <Route path="/:type" element={<Login />} />

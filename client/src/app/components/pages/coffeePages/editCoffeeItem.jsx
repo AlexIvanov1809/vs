@@ -14,6 +14,8 @@ import {
 import CheckBoxField from "../../common/form/checkBoxField";
 import TextAreaField from "../../common/form/textAreaField";
 import { validator } from "../../../utils/validator";
+import ImageLoaderField from "../../common/form/imageLoaderField";
+import fileService from "../../../service/file.service";
 
 const EditCoffeeItem = () => {
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ const EditCoffeeItem = () => {
     { _id: 10, value: 10 }
   ];
   const [data, setData] = useState();
+  const [image, setImage] = useState();
   const [errors, setErrors] = useState({});
   useEffect(() => {
     if (currentCoffeeItem) {
@@ -50,6 +53,7 @@ const EditCoffeeItem = () => {
         ...currentCoffeeItem,
         ...price
       });
+      setImage(currentCoffeeItem.images);
     }
   }, []);
   if (data) {
@@ -91,14 +95,39 @@ const EditCoffeeItem = () => {
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
+
+  const handleGetImage = (file, type) => {
+    setImage((prevState) => ({ ...prevState, [type]: file }));
+  };
+
   const back = () => {
     navigate(-1);
   };
-
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    for (const key in image) {
+      if (!image[key]._id) {
+        if (image[key]) {
+          if (data.images[key]) {
+            const updatedImage = await fileService.edit(
+              image[key],
+              data.images[key]
+            );
+            image[key] = updatedImage;
+          } else {
+            const newImage = await fileService.create(image[key], key);
+            image[key] = newImage;
+          }
+        } else {
+          const { message } = await fileService.remove(data.images[key]);
+          delete image[key];
+          console.log(message);
+        }
+      }
+    }
+    data.images = image;
     data.price = {
       quarter: data.priceQuarter,
       kg: data.priceKg,
@@ -120,6 +149,38 @@ const EditCoffeeItem = () => {
             <div className="col-md-9 offset-md-3 shadow p-4">
               <label className="fw-700 fs-3 mb-2">Изменить карточку</label>
               <form onSubmit={handleSubmit}>
+                <div className="d-flex">
+                  <ImageLoaderField
+                    mainImagePath={
+                      data.images.quarter
+                        ? "../../../" + data.images.quarter.htmlPath
+                        : "../img/noFoto/noImg.jpg"
+                    }
+                    type="quarter"
+                    onChange={handleGetImage}
+                    remove={true}
+                  />
+                  <ImageLoaderField
+                    mainImagePath={
+                      data.images.kg
+                        ? "../../../" + data.images.kg.htmlPath
+                        : "../img/noFoto/noImg.jpg"
+                    }
+                    type="kg"
+                    onChange={handleGetImage}
+                    remove={true}
+                  />
+                  <ImageLoaderField
+                    mainImagePath={
+                      data.images.drip
+                        ? "../../../" + data.images.drip.htmlPath
+                        : "../img/noFoto/noImg.jpg"
+                    }
+                    type="drip"
+                    onChange={handleGetImage}
+                    remove={true}
+                  />
+                </div>
                 <SelectField
                   label="Выберите Бренд"
                   value={data.brand}

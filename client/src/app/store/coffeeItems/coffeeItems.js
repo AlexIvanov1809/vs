@@ -74,11 +74,12 @@ export const createNewCoffeeItem = (payload, back) => async (dispatch) => {
   }
 };
 
-export const coffeeItemRemove = (itemId) => async (dispatch) => {
+export const coffeeItemRemove = (itemId, back) => async (dispatch) => {
   try {
     const { content } = await coffeeItemService.remove(itemId);
     if (!content) {
       dispatch(coffeeItemRemoved(itemId));
+      back();
     }
   } catch (error) {
     dispatch(coffeeItemsRequestFeild(error.message));

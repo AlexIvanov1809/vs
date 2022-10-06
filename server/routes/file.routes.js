@@ -40,12 +40,24 @@ router.patch("/", async (req, res) => {
         console.log(err);
       }
     });
+    const path = image.htmlPath.split("/");
+    console.log(path);
+    path.pop();
+    path.push(newFileName);
+    console.log(path);
 
     file.mv(image.straightPath + newFileName);
-    image.name = newFileName;
-    const updatedImage = await Image.findByIdAndUpdate(image._id, image, {
-      new: true,
-    });
+    const updatedImage = await Image.findByIdAndUpdate(
+      image._id,
+      {
+        name: newFileName,
+        straightPath: image.straightPath,
+        htmlPath: path.join("/"),
+      },
+      {
+        new: true,
+      }
+    );
     res.send(updatedImage);
   } catch (error) {
     res.status(500).json({
@@ -58,10 +70,9 @@ router.delete("/", async (req, res) => {
   try {
     const { data } = req.body;
     const removedImage = await Image.findById(data);
-    console.log(removedImage);
     await removedImage.remove();
 
-    fs.unlink(removedImage.straightPath, (err) => {
+    fs.unlink(removedImage.straightPath + removedImage.name, (err) => {
       if (err) {
         console.log(err);
       }
