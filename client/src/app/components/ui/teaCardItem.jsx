@@ -6,14 +6,13 @@ import {
   getStore,
   storeAdding
 } from "../../store/consumerBasket";
+import currentPrice from "../../utils/currentPrice";
 
 const TeaCardItem = ({ teaItem }) => {
   const dispatch = useDispatch();
   const basket = useSelector(getStore());
-  const currentPrice =
-    teaItem.weight === "шт"
-      ? teaItem.price
-      : Math.ceil((parseInt(teaItem.price) / 1000) * parseInt(teaItem.weight));
+  const price = currentPrice(teaItem);
+
   const unit = teaItem.weight === "шт" ? teaItem.weight : teaItem.weight + " г";
   const handleSubmit = (item) => {
     let same = false;
@@ -41,16 +40,16 @@ const TeaCardItem = ({ teaItem }) => {
       <h4>{teaItem.brand}</h4>
       <p>{teaItem.type}</p>
       <img
-        src={"../img/tea.jpg"}
+        src={"../" + teaItem.images.tea.htmlPath}
         className="d-block w-75 mx-auto"
-        alt="Coffee 250"
+        alt="Tea"
       />
       <h2>{teaItem.name}</h2>
       <p className="text-start">{teaItem.description}</p>
       <div className="d-flex">
         <div className="w-100 text-start">
           <p>{unit}</p>
-          <p>{currentPrice} &#8381;</p>
+          <p>{price} &#8381;</p>
           <BuyButton onChange={handleSubmit} />
         </div>
       </div>

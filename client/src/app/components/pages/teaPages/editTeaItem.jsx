@@ -10,6 +10,8 @@ import { getTeaPackagesList } from "../../../store/teaItems/teaPackages";
 import { getTeaBrandsList } from "../../../store/teaItems/teaBrands";
 import TextAreaField from "../../common/form/textAreaField";
 import { validator } from "../../../utils/validator";
+import ImageLoaderField from "../../common/form/imageLoaderField";
+import imageUpdater from "../../../utils/imageUpdater";
 
 const EditTeaItem = () => {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const EditTeaItem = () => {
     { _id: 5, value: "шт" }
   ];
   const [data, setData] = useState();
+  const [image, setImage] = useState();
   const [errors, setErrors] = useState({});
   const validatorConfig = {
     brand: {
@@ -76,115 +79,144 @@ const EditTeaItem = () => {
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
+  const handleGetImage = (file, type) => {
+    setImage((prevState) => ({ ...prevState, [type]: file }));
+  };
   const back = () => {
     navigate(-1);
   };
 
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const update = await imageUpdater(image, data);
+    data.images = update;
     dispatch(editTeaItem(data, back));
   };
-  return (
-    <>
-      {data ? (
-        <div className="container mt-5 position-relative">
-          <div className="row">
-            <div className="col-md-9 offset-md-3 shadow p-4">
-              <label className="fw-700 fs-3 mb-2">Изменить карточку</label>
-              <form onSubmit={handleSubmit}>
-                <SelectField
-                  label="Выберите Бренд"
-                  value={data.brand}
-                  defaultOption=""
-                  name="brand"
-                  options={brands}
-                  onChange={handleChange}
-                  error={errors.brand}
-                />
-                <SelectField
-                  label="Выберите Вид"
-                  value={data.type}
-                  defaultOption=""
-                  name="type"
-                  options={teaTypes}
-                  onChange={handleChange}
-                  error={errors.type}
-                />
-                <SelectField
-                  label="Выберите Упаковку"
-                  value={data.package}
-                  defaultOption=""
-                  name="package"
-                  options={teaPackages}
-                  onChange={handleChange}
-                  error={errors.package}
-                />
-                <TextForm
-                  label="Введите Название"
-                  name="name"
-                  type="text"
-                  value={data.name || ""}
-                  onChange={handleChange}
-                  error={errors.name}
-                />
-                <TextAreaField
-                  label="Введите описание"
-                  name="description"
-                  value={data.description || ""}
-                  onChange={handleChange}
-                  error={errors.description}
-                />
-                <TextAreaField
-                  label="Введите способ приготовления (если имеется)"
-                  name="recipe"
-                  value={data.recipe || ""}
-                  onChange={handleChange}
-                />
-                <SelectField
-                  label="Выберите вес или шт"
-                  value={data.weight}
-                  defaultOption=""
-                  name="weight"
-                  options={weight}
-                  onChange={handleChange}
-                  error={errors.weight}
-                />
-                <TextForm
-                  className="w-25"
-                  label="Цена за кг."
-                  name="price"
-                  type="text"
-                  value={data.price || ""}
-                  onChange={handleChange}
-                  error={errors.price}
-                />
-                <CheckBoxField
-                  named="active"
-                  value={data.active}
-                  onChange={handleChange}
-                >
-                  Активность
-                </CheckBoxField>
+  if (!brands) {
+    return (
+      <div className="d-flex m-auto flex-column justify-content-center h-100 w-75 mt-5">
+        <h4>Что-то пошло не так, вернитесь в панель администратора</h4>
+        <button
+          className=" m-auto btn btn-primary w-25 mt-3"
+          onClick={() => navigate("/adminPanel/tea")}
+        >
+          Вернуться
+        </button>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        {data ? (
+          <div className="container mt-5 position-relative">
+            <div className="row">
+              <div className="col-md-9 offset-md-3 shadow p-4">
+                <label className="fw-700 fs-3 mb-2">Изменить карточку</label>
+                <form onSubmit={handleSubmit}>
+                  <ImageLoaderField
+                    mainImagePath={
+                      data.images.tea
+                        ? "../../../" + data.images.tea.htmlPath
+                        : "../img/noFoto/noImg.jpg"
+                    }
+                    type="tea"
+                    onChange={handleGetImage}
+                    remove={true}
+                  />
+                  <SelectField
+                    label="Выберите Бренд"
+                    value={data.brand}
+                    defaultOption=""
+                    name="brand"
+                    options={brands}
+                    onChange={handleChange}
+                    error={errors.brand}
+                  />
+                  <SelectField
+                    label="Выберите Вид"
+                    value={data.type}
+                    defaultOption=""
+                    name="type"
+                    options={teaTypes}
+                    onChange={handleChange}
+                    error={errors.type}
+                  />
+                  <SelectField
+                    label="Выберите Упаковку"
+                    value={data.package}
+                    defaultOption=""
+                    name="package"
+                    options={teaPackages}
+                    onChange={handleChange}
+                    error={errors.package}
+                  />
+                  <TextForm
+                    label="Введите Название"
+                    name="name"
+                    type="text"
+                    value={data.name || ""}
+                    onChange={handleChange}
+                    error={errors.name}
+                  />
+                  <TextAreaField
+                    label="Введите описание"
+                    name="description"
+                    value={data.description || ""}
+                    onChange={handleChange}
+                    error={errors.description}
+                  />
+                  <TextAreaField
+                    label="Введите способ приготовления (если имеется)"
+                    name="recipe"
+                    value={data.recipe || ""}
+                    onChange={handleChange}
+                  />
+                  <SelectField
+                    label="Выберите вес или шт"
+                    value={data.weight}
+                    defaultOption=""
+                    name="weight"
+                    options={weight}
+                    onChange={handleChange}
+                    error={errors.weight}
+                  />
+                  <TextForm
+                    className="w-25"
+                    label="Цена за кг."
+                    name="price"
+                    type="text"
+                    value={data.price || ""}
+                    onChange={handleChange}
+                    error={errors.price}
+                  />
+                  <CheckBoxField
+                    named="active"
+                    value={data.active}
+                    onChange={handleChange}
+                  >
+                    Активность
+                  </CheckBoxField>
 
-                <button
-                  disabled={!isValid}
-                  className="btn btn-primary ms-2 mb-2 h-25"
-                >
-                  Изменить
-                </button>
-              </form>
+                  <button
+                    disabled={!isValid}
+                    className="btn btn-primary ms-2 mb-2 h-25"
+                  >
+                    Изменить
+                  </button>
+                </form>
 
-              <button onClick={() => navigate(-1)}>Back</button>
+                <button onClick={() => navigate(-1)}>Back</button>
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        "loading.."
-      )}
-    </>
-  );
+        ) : (
+          "loading.."
+        )}
+      </>
+    );
+  }
 };
 
 export default EditTeaItem;

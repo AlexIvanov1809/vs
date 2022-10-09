@@ -1,22 +1,38 @@
 const Router = require("express");
 const router = new Router();
 const fs = require("fs");
+// const sharp = require("sharp");
 const Image = require("../models/Image");
 
-router.post("/", async (req, res) => {
+router.post("/:key", async (req, res) => {
   try {
     if (!req.files) {
       return res.status(400).json({ message: "Файл не был загружен" });
     }
-    const { folder } = req.headers;
-    const path = `${__dirname}/../../client/public/img/marketItems/${folder}/`;
+    const { key } = req.params;
+    const path = `${__dirname}/../../client/public/img/marketItems/${key}/`;
     const file = req.files.file;
-    newFileName = Date.now() + "." + file.name.split(".")[1];
+    newFileName = Date.now() + ".png";
     file.mv(path + newFileName);
+    // await sharp(req.file.path)
+    //   .toFormat("jpeg")
+    //   .resize(200, 200)
+    //   .jpeg({
+    //     quality: 80,
+    //     chromaSubsampling: "4:4:4",
+    //   })
+    //   .toFile(path + newFileName, (err, info) => {
+    //     if (err) {
+    //       res.send(err);
+    //     } else {
+    //       res.send(info);
+    //     }
+    //   });
+
     const newImage = await Image.create({
       name: newFileName,
       straightPath: path,
-      htmlPath: `img/marketItems/${folder}/${newFileName}`,
+      htmlPath: `img/marketItems/${key}/${newFileName}`,
     });
     res.status(200).send(newImage);
   } catch (error) {
@@ -25,14 +41,14 @@ router.post("/", async (req, res) => {
     });
   }
 });
-router.patch("/", async (req, res) => {
+router.patch("/:key", async (req, res) => {
   try {
     if (!req.files) {
       return res.status(400).json({ message: "Файл не был загружен" });
     }
-    const { data } = req.headers;
+    const { key } = req.params;
     const file = req.files.file;
-    const image = await Image.findById(data);
+    const image = await Image.findById(key);
     const newFileName = Date.now() + "." + file.name.split(".")[1];
 
     await fs.unlink(image.straightPath + image.name, (err) => {
@@ -41,10 +57,8 @@ router.patch("/", async (req, res) => {
       }
     });
     const path = image.htmlPath.split("/");
-    console.log(path);
     path.pop();
     path.push(newFileName);
-    console.log(path);
 
     file.mv(image.straightPath + newFileName);
     const updatedImage = await Image.findByIdAndUpdate(

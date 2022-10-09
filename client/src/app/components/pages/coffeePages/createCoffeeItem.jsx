@@ -12,7 +12,7 @@ import CheckBoxField from "../../common/form/checkBoxField";
 import TextAreaField from "../../common/form/textAreaField";
 import { validator } from "../../../utils/validator";
 import ImageLoaderField from "../../common/form/imageLoaderField";
-import fileService from "../../../service/file.service";
+import imageLoader from "../../../utils/imageLoader";
 
 const CreateCoffeeItem = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const CreateCoffeeItem = () => {
   const [image, setImage] = useState();
   const [data, setData] = useState({
     images: {
-      quarter: { name: "1664977125457.png", path: "img/coffeeItems/quarter/" },
+      quarter: {},
       kg: {},
       drip: {}
     },
@@ -118,16 +118,15 @@ const CreateCoffeeItem = () => {
 
   const back = () => {
     navigate(-1);
+    clearForm();
   };
 
   const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    for (const key in image) {
-      const newImage = await fileService.create(image[key], key);
-      data.images[key] = newImage;
-    }
+    const uploadedImages = await imageLoader(image);
+    data.images = uploadedImages;
     data.price = {
       quarter: data.priceQuarter,
       kg: data.priceKg,
@@ -142,155 +141,168 @@ const CreateCoffeeItem = () => {
     console.log(data);
 
     dispatch(createNewCoffeeItem(data, back));
-    clearForm();
   };
-  return (
-    <>
-      <div className="container mt-5 position-relative">
-        <div className="row">
-          <div className="col-md-9 offset-md-3 shadow p-4">
-            <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
-            <form onSubmit={handleSubmit}>
-              <div className="d-flex">
-                <ImageLoaderField
-                  mainImagePath="img/noFoto/noImg.jpg"
-                  type="quarter"
-                  onChange={handleGetImage}
-                />
-                <ImageLoaderField
-                  mainImagePath="img/noFoto/noImg.jpg"
-                  type="kg"
-                  onChange={handleGetImage}
-                />
-                <ImageLoaderField
-                  mainImagePath="img/noFoto/noImg.jpg"
-                  type="drip"
-                  onChange={handleGetImage}
-                />
-              </div>
-              <SelectField
-                label="Выберите Бренд"
-                value={data.brand}
-                defaultOption=""
-                name="brand"
-                options={brands}
-                onChange={handleChange}
-                error={errors.brand}
-              />
-              <SelectField
-                label="Выберите метод обработки"
-                value={data.method}
-                defaultOption=""
-                name="method"
-                options={methods}
-                onChange={handleChange}
-                error={errors.method}
-              />
-              <SelectField
-                label="Выберите Страну"
-                value={data.country}
-                defaultOption=""
-                name="country"
-                options={countries}
-                onChange={handleChange}
-              />
-              <TextForm
-                label="Введите название сорта или смеси"
-                name="sortName"
-                type="text"
-                value={data.sortName || ""}
-                onChange={handleChange}
-                error={errors.sortName}
-              />
-              <TextForm
-                label="Введите метод приготовления"
-                name="preparationMethod"
-                type="text"
-                value={data.preparationMethod || ""}
-                onChange={handleChange}
-                error={errors.preparationMethod}
-              />
-              <SelectField
-                label="Выберите сорт"
-                value={data.kind}
-                defaultOption=""
-                name="kind"
-                options={kinds}
-                onChange={handleChange}
-                error={errors.kind}
-              />
-              <TextAreaField
-                label="Введите описание"
-                name="description"
-                value={data.description || ""}
-                onChange={handleChange}
-                error={errors.description}
-              />
-              <div className="d-flex justify-content-between">
+  if (!brands) {
+    return (
+      <div className="d-flex m-auto flex-column justify-content-center h-100 w-75 mt-5">
+        <h4>Что-то пошло не так, вернитесь в панель администратора</h4>
+        <button
+          className=" m-auto btn btn-primary w-25 mt-3"
+          onClick={() => navigate("/adminPanel/coffee")}
+        >
+          Вернуться
+        </button>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <div className="container mt-5 position-relative">
+          <div className="row">
+            <div className="col-md-9 offset-md-3 shadow p-4">
+              <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
+              <form onSubmit={handleSubmit}>
+                <div className="d-flex">
+                  <ImageLoaderField
+                    mainImagePath="img/noFoto/noImg.jpg"
+                    type="quarter"
+                    onChange={handleGetImage}
+                  />
+                  <ImageLoaderField
+                    mainImagePath="img/noFoto/noImg.jpg"
+                    type="kg"
+                    onChange={handleGetImage}
+                  />
+                  <ImageLoaderField
+                    mainImagePath="img/noFoto/noImg.jpg"
+                    type="drip"
+                    onChange={handleGetImage}
+                  />
+                </div>
                 <SelectField
-                  label="Выберите уровень кислотности"
-                  value={data.acidity}
-                  defaultOption={"0"}
-                  name="acidity"
-                  options={level}
+                  label="Выберите Бренд"
+                  value={data.brand}
+                  defaultOption=""
+                  name="brand"
+                  options={brands}
                   onChange={handleChange}
+                  error={errors.brand}
                 />
                 <SelectField
-                  label="Выберите уровень плотности"
-                  value={data.density}
-                  defaultOption={"0"}
-                  name="density"
-                  options={level}
+                  label="Выберите метод обработки"
+                  value={data.method}
+                  defaultOption=""
+                  name="method"
+                  options={methods}
                   onChange={handleChange}
+                  error={errors.method}
                 />
-              </div>
-              <div className="d-flex justify-content-between text-center">
-                <TextForm
-                  className="w-25"
-                  label="250"
-                  name="priceQuarter"
-                  type="text"
-                  value={data.priceQuarter || ""}
-                  onChange={handleChange}
-                />
-                <TextForm
-                  className="w-25"
-                  label="1000"
-                  name="priceKg"
-                  type="text"
-                  value={data.priceKg || ""}
+                <SelectField
+                  label="Выберите Страну"
+                  value={data.country}
+                  defaultOption=""
+                  name="country"
+                  options={countries}
                   onChange={handleChange}
                 />
                 <TextForm
-                  className="w-25"
-                  label="Дрип шт"
-                  name="priceDrip"
+                  label="Введите название сорта или смеси"
+                  name="sortName"
                   type="text"
-                  value={data.priceDrip || ""}
+                  value={data.sortName || ""}
                   onChange={handleChange}
+                  error={errors.sortName}
                 />
-              </div>
-              <CheckBoxField
-                named="active"
-                value={data.active}
-                onChange={handleChange}
-              >
-                Активность
-              </CheckBoxField>
+                <TextForm
+                  label="Введите метод приготовления"
+                  name="preparationMethod"
+                  type="text"
+                  value={data.preparationMethod || ""}
+                  onChange={handleChange}
+                  error={errors.preparationMethod}
+                />
+                <SelectField
+                  label="Выберите сорт"
+                  value={data.kind}
+                  defaultOption=""
+                  name="kind"
+                  options={kinds}
+                  onChange={handleChange}
+                  error={errors.kind}
+                />
+                <TextAreaField
+                  label="Введите описание"
+                  name="description"
+                  value={data.description || ""}
+                  onChange={handleChange}
+                  error={errors.description}
+                />
+                <div className="d-flex justify-content-between">
+                  <SelectField
+                    label="Выберите уровень кислотности"
+                    value={data.acidity}
+                    defaultOption={"0"}
+                    name="acidity"
+                    options={level}
+                    onChange={handleChange}
+                  />
+                  <SelectField
+                    label="Выберите уровень плотности"
+                    value={data.density}
+                    defaultOption={"0"}
+                    name="density"
+                    options={level}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="d-flex justify-content-between text-center">
+                  <TextForm
+                    className="w-25"
+                    label="250"
+                    name="priceQuarter"
+                    type="text"
+                    value={data.priceQuarter || ""}
+                    onChange={handleChange}
+                  />
+                  <TextForm
+                    className="w-25"
+                    label="1000"
+                    name="priceKg"
+                    type="text"
+                    value={data.priceKg || ""}
+                    onChange={handleChange}
+                  />
+                  <TextForm
+                    className="w-25"
+                    label="Дрип шт"
+                    name="priceDrip"
+                    type="text"
+                    value={data.priceDrip || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <CheckBoxField
+                  named="active"
+                  value={data.active}
+                  onChange={handleChange}
+                >
+                  Активность
+                </CheckBoxField>
 
-              <button
-                disabled={!isValid}
-                className="btn btn-primary ms-2 mb-2 h-25"
-              >
-                Создать
-              </button>
-            </form>
-            <button onClick={() => navigate(-1)}>Back</button>
+                <button
+                  disabled={!isValid}
+                  className="btn btn-primary ms-2 mb-2 h-25"
+                >
+                  Создать
+                </button>
+              </form>
+              <button onClick={() => navigate(-1)}>Back</button>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default CreateCoffeeItem;
