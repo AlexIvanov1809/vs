@@ -1,7 +1,5 @@
-// import httpService from "./http.service";
-
 const hostURL = "http://localhost:8080/venditore/files/";
-const params = new URLSearchParams();
+// const params = new URLSearchParams();
 
 const fileService = {
   create: async (payload, key) => {
@@ -21,31 +19,38 @@ const fileService = {
       console.log(error);
     }
   },
-  // create: async (payload) => {
-  //   const formData = new FormData();
-  //   formData.append("file", payload);
-  //   const { data } = await httpService.post(hostURL, formData);
-  //   return data;
-  // },
+
   edit: async (payload, data) => {
-    const formData = new FormData();
-    formData.append("file", payload);
+    try {
+      const formData = new FormData();
+      formData.append("file", payload);
 
-    const res = await fetch(hostURL + data._id, {
-      method: "PATCH",
-      body: formData
-      // headers: { data: data._id }
-    });
+      const res = await fetch(hostURL + data._id, {
+        method: "PATCH",
+        body: formData
+      });
+      if (!res.ok) {
+        throw new Error("Error");
+      }
 
-    return await res.json();
+      return await res.json();
+    } catch (error) {
+      console.log(error);
+    }
   },
   remove: async (payload) => {
-    params.set("data", payload._id);
-    const res = await fetch(hostURL, {
-      method: "DELETE",
-      body: params
-    });
-    return await res.json();
+    // params.set("data", payload._id);
+    try {
+      const res = await fetch(hostURL + payload._id, {
+        method: "DELETE"
+      });
+      if (!res.ok) {
+        throw new Error("Error");
+      }
+      return await res.json();
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 

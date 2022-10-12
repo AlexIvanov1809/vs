@@ -35,7 +35,7 @@ const NavBar = () => {
               Market
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               className="nav-link link-light"
               aria-current="page"
@@ -52,7 +52,7 @@ const NavBar = () => {
             >
               Login
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <button
               onClick={handleClick}

@@ -80,10 +80,10 @@ router.patch("/:key", async (req, res) => {
   }
 });
 
-router.delete("/", async (req, res) => {
+router.delete("/:fileId", async (req, res) => {
   try {
-    const { data } = req.body;
-    const removedImage = await Image.findById(data);
+    const { fileId } = req.params;
+    const removedImage = await Image.findById(fileId);
     await removedImage.remove();
 
     fs.unlink(removedImage.straightPath + removedImage.name, (err) => {

@@ -1,58 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextForm from "../common/form/textForm";
-import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
+import authService from "../../service/auth.service";
+import localStorageSevice from "../../service/localStorage.service";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [data, setData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+  const [logData, setData] = useState({ name: "", password: "" });
   const [errors, setErrors] = useState({});
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
-  const validatorConfig = {
-    email: {
-      isRequired: { message: "Необходимо укахать ваш e-mail" },
-      isEmail: { message: "Не корpектный e-mail" }
-    },
-    password: {
-      isRequired: { message: "Поле необходимое для заполнения" },
-      isCapitalSymbol: {
-        message: "Пароль должен иметь хотя бы одну заглавную букву"
-      },
-      isContainDigit: { message: "Пароль должен иметь хотя бы одно число" },
-      min: { message: "Пароль должен содержать минимум 8 символов", value: 8 }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { name, password } = logData;
+      const data = await authService.login({ name, password });
+      await localStorageSevice.setTokens(data);
+      navigate("/adminPanel/coffee");
+    } catch (error) {
+      const { code } = error.response.data.error;
+      if (code === 400) {
+        setErrors("Неверное имя или пароль");
+      } else {
+        setErrors("Произошла ошибка на сервере попробуйте позже");
+      }
     }
   };
-
-  useEffect(() => {
-    validate();
-  }, [data]);
-
-  const validate = () => {
-    const errors = validator(data, validatorConfig);
-    setErrors(errors);
-    // return Object.keys(errors).length === 0;
-  };
-
   return (
-    <form className="row g-3 mb-3">
+    <form className="row g-3 mb-3" onSubmit={handleSubmit}>
       <TextForm
         label="Элекстронная почта"
-        name="email"
+        name="name"
         type="text"
-        value={data.email}
+        value={logData.name}
         onChange={handleChange}
-        error={errors.email}
       />
       <TextForm
         label="Пароль"
         name="password"
         type="password"
-        value={data.password}
+        value={logData.password}
         onChange={handleChange}
-        error={errors.password}
       />
+      {errors && <p className="text-danger">{errors}</p>}
       <CheckBoxField label="Оставаться в сети" />
       <button className="btn btn-primary w-100 mx-auto" type="submit">
         submit

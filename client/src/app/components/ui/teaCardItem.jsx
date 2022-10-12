@@ -20,12 +20,14 @@ const TeaCardItem = ({ teaItem }) => {
       _id: teaItem._id,
       name: teaItem.name,
       quantity: item,
-      price: currentPrice,
+      price,
       weight: unit
     };
     basket.map((i) => {
       if (i._id === order._id) {
         same = true;
+        const newQuantity = order.quantity + i.quantity;
+        order.quantity = newQuantity;
       }
       return i;
     });

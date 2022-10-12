@@ -3,21 +3,32 @@ import Counter from "./counter";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  backupBasket,
   deleteItem,
   editItemBasket,
   getStore,
   resetBasket
 } from "../../../store/consumerBasket";
 import OrderSubmit from "../../ui/orderSubmit";
+import localStorageSevice from "../../../service/localStorage.service";
 
 const CountersList = () => {
   const dispatch = useDispatch();
   const orderItems = useSelector(getStore());
+  const localStorageorderItems = localStorageSevice.getBasketItems();
   const [hiddenItem, setHidden] = useState(true);
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState();
   useEffect(() => {
-    setItems(orderItems);
+    if (orderItems.length > 0) {
+      setItems(orderItems);
+      localStorageSevice.setBasketItems(orderItems);
+    } else if (orderItems.length === 0 && localStorageorderItems) {
+      dispatch(backupBasket(localStorageorderItems));
+      localStorageSevice.removeBasketItems();
+    } else {
+      setItems(orderItems);
+    }
   }, [orderItems]);
 
   useEffect(() => {
@@ -32,9 +43,11 @@ const CountersList = () => {
 
   const handleDelete = (id) => {
     dispatch(deleteItem(id));
+    localStorageSevice.removeBasketItems();
   };
 
   const handleReset = () => {
+    localStorageSevice.removeBasketItems();
     dispatch(resetBasket());
   };
 

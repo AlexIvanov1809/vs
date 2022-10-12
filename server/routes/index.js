@@ -11,5 +11,6 @@ router.use("/teaPackages", require("./teaItems/package.routes"));
 router.use("/teaItems", require("./teaItems/teaItem.routes"));
 router.use("/teaTypes", require("./teaItems/type.routes"));
 router.use("/files", require("./file.routes"));
+router.use("/auth", require("./auth.routes"));
 
 module.exports = router;

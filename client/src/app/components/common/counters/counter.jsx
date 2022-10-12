@@ -27,7 +27,7 @@ const Counter = ({ orderItems, onChange, onDelete }) => {
       <span className="me-2 fw-bold text-primary">
         {price * quantity} &#8381;
       </span>
-      <DeleteButton onDelete={onDelete} id={id} />
+      <DeleteButton onDelete={onDelete} itemId={id} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBrandsList } from "../../../store/coffeeItems/brands";
 import { getCountriesList } from "../../../store/coffeeItems/countries";
@@ -143,17 +143,7 @@ const CreateCoffeeItem = () => {
     dispatch(createNewCoffeeItem(data, back));
   };
   if (!brands) {
-    return (
-      <div className="d-flex m-auto flex-column justify-content-center h-100 w-75 mt-5">
-        <h4>Что-то пошло не так, вернитесь в панель администратора</h4>
-        <button
-          className=" m-auto btn btn-primary w-25 mt-3"
-          onClick={() => navigate("/adminPanel/coffee")}
-        >
-          Вернуться
-        </button>
-      </div>
-    );
+    return <Navigate to={"/adminPanel/coffee"} />;
   } else {
     return (
       <>

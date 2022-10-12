@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import fileService from "../../../service/file.service";
 import {
   coffeeItemRemove,
@@ -36,17 +36,7 @@ const CoffeeAdminCard = () => {
   };
 
   if (!coffeeItem) {
-    return (
-      <div className="d-flex m-auto flex-column justify-content-center h-100 w-75 mt-5">
-        <h4>Что-то пошло не так, вернитесь в панель администратора</h4>
-        <button
-          className=" m-auto btn btn-primary w-25 mt-3"
-          onClick={() => navigate("/adminPanel/coffee")}
-        >
-          Вернуться
-        </button>
-      </div>
-    );
+    return <Navigate to={"/adminPanel/coffee"} />;
   } else {
     return (
       <div

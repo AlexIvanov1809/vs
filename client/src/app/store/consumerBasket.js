@@ -20,12 +20,15 @@ const consumerBusketSlice = createSlice({
     },
     itemReset: (state) => {
       state.entities = [];
+    },
+    itemBackuped: (state, action) => {
+      state.entities = action.payload;
     }
   }
 });
 
 const { reducer: consumerBusketreducer, actions } = consumerBusketSlice;
-const { itemAdded, itemEdited, itemRemoved, itemReset } = actions;
+const { itemAdded, itemEdited, itemRemoved, itemReset, itemBackuped } = actions;
 
 export const storeAdding = (payload) => (dispatch) => {
   dispatch(itemAdded(payload));
@@ -39,6 +42,15 @@ export const deleteItem = (itemId) => (dispatch) => {
 export const resetBasket = () => (dispatch) => {
   dispatch(itemReset());
 };
+export const backupBasket = (items) => (dispatch) => {
+  dispatch(itemBackuped(items));
+};
 export const getStore = () => (state) => state.consumerBusket.entities;
+export const getBasketItemById = (id) => (state) => {
+  if (state.consumerBusket.entities) {
+    return state.consumerBusket.entities.find((q) => q._id === id);
+  }
+  return [];
+};
 
 export default consumerBusketreducer;
