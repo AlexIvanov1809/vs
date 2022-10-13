@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import authService from "../../service/auth.service";
 import localStorageSevice from "../../service/localStorage.service";
 import TextForm from "../common/form/textForm";
@@ -23,6 +23,7 @@ const RegistrationForm = () => {
   if (userId) {
     return (
       <form className="row g-3 mb-3" onSubmit={handleSubmit}>
+        <h2>Регистрация</h2>
         <TextForm
           label="Имя"
           name="name"
@@ -43,7 +44,14 @@ const RegistrationForm = () => {
       </form>
     );
   } else {
-    return <Navigate to={"/login"} />;
+    return (
+      <>
+        <h3>Ошибка 404, страницы не существует, вернитесь на главную</h3>
+        <Link className="btn btn-primary" to={"/"}>
+          Вернуться
+        </Link>
+      </>
+    );
   }
 };
 

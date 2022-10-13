@@ -29,10 +29,10 @@ const CoffeeTable = ({ coffeeItems }) => {
       path: "preparationMethod",
       name: "Метод приготовления"
     },
-    description: {
-      path: "description",
-      name: "Описание"
-    },
+    // description: {
+    //   path: "description",
+    //   name: "Описание"
+    // },
     acidity: {
       path: "acidity",
       name: "Кислотность"

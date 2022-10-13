@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import Price from "../price";
 import Table from "./table";
 
 const TeaTable = ({ teaItems }) => {
@@ -17,10 +16,10 @@ const TeaTable = ({ teaItems }) => {
       path: "name",
       name: "Название"
     },
-    description: {
-      path: "description",
-      name: "Описание"
-    },
+    // description: {
+    //   path: "description",
+    //   name: "Описание"
+    // },
     weight: {
       path: "weight",
       name: "Вес"
@@ -28,7 +27,6 @@ const TeaTable = ({ teaItems }) => {
     price: {
       path: "price",
       name: "Стоимость"
-      // component: (item) => <Price price={item.price} />
     },
     active: {
       path: "active",

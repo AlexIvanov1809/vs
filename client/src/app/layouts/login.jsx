@@ -30,16 +30,7 @@ const Login = () => {
               </p>
             </>
           ) : (
-            <>
-              <h2>Регистрация</h2>
-              <RegistrationForm />
-              <p>
-                Уже есть аккаунт?{" "}
-                <Link to="/login" onClick={toggleChangeForm}>
-                  Войти
-                </Link>
-              </p>
-            </>
+            <RegistrationForm />
           )}
         </div>
       </div>

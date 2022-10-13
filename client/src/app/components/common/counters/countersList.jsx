@@ -11,6 +11,7 @@ import {
 } from "../../../store/consumerBasket";
 import OrderSubmit from "../../ui/orderSubmit";
 import localStorageSevice from "../../../service/localStorage.service";
+import sendMsg from "../../../api/telegramBotMsg";
 
 const CountersList = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,8 @@ const CountersList = () => {
   };
   const handleSubmit = (costumerData) => {
     const dataToSand = { ...costumerData, items, total, _id: Date.now() };
-    console.log(dataToSand);
+    sendMsg(dataToSand);
+    // orderService.create(dataToSand);
     handleReset();
     setHidden(true);
   };

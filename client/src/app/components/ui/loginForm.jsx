@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const navigate = useNavigate();
   const [logData, setData] = useState({ name: "", password: "" });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState("");
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
@@ -47,7 +47,7 @@ const LoginForm = () => {
         onChange={handleChange}
       />
       {errors && <p className="text-danger">{errors}</p>}
-      <CheckBoxField label="Оставаться в сети" />
+      <CheckBoxField>Оставаться в сети</CheckBoxField>
       <button className="btn btn-primary w-100 mx-auto" type="submit">
         submit
       </button>

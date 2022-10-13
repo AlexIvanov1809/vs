@@ -62,7 +62,7 @@ const CoffeeCardItem = ({ coffeeItem }) => {
         break;
     }
     const order = {
-      _id: coffeeItem._id + name,
+      _id: coffeeItem._id + name + bean.value,
       [bean.name]: bean.value,
       name: coffeeItem.name,
       quantity: item,
