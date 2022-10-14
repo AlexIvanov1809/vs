@@ -27,13 +27,6 @@ const TextForm = ({ label, name, type, value, onChange, error }) => {
           id={name}
           value={value}
           onChange={handleChange}
-          placeholder={
-            name === "email"
-              ? "example@exp.com"
-              : name === "phone"
-              ? "071XXXXXXX"
-              : ""
-          }
         />
         {type === "password" && (
           <button

@@ -1,37 +1,49 @@
 import React, { useState, useEffect } from "react";
-import SelectField from "../common/form/selectField";
 import TextForm from "../common/form/textForm";
 import PropTypes from "prop-types";
+import { validator } from "../../utils/validator";
 
 const OrderSubmit = ({ hid, onSubmit }) => {
   const defaultData = {
     name: "",
     phone: "",
-    address: "",
-    phonePref: "+38071"
+    address: ""
   };
   const [hiddenItem, setHidden] = useState(hid);
   const [data, setData] = useState(defaultData);
-  const phone = [
-    {
-      _id: 0,
-      value: "+7949"
-    }
-  ];
+  const [errors, setErrors] = useState(defaultData);
+
   useEffect(() => {
     hid ? setHidden(true) : setHidden(false);
   }, [hid]);
   const clear = () => {
     setData(defaultData);
   };
+  const validatorConfig = {
+    name: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    phone: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    },
+    address: {
+      isRequired: { message: "Поле необходимое для заполнения" }
+    }
+  };
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+  };
+  useEffect(() => {
+    validate();
+  }, [data]);
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    data.phone = data.phonePref + data.phone;
-    delete data.phonePref;
     onSubmit(data);
     clear();
     setHidden(true);
@@ -46,33 +58,23 @@ const OrderSubmit = ({ hid, onSubmit }) => {
           type="text"
           value={data.name}
           onChange={handleChange}
-          // error={errors.email}
+          error={errors.name}
         />
-        <div className="d-flex align-items-end justify-content-evenly">
-          <SelectField
-            label=""
-            value={data.phonePref}
-            defaultOption="+38071"
-            name="phonePref"
-            options={phone}
-            onChange={handleChange}
-          />
-          <TextForm
-            label="Телефон"
-            name="phone"
-            type="tel"
-            value={data.phone}
-            onChange={handleChange}
-            // error={errors.email}
-          />
-        </div>
+        <TextForm
+          label="Телефон"
+          name="phone"
+          type="tel"
+          value={data.phone}
+          onChange={handleChange}
+          error={errors.phone}
+        />
         <TextForm
           label="Адрес доставки"
           name="address"
           type="text"
           value={data.address}
           onChange={handleChange}
-          // error={errors.email}
+          error={errors.address}
         />
         <button className="btn btn-primary w-100">Оформить</button>
       </form>

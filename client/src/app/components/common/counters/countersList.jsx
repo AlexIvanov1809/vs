@@ -11,7 +11,8 @@ import {
 } from "../../../store/consumerBasket";
 import OrderSubmit from "../../ui/orderSubmit";
 import localStorageSevice from "../../../service/localStorage.service";
-import sendMsg from "../../../api/telegramBotMsg";
+import messageConverter from "../../../utils/messageConverter";
+import orderService from "../../../service/order.service";
 
 const CountersList = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const CountersList = () => {
   const [hiddenItem, setHidden] = useState(true);
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState();
+  const [minOrder, setMinOrder] = useState("");
   useEffect(() => {
     if (orderItems.length > 0) {
       setItems(orderItems);
@@ -46,9 +48,18 @@ const CountersList = () => {
     dispatch(deleteItem(id));
     localStorageSevice.removeBasketItems();
   };
+  const handleShow = () => {
+    if (total >= 1500) {
+      setHidden(false);
+      setMinOrder("");
+    } else {
+      setMinOrder("Минимальный  заказ 1500 руб.");
+    }
+  };
 
   const handleReset = () => {
     localStorageSevice.removeBasketItems();
+    setHidden(true);
     dispatch(resetBasket());
   };
 
@@ -57,12 +68,11 @@ const CountersList = () => {
     const newItem = { ...item, quantity: item.quantity + counter };
     dispatch(editItemBasket(newItem));
   };
-  const handleSubmit = (costumerData) => {
+  const handleSubmit = async (costumerData) => {
     const dataToSand = { ...costumerData, items, total, _id: Date.now() };
-    sendMsg(dataToSand);
-    // orderService.create(dataToSand);
+    const message = messageConverter(dataToSand);
+    await orderService.create({ message });
     handleReset();
-    setHidden(true);
   };
   if (items.length > 0) {
     return (
@@ -81,13 +91,14 @@ const CountersList = () => {
             {total} &#8381;
           </span>
         </h5>
+        {minOrder && <p className="text-danger">{minOrder}</p>}
         <OrderSubmit hid={hiddenItem} onSubmit={handleSubmit} />
         <button className="btn btn-primary btn-sm m-2" onClick={handleReset}>
           Reset
         </button>
         <button
           className="btn btn-primary btn-sm m-2"
-          onClick={() => setHidden(false)}
+          onClick={handleShow}
           hidden={!hiddenItem}
         >
           Оформить заказ

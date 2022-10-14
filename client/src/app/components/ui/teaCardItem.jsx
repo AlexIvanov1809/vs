@@ -18,6 +18,7 @@ const TeaCardItem = ({ teaItem }) => {
     let same = false;
     const order = {
       _id: teaItem._id,
+      brand: teaItem.brand,
       name: teaItem.name,
       quantity: item,
       price,

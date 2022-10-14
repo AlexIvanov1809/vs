@@ -65,6 +65,7 @@ const CoffeeCardItem = ({ coffeeItem }) => {
       _id: coffeeItem._id + name + bean.value,
       [bean.name]: bean.value,
       name: coffeeItem.name,
+      brand: coffeeItem.brand,
       quantity: item,
       price: coffeeItem.price[name],
       weight
