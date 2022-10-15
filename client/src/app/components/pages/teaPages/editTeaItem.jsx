@@ -63,10 +63,7 @@ const EditTeaItem = () => {
   const validate = () => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
-    // return Object.keys(errors).length === 0;
   };
-
-  // const coffeeItems = useSelector(getCoffeeItemsList());
 
   useEffect(() => {
     if (currenTeaItem) {
@@ -101,6 +98,13 @@ const EditTeaItem = () => {
       <>
         {data ? (
           <div className="container mt-5 position-relative">
+            <button
+              className="btn btn-primary position-absolute t-2"
+              style={{ left: "10%" }}
+              onClick={() => navigate(-1)}
+            >
+              Назад
+            </button>
             <div className="row">
               <div className="col-md-9 offset-md-3 shadow p-4">
                 <label className="fw-700 fs-3 mb-2">Изменить карточку</label>
@@ -113,7 +117,7 @@ const EditTeaItem = () => {
                     }
                     type="tea"
                     onChange={handleGetImage}
-                    remove={true}
+                    error={!image && !data.images.tea}
                   />
                   <SelectField
                     label="Выберите Бренд"
@@ -196,8 +200,6 @@ const EditTeaItem = () => {
                     Изменить
                   </button>
                 </form>
-
-                <button onClick={() => navigate(-1)}>Back</button>
               </div>
             </div>
           </div>

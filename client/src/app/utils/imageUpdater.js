@@ -6,19 +6,19 @@ async function imageUpdater(image, data) {
     if (!image[key]._id) {
       if (image[key]) {
         if (data.images[key]) {
-          const updatedImage = await fileService.edit(
+          const { content } = await fileService.edit(
             image[key],
             data.images[key]
           );
-          update[key] = updatedImage;
+          update[key] = content;
         } else {
-          const newImage = await fileService.create(image[key], key);
-          update[key] = newImage;
+          const { content } = await fileService.create(image[key], key);
+          update[key] = content;
         }
       } else {
-        const { message } = await fileService.remove(data.images[key]);
+        const { content } = await fileService.remove(data.images[key]);
         delete update[key];
-        console.log(message);
+        console.log(content.message);
       }
     }
   }

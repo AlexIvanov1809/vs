@@ -101,7 +101,7 @@ const CreateTeaItem = () => {
     clearForm();
   };
 
-  const isValid = Object.keys(errors).length === 0;
+  const isValid = Object.keys(errors).length === 0 && data.images?.tea;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,7 +114,14 @@ const CreateTeaItem = () => {
   } else {
     return (
       <>
-        <div className="container mt-5 position-relative">
+        <div className="container  position-relative mt-2">
+          <button
+            className="btn btn-primary position-absolute t-2"
+            style={{ left: "10%" }}
+            onClick={() => navigate(-1)}
+          >
+            Назад
+          </button>
           <div className="row">
             <div className="col-md-9 offset-md-3 shadow p-4">
               <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
@@ -123,6 +130,7 @@ const CreateTeaItem = () => {
                   mainImagePath="img/noFoto/noImg.jpg"
                   type="tea"
                   onChange={handleGetImage}
+                  error={!data.images?.tea}
                 />
                 <SelectField
                   label="Выберите Бренд"
@@ -205,7 +213,6 @@ const CreateTeaItem = () => {
                   Создать
                 </button>
               </form>
-              <button onClick={() => navigate(-1)}>Back</button>
             </div>
           </div>
         </div>

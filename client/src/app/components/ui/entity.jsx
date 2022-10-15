@@ -44,7 +44,11 @@ const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
             items.map((item) => (
               <div key={item._id}>
                 {item.value}
-                <DeleteButton onDelete={onDelete} id={item._id} name={name} />
+                <DeleteButton
+                  onDelete={onDelete}
+                  itemId={item._id}
+                  name={name}
+                />
               </div>
             ))
           ) : (

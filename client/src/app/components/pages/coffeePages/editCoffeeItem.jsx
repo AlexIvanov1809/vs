@@ -16,6 +16,7 @@ import TextAreaField from "../../common/form/textAreaField";
 import { validator } from "../../../utils/validator";
 import ImageLoaderField from "../../common/form/imageLoaderField";
 import imageUpdater from "../../../utils/imageUpdater";
+import imageAndPriceValidatore from "../../../utils/imageAndPriceValidator";
 
 const EditCoffeeItem = () => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ const EditCoffeeItem = () => {
   const [data, setData] = useState();
   const [image, setImage] = useState();
   const [errors, setErrors] = useState({});
+  const [err, setErr] = useState({});
   useEffect(() => {
     if (currentCoffeeItem) {
       const price = {
@@ -85,10 +87,14 @@ const EditCoffeeItem = () => {
 
   useEffect(() => {
     validate();
-  }, [data]);
+  }, [data, image]);
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
+    if (data) {
+      const err = imageAndPriceValidatore(image, data);
+      setErr(err);
+    }
     setErrors(errors);
   };
 
@@ -103,7 +109,8 @@ const EditCoffeeItem = () => {
   const back = () => {
     navigate(-1);
   };
-  const isValid = Object.keys(errors).length === 0;
+  const isValid =
+    Object.keys(errors).length === 0 && Object.keys(err).length === 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -129,6 +136,13 @@ const EditCoffeeItem = () => {
       <>
         {data ? (
           <div className="container mt-5 position-relative">
+            <button
+              className="btn btn-primary position-absolute t-2"
+              style={{ left: "10%" }}
+              onClick={() => navigate(-1)}
+            >
+              Назад
+            </button>
             <div className="row">
               <div className="col-md-9 offset-md-3 shadow p-4">
                 <label className="fw-700 fs-3 mb-2">Изменить карточку</label>
@@ -142,6 +156,7 @@ const EditCoffeeItem = () => {
                       }
                       type="quarter"
                       onChange={handleGetImage}
+                      error={!!err.all || !!err.quarter}
                       remove={true}
                     />
                     <ImageLoaderField
@@ -152,6 +167,7 @@ const EditCoffeeItem = () => {
                       }
                       type="kg"
                       onChange={handleGetImage}
+                      error={!!err.all || !!err.kg}
                       remove={true}
                     />
                     <ImageLoaderField
@@ -162,6 +178,7 @@ const EditCoffeeItem = () => {
                       }
                       type="drip"
                       onChange={handleGetImage}
+                      error={!!err.all || !!err.drip}
                       remove={true}
                     />
                   </div>
@@ -249,6 +266,7 @@ const EditCoffeeItem = () => {
                       type="text"
                       value={data.priceQuarter || ""}
                       onChange={handleChange}
+                      error={err.all || err.quarter}
                     />
                     <TextForm
                       className="w-25"
@@ -257,6 +275,7 @@ const EditCoffeeItem = () => {
                       type="text"
                       value={data.priceKg || ""}
                       onChange={handleChange}
+                      error={err.all || err.kg}
                     />
                     <TextForm
                       className="w-25"
@@ -265,6 +284,7 @@ const EditCoffeeItem = () => {
                       type="text"
                       value={data.priceDrip || ""}
                       onChange={handleChange}
+                      error={err.all || err.drip}
                     />
                   </div>
                   <CheckBoxField
@@ -282,8 +302,6 @@ const EditCoffeeItem = () => {
                     Изменить
                   </button>
                 </form>
-
-                <button onClick={() => navigate(-1)}>Back</button>
               </div>
             </div>
           </div>

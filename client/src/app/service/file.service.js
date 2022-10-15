@@ -1,56 +1,29 @@
-const hostURL = "http://localhost:8080/venditore/files/";
-// const params = new URLSearchParams();
+import httpService from "./http.service";
+
+const fileEndpoint = "files/";
 
 const fileService = {
   create: async (payload, key) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", payload);
+    const formData = new FormData();
+    formData.append("file", payload);
 
-      const res = await fetch(hostURL + key, {
-        method: "POST",
-        body: formData
-      });
-      if (!res.ok) {
-        throw new Error("Error");
-      }
-      return await res.json();
-    } catch (error) {
-      console.log(error);
-    }
+    const { data } = await httpService.post(fileEndpoint + key, formData);
+
+    return data;
   },
 
-  edit: async (payload, data) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", payload);
+  edit: async (payload, dat) => {
+    const formData = new FormData();
+    formData.append("file", payload);
 
-      const res = await fetch(hostURL + data._id, {
-        method: "PATCH",
-        body: formData
-      });
-      if (!res.ok) {
-        throw new Error("Error");
-      }
+    const { data } = await httpService.patch(fileEndpoint + dat._id, formData);
 
-      return await res.json();
-    } catch (error) {
-      console.log(error);
-    }
+    return data;
   },
   remove: async (payload) => {
-    // params.set("data", payload._id);
-    try {
-      const res = await fetch(hostURL + payload._id, {
-        method: "DELETE"
-      });
-      if (!res.ok) {
-        throw new Error("Error");
-      }
-      return await res.json();
-    } catch (error) {
-      console.log(error);
-    }
+    const { data } = await httpService.delete(fileEndpoint + payload._id);
+
+    return data;
   }
 };
 

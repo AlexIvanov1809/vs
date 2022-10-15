@@ -13,12 +13,12 @@ import TextAreaField from "../../common/form/textAreaField";
 import { validator } from "../../../utils/validator";
 import ImageLoaderField from "../../common/form/imageLoaderField";
 import imageLoader from "../../../utils/imageLoader";
+import imageAndPriceValidatore from "../../../utils/imageAndPriceValidator";
 
 const CreateCoffeeItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [image, setImage] = useState();
-  const [data, setData] = useState({
+  const defaultData = {
     images: {
       quarter: {},
       kg: {},
@@ -37,8 +37,11 @@ const CreateCoffeeItem = () => {
     priceKg: "",
     priceDrip: "",
     active: true
-  });
+  };
+  const [image, setImage] = useState();
+  const [data, setData] = useState(defaultData);
   const [errors, setErrors] = useState({});
+  const [err, setErr] = useState({});
   const validatorConfig = {
     brand: {
       isRequired: { message: "Поле необходимое для заполнения" }
@@ -65,10 +68,12 @@ const CreateCoffeeItem = () => {
 
   useEffect(() => {
     validate();
-  }, [data]);
+  }, [data, image]);
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
+    const err = imageAndPriceValidatore(image, data);
+    setErr(err);
     setErrors(errors);
   };
 
@@ -98,22 +103,7 @@ const CreateCoffeeItem = () => {
   };
 
   const clearForm = () => {
-    setData({
-      images: { quarter: {}, kg: {}, drip: {} },
-      acidity: 0,
-      brand: "",
-      country: "",
-      density: 0,
-      description: "",
-      sortName: "",
-      kind: "",
-      method: "",
-      preparationMethod: "",
-      priceQuarter: "",
-      priceKg: "",
-      priceDrip: "",
-      active: true
-    });
+    setData(defaultData);
   };
 
   const back = () => {
@@ -121,7 +111,8 @@ const CreateCoffeeItem = () => {
     clearForm();
   };
 
-  const isValid = Object.keys(errors).length === 0;
+  const isValid =
+    Object.keys(errors).length === 0 && Object.keys(err).length === 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,7 +129,6 @@ const CreateCoffeeItem = () => {
     delete data.priceDrip;
     delete data.priceKg;
     delete data.priceQuarter;
-    console.log(data);
 
     dispatch(createNewCoffeeItem(data, back));
   };
@@ -148,6 +138,13 @@ const CreateCoffeeItem = () => {
     return (
       <>
         <div className="container mt-5 position-relative">
+          <button
+            className="btn btn-primary position-absolute t-2"
+            style={{ left: "10%" }}
+            onClick={() => navigate(-1)}
+          >
+            Назад
+          </button>
           <div className="row">
             <div className="col-md-9 offset-md-3 shadow p-4">
               <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
@@ -157,16 +154,22 @@ const CreateCoffeeItem = () => {
                     mainImagePath="img/noFoto/noImg.jpg"
                     type="quarter"
                     onChange={handleGetImage}
+                    error={!!err.all || !!err.quarter}
+                    remove={true}
                   />
                   <ImageLoaderField
                     mainImagePath="img/noFoto/noImg.jpg"
                     type="kg"
                     onChange={handleGetImage}
+                    error={!!err.all || !!err.kg}
+                    remove={true}
                   />
                   <ImageLoaderField
                     mainImagePath="img/noFoto/noImg.jpg"
                     type="drip"
                     onChange={handleGetImage}
+                    error={!!err.all || !!err.drip}
+                    remove={true}
                   />
                 </div>
                 <SelectField
@@ -253,6 +256,7 @@ const CreateCoffeeItem = () => {
                     type="text"
                     value={data.priceQuarter || ""}
                     onChange={handleChange}
+                    error={err.all || err.quarter}
                   />
                   <TextForm
                     className="w-25"
@@ -261,6 +265,7 @@ const CreateCoffeeItem = () => {
                     type="text"
                     value={data.priceKg || ""}
                     onChange={handleChange}
+                    error={err.all || err.kg}
                   />
                   <TextForm
                     className="w-25"
@@ -269,6 +274,7 @@ const CreateCoffeeItem = () => {
                     type="text"
                     value={data.priceDrip || ""}
                     onChange={handleChange}
+                    error={err.all || err.drip}
                   />
                 </div>
                 <CheckBoxField
@@ -286,7 +292,6 @@ const CreateCoffeeItem = () => {
                   Создать
                 </button>
               </form>
-              <button onClick={() => navigate(-1)}>Back</button>
             </div>
           </div>
         </div>

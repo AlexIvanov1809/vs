@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const ImageLoaderField = ({ mainImagePath, type, onChange, remove }) => {
+const ImageLoaderField = ({ mainImagePath, type, onChange, remove, error }) => {
   const [imgUrl, setImgUrl] = useState();
   const reader = new FileReader();
   reader.onloadend = () => {
@@ -50,6 +50,11 @@ const ImageLoaderField = ({ mainImagePath, type, onChange, remove }) => {
           </div>
         )}
       </div>
+      {error && (
+        <p className="text-danger">
+          Поле необходимое для заполнения вместе с ценой
+        </p>
+      )}
     </div>
   );
 };
@@ -58,7 +63,8 @@ ImageLoaderField.propTypes = {
   mainImagePath: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  remove: PropTypes.bool
+  remove: PropTypes.bool,
+  error: PropTypes.bool
 };
 
 export default ImageLoaderField;
