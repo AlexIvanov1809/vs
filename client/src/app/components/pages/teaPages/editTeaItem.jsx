@@ -87,8 +87,10 @@ const EditTeaItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const update = await imageUpdater(image, data);
-    data.images = update;
+    if (image) {
+      const update = await imageUpdater(image, data);
+      data.images = update;
+    }
     dispatch(editTeaItem(data, back));
   };
   if (!brands) {

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Table from "./table";
 
-const TeaTable = ({ teaItems }) => {
+const TeaTable = ({ teaItems, onSort, selectedSort }) => {
   const columns = {
     brand: {
       path: "brand",
@@ -34,11 +34,21 @@ const TeaTable = ({ teaItems }) => {
       component: (item) => (item.active ? <p>Активный</p> : <p>Неактивен</p>)
     }
   };
-  return <Table columns={columns} data={teaItems} type="tea" />;
+  return (
+    <Table
+      columns={columns}
+      data={teaItems}
+      onSort={onSort}
+      selectedSort={selectedSort}
+      type="tea"
+    />
+  );
 };
 
 TeaTable.propTypes = {
-  teaItems: PropTypes.array
+  teaItems: PropTypes.array,
+  onSort: PropTypes.func,
+  selectedSort: PropTypes.object
 };
 
 export default TeaTable;

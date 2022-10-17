@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Entity from "../../ui/entity";
@@ -28,6 +28,7 @@ import {
   loadTeaPackagesList,
   teaPackagesRemove
 } from "../../../store/teaItems/teaPackages";
+import _ from "lodash";
 
 const AdminTeaPage = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const AdminTeaPage = () => {
   const teaItems = useSelector(getTeaItemsList());
   const teaBrands = useSelector(getTeaBrandsList());
   const teaPackages = useSelector(getTeaPackagesList());
+  const [sortBy, setSortBy] = useState({ path: "brand", order: "asc" });
 
   const handleDelete = (id, name) => {
     const items = {
@@ -53,6 +55,11 @@ const AdminTeaPage = () => {
     };
     dispatch(items[name]);
   };
+
+  const handleSort = (item) => {
+    setSortBy(item);
+  };
+  const sortedItems = _.orderBy(teaItems, [sortBy.path], [sortBy.order]);
 
   const handleSubmit = (value) => {
     const ItemName = Object.keys(value);
@@ -103,7 +110,11 @@ const AdminTeaPage = () => {
         </button>
       </div>
       {!teaItemsLoading ? (
-        <TeaTable teaItems={teaItems} />
+        <TeaTable
+          teaItems={sortedItems}
+          onSort={handleSort}
+          selectedSort={sortBy}
+        />
       ) : (
         <div className="d-flex justify-content-center w-100 mt-5">
           <div className="spinner-border text-primary" role="status">

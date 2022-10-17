@@ -21,7 +21,7 @@ const CountersList = () => {
   const [hiddenItem, setHidden] = useState(true);
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState();
-  const [minOrder, setMinOrder] = useState("");
+  // const [minOrder, setMinOrder] = useState("");
   useEffect(() => {
     if (orderItems.length > 0) {
       setItems(orderItems);
@@ -49,12 +49,14 @@ const CountersList = () => {
     localStorageSevice.removeBasketItems();
   };
   const handleShow = () => {
-    if (total >= 1500) {
-      setHidden(false);
-      setMinOrder("");
-    } else {
-      setMinOrder("Минимальный  заказ 1500 руб.");
-    }
+    setHidden(false);
+
+    // if (total >= 1500) {
+    //   setHidden(false);
+    //   setMinOrder("");
+    // } else {
+    //   setMinOrder("Минимальный  заказ для доставки 1000 руб.");
+    // }
   };
 
   const handleReset = () => {
@@ -91,7 +93,7 @@ const CountersList = () => {
             {total} &#8381;
           </span>
         </h5>
-        {minOrder && <p className="text-danger">{minOrder}</p>}
+        <p className="">Минимальный заказ для доставки 1000 руб.</p>
         <OrderSubmit hid={hiddenItem} onSubmit={handleSubmit} />
         <button className="btn btn-primary btn-sm m-2" onClick={handleReset}>
           Reset

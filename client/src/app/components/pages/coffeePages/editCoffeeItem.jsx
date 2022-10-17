@@ -114,8 +114,10 @@ const EditCoffeeItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const update = await imageUpdater(image, data);
-    data.images = update;
+    if (image) {
+      const update = await imageUpdater(image, data);
+      data.images = update;
+    }
     data.price = {
       quarter: data.priceQuarter,
       kg: data.priceKg,

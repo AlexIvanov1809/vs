@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Price from "../price";
 import Table from "./table";
 
-const CoffeeTable = ({ coffeeItems }) => {
+const CoffeeTable = ({ coffeeItems, onSort, selectedSort }) => {
   const columns = {
     brand: {
       path: "brand",
@@ -34,29 +34,41 @@ const CoffeeTable = ({ coffeeItems }) => {
     //   name: "Описание"
     // },
     acidity: {
-      path: "acidity",
-      name: "Кислотность"
+      // path: "acidity",
+      name: "Кислотность",
+      component: (item) => <p>{item.acidity}</p>
     },
     density: {
-      path: "density",
-      name: "Плотность"
+      // path: "density",
+      name: "Плотность",
+      component: (item) => <p>{item.density}</p>
     },
     price: {
-      path: "price",
+      // path: "price",
       name: "Стоимость",
       component: (item) => <Price price={item.price} />
     },
     active: {
       path: "active",
-      name: "",
+      name: "Активность",
       component: (item) => (item.active ? <p>Активный</p> : <p>Неактивен</p>)
     }
   };
-  return <Table columns={columns} data={coffeeItems} type="coffee" />;
+  return (
+    <Table
+      columns={columns}
+      data={coffeeItems}
+      onSort={onSort}
+      selectedSort={selectedSort}
+      type="coffee"
+    />
+  );
 };
 
 CoffeeTable.propTypes = {
-  coffeeItems: PropTypes.array
+  coffeeItems: PropTypes.array,
+  onSort: PropTypes.func,
+  selectedSort: PropTypes.object
 };
 
 export default CoffeeTable;

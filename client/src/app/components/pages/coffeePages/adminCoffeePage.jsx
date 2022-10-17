@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,6 +35,7 @@ import {
 } from "../../../store/coffeeItems/kinds";
 import CoffeeTable from "../../common/table/coffeeTable";
 import Entity from "../../ui/entity";
+import _ from "lodash";
 
 const AdminCoffeePage = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const AdminCoffeePage = () => {
   const kinds = useSelector(getKindsList());
   const kindsLoadingStatus = useSelector(getKindsLoadingStatus());
   const coffeeItems = useSelector(getCoffeeItemsList());
+  const [sortBy, setSortBy] = useState({ path: "brand", order: "asc" });
 
   const handleDelete = (id, name) => {
     const items = {
@@ -65,6 +67,12 @@ const AdminCoffeePage = () => {
     };
     dispatch(items[name]);
   };
+
+  const handleSort = (item) => {
+    setSortBy(item);
+  };
+
+  const sortedItems = _.orderBy(coffeeItems, [sortBy.path], [sortBy.order]);
 
   const handleSubmit = (value) => {
     const ItemName = Object.keys(value);
@@ -124,7 +132,11 @@ const AdminCoffeePage = () => {
         </button>
       </div>
       {!coffeeItemsLoading ? (
-        <CoffeeTable coffeeItems={coffeeItems} />
+        <CoffeeTable
+          coffeeItems={sortedItems}
+          onSort={handleSort}
+          selectedSort={sortBy}
+        />
       ) : (
         <div className="d-flex justify-content-center w-100 mt-5">
           <div className="spinner-border text-primary" role="status">
