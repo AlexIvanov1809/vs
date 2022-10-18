@@ -11,7 +11,7 @@ const OrderSubmit = ({ hid, onSubmit }) => {
   };
   const [hiddenItem, setHidden] = useState(hid);
   const [data, setData] = useState(defaultData);
-  const [errors, setErrors] = useState(defaultData);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     hid ? setHidden(true) : setHidden(false);
@@ -42,6 +42,7 @@ const OrderSubmit = ({ hid, onSubmit }) => {
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
+  const isValid = Object.keys(errors).length === 0;
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(data);
@@ -76,7 +77,9 @@ const OrderSubmit = ({ hid, onSubmit }) => {
           onChange={handleChange}
           error={errors.address}
         />
-        <button className="btn btn-primary w-100">Оформить</button>
+        <button disabled={!isValid} className="btn btn-primary w-100">
+          Оформить
+        </button>
       </form>
     </div>
   );

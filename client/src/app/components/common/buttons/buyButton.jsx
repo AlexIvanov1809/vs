@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const BuyButton = ({ onChange }) => {
+const BuyButton = ({ onChange, bought, onOrder }) => {
   const [quantity, setQuantity] = useState(1);
   const handleChange = (counter) => {
     setQuantity(quantity + counter);
@@ -9,6 +9,7 @@ const BuyButton = ({ onChange }) => {
 
   const handleSubmit = (qty) => {
     onChange(qty);
+    onOrder("ordered");
   };
 
   return (
@@ -34,14 +35,16 @@ const BuyButton = ({ onChange }) => {
         onClick={() => handleSubmit(quantity)}
         className="btn btn-primary"
       >
-        Добавить
+        {bought ? "В корзине" : "Купить"}
       </button>
     </div>
   );
 };
 
 BuyButton.propTypes = {
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onOrder: PropTypes.func,
+  bought: PropTypes.bool
 };
 
 export default BuyButton;

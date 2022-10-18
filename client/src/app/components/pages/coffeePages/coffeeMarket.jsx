@@ -12,11 +12,14 @@ import { loadbrandsList } from "../../../store/coffeeItems/brands";
 import { loadmethodsList } from "../../../store/coffeeItems/methods";
 import { loadkindsList } from "../../../store/coffeeItems/kinds";
 import CoffeeSideBar from "../../common/coffeeSidebar";
+import { Link } from "react-router-dom";
 
 const CoffeeMarket = () => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [hidden, setHidden] = useState(true);
+  const [firstOrder, setFirstOrder] = useState(true);
   const [filter, setFilter] = useState([]);
   const [selectedItems, setSelectedItems] = useState({
     brand: [],
@@ -96,6 +99,18 @@ const CoffeeMarket = () => {
     setFilter(selected.kind);
   }, [selectedItems]);
 
+  const handleOrder = (type) => {
+    console.log(type);
+    if (!firstOrder) {
+      if (type === "continue") {
+        setHidden(true);
+        setFirstOrder(false);
+      } else {
+        setHidden(false);
+      }
+    }
+  };
+
   const handleCurrentPageSet = (page) => {
     setCurrentPage(page);
   };
@@ -125,42 +140,66 @@ const CoffeeMarket = () => {
   const itemsOnPage = paginate(filtereditems, currentPage, pageSize);
 
   return (
-    <div className="d-flex">
-      <CoffeeSideBar onSelect={handleSelectedItems} />
-      <div>
-        {!coffeeItemsLoading ? (
-          <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
-            <input
-              className="w-50 mt-2"
-              type="text"
-              name="searchQuery"
-              placeholder="Search..."
-              onChange={handleSearchQuery}
-              value={searchQuery}
-            />
-            <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
-              {itemsOnPage.map((item) => (
-                <CoffeeCardItem key={item._id} coffeeItem={item} />
-              ))}
-              <div className="w-100">
-                <Pagination
-                  itemsQty={itemsQty}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={handleCurrentPageSet}
-                />
+    <>
+      <div className="d-flex position-relative">
+        <CoffeeSideBar onSelect={handleSelectedItems} />
+        <div>
+          {!coffeeItemsLoading ? (
+            <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
+              <input
+                className="w-50 mt-2"
+                type="text"
+                name="searchQuery"
+                placeholder="Search..."
+                onChange={handleSearchQuery}
+                value={searchQuery}
+              />
+              <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
+                {itemsOnPage.map((item) => (
+                  <CoffeeCardItem
+                    key={item._id}
+                    coffeeItem={item}
+                    onOrder={handleOrder}
+                  />
+                ))}
+                <div className="w-100">
+                  <Pagination
+                    itemsQty={itemsQty}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={handleCurrentPageSet}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-center w-100 mt-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+          ) : (
+            <div className="d-flex justify-content-center w-100 mt-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+      <div
+        className={
+          hidden
+            ? "d-none"
+            : "position-absolute top-0 start-0 d-flex justify-content-center align-items-center bg-dark bg-opacity-25"
+        }
+        style={{ width: "100%", height: "100%" }}
+      >
+        <div className="m-auto text-center bg-white p-4 zindex-dropdown">
+          <p>ТОВАР ДОБАВЛЕН В КОРЗИНУ</p>
+          <Link to={"/basket"} className="btn btn-primary">
+            Перейти в корзину
+          </Link>
+          <button onClick={() => handleOrder("continue")}>
+            Продолжить покупки
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 

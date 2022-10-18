@@ -13,12 +13,13 @@ import OrderSubmit from "../../ui/orderSubmit";
 import localStorageSevice from "../../../service/localStorage.service";
 import messageConverter from "../../../utils/messageConverter";
 import orderService from "../../../service/order.service";
+import { Link } from "react-router-dom";
 
 const CountersList = () => {
   const dispatch = useDispatch();
   const orderItems = useSelector(getStore());
   const localStorageorderItems = localStorageSevice.getBasketItems();
-  const [hiddenItem, setHidden] = useState(true);
+  // const [hiddenItem, setHidden] = useState(true);
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState();
   // const [minOrder, setMinOrder] = useState("");
@@ -48,20 +49,20 @@ const CountersList = () => {
     dispatch(deleteItem(id));
     localStorageSevice.removeBasketItems();
   };
-  const handleShow = () => {
-    setHidden(false);
+  // const handleShow = () => {
+  //   setHidden(false);
 
-    // if (total >= 1500) {
-    //   setHidden(false);
-    //   setMinOrder("");
-    // } else {
-    //   setMinOrder("Минимальный  заказ для доставки 1000 руб.");
-    // }
-  };
+  // if (total >= 1500) {
+  //   setHidden(false);
+  //   setMinOrder("");
+  // } else {
+  //   setMinOrder("Минимальный  заказ для доставки 1000 руб.");
+  // }
+  // };
 
   const handleReset = () => {
     localStorageSevice.removeBasketItems();
-    setHidden(true);
+    // setHidden(true);
     dispatch(resetBasket());
   };
 
@@ -94,18 +95,30 @@ const CountersList = () => {
           </span>
         </h5>
         <p className="">Минимальный заказ для доставки 1000 руб.</p>
-        <OrderSubmit hid={hiddenItem} onSubmit={handleSubmit} />
-        <button className="btn btn-primary btn-sm m-2" onClick={handleReset}>
+        <OrderSubmit
+          // hid={hiddenItem}
+          onSubmit={handleSubmit}
+        />
+        <button className="btn btn-danger btn-sm m-2" onClick={handleReset}>
           Reset
         </button>
-        <button
+        {/* <button
           className="btn btn-primary btn-sm m-2"
           onClick={handleShow}
           hidden={!hiddenItem}
         >
           Оформить заказ
-        </button>
+        </button> */}
       </div>
+    );
+  } else {
+    return (
+      <>
+        <p>Пустая корзина</p>
+        <Link className="btn btn-primary" to={"/market/coffee"}>
+          Перейти в каталог
+        </Link>
+      </>
     );
   }
 };

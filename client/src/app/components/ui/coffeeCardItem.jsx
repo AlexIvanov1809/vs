@@ -12,11 +12,12 @@ import {
   storeAdding
 } from "../../store/consumerBasket";
 
-const CoffeeCardItem = ({ coffeeItem }) => {
+const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   const dispatch = useDispatch();
   const basket = useSelector(getStore());
 
   const [name, setName] = useState();
+  const [bought, setBought] = useState(false);
   const [bean, setBean] = useState({ name: "beans", value: "Зерно" });
   const beans = [
     { _id: 1, value: "под чашку" },
@@ -38,6 +39,16 @@ const CoffeeCardItem = ({ coffeeItem }) => {
       setName("quarter");
     }
   }, []);
+
+  useEffect(() => {
+    basket.forEach((i) => {
+      if (i._id.split(".")[0] === coffeeItem._id) {
+        setBought(true);
+      } else {
+        setBought(false);
+      }
+    });
+  }, [basket]);
 
   const HandleChangeImg = (itemName) => {
     setName(itemName);
@@ -62,7 +73,7 @@ const CoffeeCardItem = ({ coffeeItem }) => {
         break;
     }
     const order = {
-      _id: coffeeItem._id + name + bean.value,
+      _id: coffeeItem._id + "." + name + bean.value,
       [bean.name]: bean.value,
       name: coffeeItem.name,
       brand: coffeeItem.brand,
@@ -120,7 +131,11 @@ const CoffeeCardItem = ({ coffeeItem }) => {
         </div>
         <div className="d-flex justify-content-between align-items-center">
           <PriceItem item={coffeeItem} onChange={HandleChangeImg} />
-          <BuyButton onChange={handleSubmit} />
+          <BuyButton
+            bought={bought}
+            onOrder={onOrder}
+            onChange={handleSubmit}
+          />
         </div>
       </div>
     </>
@@ -128,7 +143,8 @@ const CoffeeCardItem = ({ coffeeItem }) => {
 };
 
 CoffeeCardItem.propTypes = {
-  coffeeItem: PropTypes.object
+  coffeeItem: PropTypes.object,
+  onOrder: PropTypes.func
 };
 
 export default CoffeeCardItem;
