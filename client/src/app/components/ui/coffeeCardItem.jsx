@@ -9,13 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editItemBasket,
   getStore,
+  loadBasketList,
   storeAdding
 } from "../../store/consumerBasket";
+import localStorageSevice from "../../service/localStorage.service";
 
 const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   const dispatch = useDispatch();
-  const basket = useSelector(getStore());
-
   const [name, setName] = useState();
   const [bought, setBought] = useState(false);
   const [bean, setBean] = useState({ name: "beans", value: "Зерно" });
@@ -25,6 +25,7 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
     { _id: 3, value: "под эспрессо" }
   ];
   useEffect(() => {
+    dispatch(loadBasketList());
     if (!coffeeItem.price.quarter) {
       if (!coffeeItem.price.kg) {
         if (!coffeeItem.price.drip) {
@@ -39,13 +40,14 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
       setName("quarter");
     }
   }, []);
-
+  const basket = useSelector(getStore());
   useEffect(() => {
+    if (basket.length > 0) {
+      localStorageSevice.setBasketItems(basket);
+    }
     basket.forEach((i) => {
       if (i._id.split(".")[0] === coffeeItem._id) {
-        setBought(true);
-      } else {
-        setBought(false);
+        return setBought(true);
       }
     });
   }, [basket]);

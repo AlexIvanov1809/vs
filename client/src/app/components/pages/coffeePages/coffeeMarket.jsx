@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CoffeeCardItem from "../../ui/coffeeCardItem";
+import PropTypes from "prop-types";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/pagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,14 +13,12 @@ import { loadbrandsList } from "../../../store/coffeeItems/brands";
 import { loadmethodsList } from "../../../store/coffeeItems/methods";
 import { loadkindsList } from "../../../store/coffeeItems/kinds";
 import CoffeeSideBar from "../../common/coffeeSidebar";
-import { Link } from "react-router-dom";
 
-const CoffeeMarket = () => {
+const CoffeeMarket = ({ handleOrder }) => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [hidden, setHidden] = useState(true);
-  const [firstOrder, setFirstOrder] = useState(true);
+
   const [filter, setFilter] = useState([]);
   const [selectedItems, setSelectedItems] = useState({
     brand: [],
@@ -27,7 +26,7 @@ const CoffeeMarket = () => {
     method: [],
     kind: []
   });
-  const pageSize = 6;
+  const pageSize = 12;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -99,18 +98,6 @@ const CoffeeMarket = () => {
     setFilter(selected.kind);
   }, [selectedItems]);
 
-  const handleOrder = (type) => {
-    console.log(type);
-    if (!firstOrder) {
-      if (type === "continue") {
-        setHidden(true);
-        setFirstOrder(false);
-      } else {
-        setHidden(false);
-      }
-    }
-  };
-
   const handleCurrentPageSet = (page) => {
     setCurrentPage(page);
   };
@@ -181,26 +168,12 @@ const CoffeeMarket = () => {
           )}
         </div>
       </div>
-      <div
-        className={
-          hidden
-            ? "d-none"
-            : "position-absolute top-0 start-0 d-flex justify-content-center align-items-center bg-dark bg-opacity-25"
-        }
-        style={{ width: "100%", height: "100%" }}
-      >
-        <div className="m-auto text-center bg-white p-4 zindex-dropdown">
-          <p>ТОВАР ДОБАВЛЕН В КОРЗИНУ</p>
-          <Link to={"/basket"} className="btn btn-primary">
-            Перейти в корзину
-          </Link>
-          <button onClick={() => handleOrder("continue")}>
-            Продолжить покупки
-          </button>
-        </div>
-      </div>
     </>
   );
+};
+
+CoffeeMarket.propTypes = {
+  handleOrder: PropTypes.func
 };
 
 export default CoffeeMarket;

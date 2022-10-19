@@ -35,7 +35,11 @@ const BuyButton = ({ onChange, bought, onOrder }) => {
         onClick={() => handleSubmit(quantity)}
         className="btn btn-primary"
       >
-        {bought ? "В корзине" : "Купить"}
+        {bought ? (
+          <i className="bi bi-plus-circle fst-normal"> В корзину</i>
+        ) : (
+          "Купить"
+        )}
       </button>
     </div>
   );

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import localStorageSevice from "../service/localStorage.service";
 
 const consumerBusketSlice = createSlice({
   name: "consumerBusket",
@@ -6,6 +7,9 @@ const consumerBusketSlice = createSlice({
     entities: []
   },
   reducers: {
+    itemRecived: (state, action) => {
+      state.entities = action.payload;
+    },
     itemAdded: (state, action) => {
       state.entities.push(action.payload);
     },
@@ -28,7 +32,21 @@ const consumerBusketSlice = createSlice({
 });
 
 const { reducer: consumerBusketreducer, actions } = consumerBusketSlice;
-const { itemAdded, itemEdited, itemRemoved, itemReset, itemBackuped } = actions;
+const {
+  itemRecived,
+  itemAdded,
+  itemEdited,
+  itemRemoved,
+  itemReset,
+  itemBackuped
+} = actions;
+
+export const loadBasketList = () => async (dispatch) => {
+  const content = localStorageSevice.getBasketItems();
+  if (content) {
+    dispatch(itemRecived(content));
+  }
+};
 
 export const storeAdding = (payload) => (dispatch) => {
   dispatch(itemAdded(payload));

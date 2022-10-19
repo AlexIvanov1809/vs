@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "../../common/pagination";
+import PropTypes from "prop-types";
 import { paginate } from "../../../utils/pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { loadTeaBrandsList } from "../../../store/teaItems/teaBrands";
@@ -12,7 +13,7 @@ import {
 import TeaCardItem from "../../ui/teaCardItem";
 import TeaSideBar from "../../common/teaSidebar";
 
-const TeaMarket = () => {
+const TeaMarket = ({ handleOrder }) => {
   const [teaAssortment, setTeaAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,7 +23,7 @@ const TeaMarket = () => {
     type: [],
     package: []
   });
-  const pageSize = 6;
+  const pageSize = 12;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -125,7 +126,11 @@ const TeaMarket = () => {
             />
             <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
               {itemsOnPage.map((item) => (
-                <TeaCardItem key={item._id} teaItem={item} />
+                <TeaCardItem
+                  key={item._id}
+                  teaItem={item}
+                  onOrder={handleOrder}
+                />
               ))}
               <div className="w-100">
                 <Pagination
@@ -147,6 +152,10 @@ const TeaMarket = () => {
       </div>
     </div>
   );
+};
+
+TeaMarket.propTypes = {
+  handleOrder: PropTypes.func
 };
 
 export default TeaMarket;

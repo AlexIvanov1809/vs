@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import BuyButton from "../common/buttons/buyButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editItemBasket,
   getStore,
+  loadBasketList,
   storeAdding
 } from "../../store/consumerBasket";
 import currentPrice from "../../utils/currentPrice";
+import localStorageSevice from "../../service/localStorage.service";
 
-const TeaCardItem = ({ teaItem }) => {
+const TeaCardItem = ({ teaItem, onOrder }) => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadBasketList());
+  }, []);
   const basket = useSelector(getStore());
+  useEffect(() => {
+    if (basket.length > 0) {
+      localStorageSevice.setBasketItems(basket);
+    }
+    basket.forEach((i) => {
+      if (i._id === teaItem._id) {
+        return setBought(true);
+      }
+    });
+  }, [basket]);
   const price = currentPrice(teaItem);
-
+  const [bought, setBought] = useState(false);
   const unit = teaItem.weight === "шт" ? teaItem.weight : teaItem.weight + " г";
   const handleSubmit = (item) => {
     let same = false;
@@ -53,11 +69,20 @@ const TeaCardItem = ({ teaItem }) => {
         <div className="w-100 text-start">
           <p>{unit}</p>
           <p>{price} &#8381;</p>
-          <BuyButton onChange={handleSubmit} />
+          <BuyButton
+            onChange={handleSubmit}
+            bought={bought}
+            onOrder={onOrder}
+          />
         </div>
       </div>
     </div>
   );
+};
+
+TeaCardItem.propTypes = {
+  teaItem: PropTypes.object,
+  onOrder: PropTypes.func
 };
 
 export default TeaCardItem;
