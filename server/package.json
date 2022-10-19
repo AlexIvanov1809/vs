@@ -4,8 +4,9 @@
   "description": "venditore server",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "nodemon index.js"
+    "dev": "cross-env NODE_ENV=development nodemon app.js",
+		"start": "cross-env NODE_ENV=production node app.js"
+
   },
   "author": "AAI",
   "license": "ISC",

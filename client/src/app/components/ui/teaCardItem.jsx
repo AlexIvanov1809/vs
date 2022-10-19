@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editItemBasket,
   getStore,
-  loadBasketList,
   storeAdding
 } from "../../store/consumerBasket";
 import currentPrice from "../../utils/currentPrice";
@@ -13,9 +12,7 @@ import localStorageSevice from "../../service/localStorage.service";
 
 const TeaCardItem = ({ teaItem, onOrder }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadBasketList());
-  }, []);
+  const [bought, setBought] = useState(false);
   const basket = useSelector(getStore());
   useEffect(() => {
     if (basket.length > 0) {
@@ -28,7 +25,7 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
     });
   }, [basket]);
   const price = currentPrice(teaItem);
-  const [bought, setBought] = useState(false);
+
   const unit = teaItem.weight === "шт" ? teaItem.weight : teaItem.weight + " г";
   const handleSubmit = (item) => {
     let same = false;

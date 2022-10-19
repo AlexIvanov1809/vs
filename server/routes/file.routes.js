@@ -1,7 +1,7 @@
 const Router = require("express");
 const router = new Router();
 const fs = require("fs");
-// const sharp = require("sharp");
+const sharp = require("sharp");
 const Image = require("../models/Image");
 
 router.post("/:key", async (req, res) => {
@@ -11,23 +11,22 @@ router.post("/:key", async (req, res) => {
     }
     const { key } = req.params;
     const path = `${__dirname}/../../client/public/img/marketItems/${key}/`;
+    // const path = `${__dirname}/../client/img/marketItems/${key}/`;
     const file = req.files.file;
-    newFileName = Date.now() + ".png";
-    file.mv(path + newFileName);
-    // await sharp(req.file.path)
-    //   .toFormat("jpeg")
-    //   .resize(200, 200)
-    //   .jpeg({
-    //     quality: 80,
-    //     chromaSubsampling: "4:4:4",
-    //   })
-    //   .toFile(path + newFileName, (err, info) => {
-    //     if (err) {
-    //       res.send(err);
-    //     } else {
-    //       res.send(info);
-    //     }
-    //   });
+    newFileName = Date.now() + ".jpeg";
+    // file.mv(path + newFileName);
+    await sharp(file.data)
+      .toFormat("jpeg")
+      .resize(200, 200)
+      .jpeg({
+        quality: 80,
+        chromaSubsampling: "4:4:4",
+      })
+      .toFile(path + newFileName, (err) => {
+        if (err) {
+          res.send(err);
+        }
+      });
 
     const newImage = await Image.create({
       name: newFileName,
