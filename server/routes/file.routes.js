@@ -48,7 +48,7 @@ router.patch("/:key", async (req, res) => {
     const { key } = req.params;
     const file = req.files.file;
     const image = await Image.findById(key);
-    const newFileName = Date.now() + "." + file.name.split(".")[1];
+    const newFileName = Date.now() + ".jpeg";
 
     await fs.unlink(image.straightPath + image.name, (err) => {
       if (err) {
@@ -59,7 +59,20 @@ router.patch("/:key", async (req, res) => {
     path.pop();
     path.push(newFileName);
 
-    file.mv(image.straightPath + newFileName);
+    await sharp(file.data)
+      .toFormat("jpeg")
+      .resize(200, 200)
+      .jpeg({
+        quality: 80,
+        chromaSubsampling: "4:4:4",
+      })
+      .toFile(image.straightPath + newFileName, (err) => {
+        if (err) {
+          res.send(err);
+        }
+      });
+
+    // file.mv(image.straightPath + newFileName);
     const updatedImage = await Image.findByIdAndUpdate(
       image._id,
       {

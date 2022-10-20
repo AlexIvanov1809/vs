@@ -38,3 +38,12 @@ code {
 	background-color: blue;
 	border-radius: 40px;
 }
+.entity-show {
+	height: 100%;
+	transition: height 0.3s ease;
+}
+.entity-hid {
+	height: 0;
+	overflow: hidden;
+	transition: height 0.3s ease;
+}

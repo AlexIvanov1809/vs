@@ -24,7 +24,7 @@ const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
   };
 
   return (
-    <>
+    <div className="card m-1" style={{ overflow: "hidden" }}>
       <div className="mx-2">
         <form className="d-flex align-items-end" onSubmit={handleSubmit}>
           <TextForm
@@ -38,31 +38,34 @@ const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
             <i className="bi bi-plus-circle"></i>
           </button>
         </form>
-
-        {!loading ? (
-          items ? (
-            items.map((item) => (
-              <div key={item._id}>
-                {item.value}
-                <DeleteButton
-                  onDelete={onDelete}
-                  itemId={item._id}
-                  name={name}
-                />
+        <div style={{ minHeight: "100%", overflow: "auto" }}>
+          <div className="card px-2 mb-1" style={{ height: "250px" }}>
+            {!loading ? (
+              items ? (
+                items.map((item) => (
+                  <div key={item._id}>
+                    {item.value}
+                    <DeleteButton
+                      onDelete={onDelete}
+                      itemId={item._id}
+                      name={name}
+                    />
+                  </div>
+                ))
+              ) : (
+                "Нет данных"
+              )
+            ) : (
+              <div className="d-flex justify-content-center w-100 mt-5">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
               </div>
-            ))
-          ) : (
-            "Нет данных"
-          )
-        ) : (
-          <div className="d-flex justify-content-center w-100 mt-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

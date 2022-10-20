@@ -146,7 +146,10 @@ const CreateCoffeeItem = () => {
             Назад
           </button>
           <div className="row">
-            <div className="col-md-9 offset-md-3 shadow p-4">
+            <div
+              className="col-md-9 offset-md-3 shadow p-4"
+              style={{ maxWidth: "750px" }}
+            >
               <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
               <form onSubmit={handleSubmit}>
                 <div className="d-flex">

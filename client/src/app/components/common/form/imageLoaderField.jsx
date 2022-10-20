@@ -25,12 +25,17 @@ const ImageLoaderField = ({ mainImagePath, type, onChange, remove, error }) => {
 
   return (
     <div className="container mt-4 mb-4">
-      <div className="card p-3 position-relative">
-        <label htmlFor={type} className="">
+      <div
+        className={
+          "card p-1 position-relative m-auto" + (error ? " border-danger" : "")
+        }
+        style={{ maxWidth: "200px", maxHeight: "200px" }}
+      >
+        <label htmlFor={type}>
           <img
             src={!imgUrl ? "../../" + mainImagePath : imgUrl}
             alt="No photo"
-            className="w-100 mt-2 mb-2"
+            className="img-fluid"
           />
         </label>
         <input

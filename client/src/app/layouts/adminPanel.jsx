@@ -22,7 +22,7 @@ const AdminPanel = () => {
   };
   if (userId) {
     return (
-      <>
+      <div className="container">
         <div className="d-flex text-start">
           <Link
             className={
@@ -47,7 +47,7 @@ const AdminPanel = () => {
           </Link>
         </div>
         {currentPage === "coffee" ? <AdminCoffeePage /> : <AdminTeaPage />}
-      </>
+      </div>
     );
   } else {
     return <Navigate to={"/login"} />;

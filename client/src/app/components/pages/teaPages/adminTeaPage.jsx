@@ -46,6 +46,7 @@ const AdminTeaPage = () => {
   const teaBrands = useSelector(getTeaBrandsList());
   const teaPackages = useSelector(getTeaPackagesList());
   const [sortBy, setSortBy] = useState({ path: "brand", order: "asc" });
+  const [show, setShow] = useState(false);
 
   const handleDelete = (id, name) => {
     const items = {
@@ -54,6 +55,9 @@ const AdminTeaPage = () => {
       teaPackages: teaPackagesRemove(id)
     };
     dispatch(items[name]);
+  };
+  const handleShow = () => {
+    setShow(!show);
   };
 
   const handleSort = (item) => {
@@ -77,31 +81,42 @@ const AdminTeaPage = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-end">
-        <div className="d-flex">
-          <Entity
-            loading={teaTypesLoading}
-            items={teaTypes}
-            label="Добавить вид чая"
-            name="teaTypes"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
-          <Entity
-            loading={teaBrandsLoading}
-            items={teaBrands}
-            label="Добавить Бренд"
-            name="teaBrands"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
-          <Entity
-            loading={teaPackagesLoading}
-            items={teaPackages}
-            label="Добавить вид упаковки"
-            name="teaPackages"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
+        <div className="card align-items-center p-1">
+          <div className={show ? "entity-show" : "entity-hid"}>
+            <div className="d-flex">
+              <Entity
+                loading={teaTypesLoading}
+                items={teaTypes}
+                label="Добавить вид чая"
+                name="teaTypes"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+              <Entity
+                loading={teaBrandsLoading}
+                items={teaBrands}
+                label="Добавить Бренд"
+                name="teaBrands"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+              <Entity
+                loading={teaPackagesLoading}
+                items={teaPackages}
+                label="Добавить вид упаковки"
+                name="teaPackages"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+            </div>
+          </div>
+          <button
+            className="badge bg-primary rounded-pill w-25"
+            style={{ border: "none" }}
+            onClick={handleShow}
+          >
+            <i className={show ? "bi bi-caret-up" : "bi bi-caret-down"}></i>
+          </button>
         </div>
         <button className="btn btn-white me-5 h-25">
           <Link className="text-primary fs-3" to={"/adminPanel/tea/create"}>

@@ -57,6 +57,7 @@ const AdminCoffeePage = () => {
   const kindsLoadingStatus = useSelector(getKindsLoadingStatus());
   const coffeeItems = useSelector(getCoffeeItemsList());
   const [sortBy, setSortBy] = useState({ path: "brand", order: "asc" });
+  const [show, setShow] = useState(false);
 
   const handleDelete = (id, name) => {
     const items = {
@@ -70,6 +71,9 @@ const AdminCoffeePage = () => {
 
   const handleSort = (item) => {
     setSortBy(item);
+  };
+  const handleShow = () => {
+    setShow(!show);
   };
 
   const sortedItems = _.orderBy(coffeeItems, [sortBy.path], [sortBy.order]);
@@ -91,39 +95,50 @@ const AdminCoffeePage = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-end">
-        <div className="d-flex">
-          <Entity
-            loading={brandsLoadingStatus}
-            items={brands}
-            label="Добавить Бренд"
-            name="brands"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
-          <Entity
-            loading={countriesLoadingStatus}
-            items={countries}
-            label="Добавить Страну"
-            name="countries"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
-          <Entity
-            loading={kindsLoadingStatus}
-            items={kinds}
-            label="Добавить Сорт"
-            name="kinds"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
-          <Entity
-            loading={methodsLoadingStatus}
-            items={methods}
-            label="Добавить Метод Обработки"
-            name="methods"
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
+        <div className="card align-items-center p-1">
+          <div className={show ? "entity-show" : "entity-hid"}>
+            <div className="d-flex">
+              <Entity
+                loading={brandsLoadingStatus}
+                items={brands}
+                label="Добавить Бренд"
+                name="brands"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+              <Entity
+                loading={countriesLoadingStatus}
+                items={countries}
+                label="Добавить Страну"
+                name="countries"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+              <Entity
+                loading={kindsLoadingStatus}
+                items={kinds}
+                label="Добавить Сорт"
+                name="kinds"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+              <Entity
+                loading={methodsLoadingStatus}
+                items={methods}
+                label="Добавить Метод Обработки"
+                name="methods"
+                onDelete={handleDelete}
+                onSubmit={handleSubmit}
+              />
+            </div>
+          </div>
+          <button
+            className="badge bg-primary rounded-pill w-25"
+            style={{ border: "none" }}
+            onClick={handleShow}
+          >
+            <i className={show ? "bi bi-caret-up" : "bi bi-caret-down"}></i>
+          </button>
         </div>
         <button className="btn btn-white me-5 h-25">
           <Link className="text-primary fs-3" to={"/adminPanel/coffee/create"}>
