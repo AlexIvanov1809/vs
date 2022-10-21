@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextForm from "../common/form/textForm";
 import PropTypes from "prop-types";
 import { validator } from "../../utils/validator";
 
-const OrderSubmit = ({ hid, onSubmit }) => {
+const OrderSubmit = ({ onSubmit }) => {
   const defaultData = {
     name: "",
     phone: "",
     address: ""
   };
-  const [hiddenItem, setHidden] = useState(hid);
+  // const [hiddenItem, setHidden] = useState(hid);
   const [data, setData] = useState(defaultData);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    hid ? setHidden(true) : setHidden(false);
-  }, [hid]);
+  // useEffect(() => {
+  //   hid ? setHidden(true) : setHidden(false);
+  // }, [hid]);
   const clear = () => {
     setData(defaultData);
   };
@@ -35,23 +35,26 @@ const OrderSubmit = ({ hid, onSubmit }) => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
   };
-  useEffect(() => {
-    validate();
-  }, [data]);
+  // useEffect(() => {
+  //   validate();
+  // }, [data]);
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
-  const isValid = Object.keys(errors).length === 0;
+  // const isValid = Object.keys(errors).length === 0;
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(data);
-    clear();
-    setHidden(true);
+    validate();
+    if (!errors) {
+      onSubmit(data);
+      clear();
+    }
+    // setHidden(true);
   };
 
   return (
-    <div className="mx-2" hidden={hiddenItem}>
+    <div className="m-2">
       <form onSubmit={handleSubmit}>
         <TextForm
           label="Имя"
@@ -77,7 +80,10 @@ const OrderSubmit = ({ hid, onSubmit }) => {
           onChange={handleChange}
           error={errors.address}
         />
-        <button disabled={!isValid} className="btn btn-primary w-100">
+        <button
+          // disabled={!isValid}
+          className="btn btn-primary w-100"
+        >
           Оформить
         </button>
       </form>

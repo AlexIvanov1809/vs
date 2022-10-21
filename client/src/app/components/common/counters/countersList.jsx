@@ -79,36 +79,50 @@ const CountersList = () => {
   };
   if (items.length > 0) {
     return (
-      <div className="card p-2">
-        {items.map((count) => (
-          <Counter
-            key={count._id}
-            onDelete={handleDelete}
-            onChange={handleChange}
-            orderItems={count}
-          />
-        ))}
-        <h5 className="ms-2">
-          Общая стоимость:{" "}
-          <span style={{ fontWeight: "900", color: "blue" }}>
-            {total} &#8381;
-          </span>
-        </h5>
-        <p className="">Минимальный заказ для доставки 1000 руб.</p>
-        <OrderSubmit
-          // hid={hiddenItem}
-          onSubmit={handleSubmit}
-        />
-        <button className="btn btn-danger btn-sm m-2" onClick={handleReset}>
-          Reset
-        </button>
-        {/* <button
+      <div className="container">
+        <div className="p-2 d-flex justify-content-center ">
+          <div className="card mx-1" style={{ width: "500px" }}>
+            <OrderSubmit
+              // hid={hiddenItem}
+              onSubmit={handleSubmit}
+            />
+          </div>
+          <div className="card justify-content-between mx-1">
+            <div>
+              {items.map((count) => (
+                <Counter
+                  key={count._id}
+                  onDelete={handleDelete}
+                  onChange={handleChange}
+                  orderItems={count}
+                />
+              ))}
+              <h5 className="ms-2">
+                Общая стоимость:{" "}
+                <span style={{ fontWeight: "900", color: "blue" }}>
+                  {total} &#8381;
+                </span>
+              </h5>
+              <p className="ms-2">Минимальный заказ для доставки 1000 руб.</p>
+            </div>
+            <div className="text-end mx-1">
+              <button
+                className="btn btn-danger btn-sm m-2"
+                onClick={handleReset}
+              >
+                Очистить корзину
+              </button>
+            </div>
+          </div>
+
+          {/* <button
           className="btn btn-primary btn-sm m-2"
           onClick={handleShow}
           hidden={!hiddenItem}
         >
           Оформить заказ
         </button> */}
+        </div>
       </div>
     );
   } else {
