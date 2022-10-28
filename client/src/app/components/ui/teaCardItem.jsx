@@ -26,7 +26,8 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
   }, [basket]);
   const price = currentPrice(teaItem);
 
-  const unit = teaItem.weight === "шт" ? teaItem.weight : teaItem.weight + " г";
+  const unit =
+    teaItem.weight === "шт." ? teaItem.weight : teaItem.weight + " г.";
   const handleSubmit = (item) => {
     let same = false;
     const order = {
@@ -52,25 +53,35 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
     }
   };
   return (
-    <div className="div m-2  text-center shadow p-4" style={{ width: "350px" }}>
-      <h4>{teaItem.brand}</h4>
-      <p>{teaItem.type}</p>
-      <img
-        src={"../" + teaItem.images.tea.htmlPath}
-        className="d-block w-75 mx-auto"
-        alt="Tea"
-      />
-      <h2>{teaItem.name}</h2>
-      <p className="text-start">{teaItem.description}</p>
-      <div className="d-flex">
-        <div className="w-100 text-start">
-          <p>{unit}</p>
-          <p>{price} &#8381;</p>
-          <BuyButton
-            onChange={handleSubmit}
-            bought={bought}
-            onOrder={onOrder}
+    <div className="div m-2 shadow p-4" style={{ width: "350px" }}>
+      <div className="d-flex flex-column justify-content-between align-items-stretch">
+        <div className="w-100">
+          <h4>{teaItem.brand}</h4>
+          <p>{teaItem.type}</p>
+          <img
+            src={"../" + teaItem.images.tea.htmlPath}
+            className="d-block w-75 mx-auto"
+            alt="Tea"
           />
+          <h2>{teaItem.name}</h2>
+          <p className="text-start px-3">{teaItem.description}</p>
+        </div>
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="w-100 d-flex flex-column justify-content-center align-items-start">
+            <div>
+              <span className="fw-bold">{unit}</span>
+            </div>
+            <div>
+              <span>{price} &#8381;</span>
+            </div>
+          </div>
+          <div className="w-100">
+            <BuyButton
+              onChange={handleSubmit}
+              bought={bought}
+              onOrder={onOrder}
+            />
+          </div>
         </div>
       </div>
     </div>

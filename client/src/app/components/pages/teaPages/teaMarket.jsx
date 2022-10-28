@@ -110,47 +110,53 @@ const TeaMarket = ({ handleOrder }) => {
   const itemsQty = filtereditems.length;
   const itemsOnPage = paginate(filtereditems, currentPage, pageSize);
   return (
-    <div className="d-flex">
-      <div className="h-100">
-        <TeaSideBar onSelect={handleSelectedItems} />
+    <>
+      <div className="w-100">
+        <input
+          className="form-control m-auto mb-2"
+          style={{ width: "300px" }}
+          type="text"
+          name="searchQuery"
+          placeholder="Search..."
+          onChange={handleSearchQuery}
+          value={searchQuery}
+        />
       </div>
-      <div>
-        {!teaItemsLoading ? (
-          <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
-            <input
-              type="text"
-              name="searchQuery"
-              placeholder="Search..."
-              onChange={handleSearchQuery}
-              value={searchQuery}
-            />
-            <div className="w-100 mt-5 d-flex flex-wrap justify-content-center">
-              {itemsOnPage.map((item) => (
-                <TeaCardItem
-                  key={item._id}
-                  teaItem={item}
-                  onOrder={handleOrder}
-                />
-              ))}
-              <div className="w-100">
-                <Pagination
-                  itemsQty={itemsQty}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={handleCurrentPageSet}
-                />
+      <div className="row">
+        <div className="col-md-auto m-2">
+          <TeaSideBar onSelect={handleSelectedItems} />
+        </div>
+        <div className="col">
+          {!teaItemsLoading ? (
+            <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
+              <div className="w-100 d-flex flex-wrap justify-content-center">
+                {itemsOnPage.map((item) => (
+                  <TeaCardItem
+                    key={item._id}
+                    teaItem={item}
+                    onOrder={handleOrder}
+                  />
+                ))}
+                <div className="w-100">
+                  <Pagination
+                    itemsQty={itemsQty}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={handleCurrentPageSet}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-center w-100 mt-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+          ) : (
+            <div className="d-flex justify-content-center w-100 mt-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

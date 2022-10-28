@@ -6,6 +6,7 @@ const GroupList = ({ value, name, onFilter, items, reset }) => {
   const [choose, setChoose] = useState({});
   const [filtredItems, setFiltredItems] = useState(false);
   const [load, setLoad] = useState(false);
+  const [active, setActive] = useState(false);
   useEffect(() => {
     const itemValues = [];
     items && items.forEach((i) => itemValues.push({ [i.value]: false }));
@@ -22,6 +23,10 @@ const GroupList = ({ value, name, onFilter, items, reset }) => {
     setLoad(true);
   }, [filtredItems]);
 
+  const handleClick = () => {
+    setActive(!active);
+  };
+
   const handleChange = (target) => {
     setChoose((prevState) => ({
       ...prevState,
@@ -31,20 +36,34 @@ const GroupList = ({ value, name, onFilter, items, reset }) => {
   };
 
   return (
-    <div style={{ width: "130px", marginLeft: "20px" }}>
-      <h6>{value}</h6>
-      {load &&
-        items.map((i) => (
-          <CheckBoxField
-            key={i._id}
-            named={i.value}
-            value={choose[i.value]}
-            onChange={handleChange}
-          >
-            {i.value}
-          </CheckBoxField>
-        ))}
-    </div>
+    <>
+      <div className="dropdown">
+        <button
+          className="btn btn-primary dropdown-toggle mb-2 w-100"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          onClick={handleClick}
+        >
+          {value}
+        </button>
+        <ul className={active ? "dropdown-menu-active" : "dropdown-menu"}>
+          {load &&
+            items.map((i) => (
+              <li key={i._id} className="dropdown-item">
+                <CheckBoxField
+                  named={i.value}
+                  value={choose[i.value]}
+                  onChange={handleChange}
+                >
+                  {i.value}
+                </CheckBoxField>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </>
   );
 };
 

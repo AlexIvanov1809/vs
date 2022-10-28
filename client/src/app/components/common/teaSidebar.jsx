@@ -45,39 +45,35 @@ const TeaSideBar = ({ onSelect }) => {
     setReset(!reset);
   };
   return (
-    <aside className="border h-100 mt-2 mx-2" style={{ width: "300px" }}>
+    <aside className="card m-auto p-3 text-center" style={{ width: "280px" }}>
       {!brandsLoadingStatus && !typesLoadingStatus && !packagesLoadingStatus ? (
         <>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="Бренд"
-              name="brand"
-              onFilter={handleFiltered}
-              items={brands}
-            />
-          </div>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="Вид"
-              name="type"
-              onFilter={handleFiltered}
-              items={types}
-            />
-          </div>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="Упаковка"
-              name="package"
-              onFilter={handleFiltered}
-              items={packages}
-            />
-          </div>
-          <div className="w-100 d-flex justify-content-center mb-2">
-            <button className="btn btn-primary" onClick={handleReset}>
-              Reset
+          <h5 className="pb-2">Фильтры</h5>
+          <GroupList
+            reset={reset}
+            value="Бренд"
+            name="brand"
+            onFilter={handleFiltered}
+            items={brands}
+          />
+
+          <GroupList
+            reset={reset}
+            value="Вид"
+            name="type"
+            onFilter={handleFiltered}
+            items={types}
+          />
+          <GroupList
+            reset={reset}
+            value="Упаковка"
+            name="package"
+            onFilter={handleFiltered}
+            items={packages}
+          />
+          <div className="w-100 d-flex justify-content-center mt-3 mb-2">
+            <button className="btn btn-secondary" onClick={handleReset}>
+              Сбросить фильтры
             </button>
           </div>
         </>

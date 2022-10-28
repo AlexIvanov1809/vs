@@ -9,13 +9,9 @@ const OrderSubmit = ({ onSubmit }) => {
     phone: "",
     address: ""
   };
-  // const [hiddenItem, setHidden] = useState(hid);
   const [data, setData] = useState(defaultData);
   const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   hid ? setHidden(true) : setHidden(false);
-  // }, [hid]);
   const clear = () => {
     setData(defaultData);
   };
@@ -35,22 +31,18 @@ const OrderSubmit = ({ onSubmit }) => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
   };
-  // useEffect(() => {
-  //   validate();
-  // }, [data]);
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
-  // const isValid = Object.keys(errors).length === 0;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     validate();
-    if (!errors) {
+    if (errors.length === 0) {
       onSubmit(data);
       clear();
     }
-    // setHidden(true);
   };
 
   return (
@@ -80,12 +72,7 @@ const OrderSubmit = ({ onSubmit }) => {
           onChange={handleChange}
           error={errors.address}
         />
-        <button
-          // disabled={!isValid}
-          className="btn btn-primary w-100"
-        >
-          Оформить
-        </button>
+        <button className="btn btn-primary w-100">Оформить</button>
       </form>
     </div>
   );

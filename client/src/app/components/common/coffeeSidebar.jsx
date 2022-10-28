@@ -53,51 +53,48 @@ const CoffeeSideBar = ({ onSelect }) => {
     setReset(!reset);
   };
   return (
-    <aside className="border h-100 mt-2 mx-2" style={{ width: "300px" }}>
+    <aside className="card  m-auto p-3 text-center" style={{ width: "280px" }}>
       {!brandsLoadingStatus &&
       !countriesLoadingStatus &&
       !methodsLoadingStatus &&
       !kindsLoadingStatus ? (
         <>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="Бренд"
-              name="brand"
-              onFilter={handleFiltered}
-              items={brands}
-            />
-          </div>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="страна произростания"
-              name="country"
-              onFilter={handleFiltered}
-              items={countries}
-            />
-          </div>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="Метод обработки"
-              name="method"
-              onFilter={handleFiltered}
-              items={methods}
-            />
-          </div>
-          <div className=" p-3">
-            <GroupList
-              reset={reset}
-              value="Вид"
-              name="kind"
-              onFilter={handleFiltered}
-              items={kinds}
-            />
-          </div>
-          <div className="w-100 d-flex justify-content-center mb-2">
-            <button className="btn btn-primary" onClick={handleReset}>
-              Reset
+          <h5 className="pb-2">Фильтры</h5>
+          <GroupList
+            reset={reset}
+            value="Бренд"
+            name="brand"
+            onFilter={handleFiltered}
+            items={brands}
+          />
+
+          <GroupList
+            reset={reset}
+            value="Страна произрастания"
+            name="country"
+            onFilter={handleFiltered}
+            items={countries}
+          />
+
+          <GroupList
+            reset={reset}
+            value="Способ обработки"
+            name="method"
+            onFilter={handleFiltered}
+            items={methods}
+          />
+
+          <GroupList
+            reset={reset}
+            value="Особенность кофе"
+            name="kind"
+            onFilter={handleFiltered}
+            items={kinds}
+          />
+
+          <div className="w-100 d-flex justify-content-center mt-3 mb-2">
+            <button className="btn btn-secondary" onClick={handleReset}>
+              Сбросить фильтры
             </button>
           </div>
         </>

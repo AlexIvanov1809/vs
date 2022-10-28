@@ -54,7 +54,7 @@ const PriceItem = ({ item, onChange }) => {
           onClick={() => handleOpacity("quarter")}
           role="button"
         >
-          <h6>250</h6>
+          <h6>250 г.</h6>
           <span>{item.price.quarter} &#8381;</span>
         </div>
         <div
@@ -66,7 +66,7 @@ const PriceItem = ({ item, onChange }) => {
           onClick={() => handleOpacity("kg")}
           role="button"
         >
-          <h6>1000</h6>
+          <h6>1000 г.</h6>
           <span>{item.price.kg} &#8381;</span>
         </div>
         <div
@@ -78,7 +78,7 @@ const PriceItem = ({ item, onChange }) => {
           onClick={() => handleOpacity("drip")}
           role="button"
         >
-          <h6>шт</h6>
+          <h6>шт.</h6>
           <span>{item.price.drip} &#8381;</span>
         </div>
       </div>

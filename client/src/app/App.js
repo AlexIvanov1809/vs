@@ -11,7 +11,7 @@ import CreateTeaItem from "./components/pages/teaPages/createTeaItem";
 import EditTeaItem from "./components/pages/teaPages/editTeaItem";
 import CoffeeAdminCard from "./components/pages/coffeePages/coffeeAdminCard";
 import TeaAdminCard from "./components/pages/teaPages/teaAdminCard";
-import CountersList from "./components/common/counters/countersList";
+import Basket from "./components/pages/basket";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" exact element={<Main />} />
-        <Route path="/basket" exact element={<CountersList />} />
+        <Route path="/basket" exact element={<Basket />} />
         <Route path="/market/:store" element={<MarketPlace />} />
         <Route path="/adminPanel/:store" element={<AdminPanel />} />
         <Route

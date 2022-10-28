@@ -100,44 +100,48 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   return (
     <>
       <div
-        className="div m-2  text-center shadow p-2"
-        style={{ width: "350px" }}
+        className="m-2 d-flex flex-column justify-content-between align-items-stretch shadow p-4"
+        style={{ width: "370px" }}
       >
-        <h4>{coffeeItem.brand}</h4>
-        <p>{coffeeItem.preparationMethod}</p>
-        <h2>{coffeeItem.name}</h2>
-        <p>{coffeeItem.method}</p>
+        <div>
+          <h4>{coffeeItem.brand}</h4>
+          <p>{coffeeItem.preparationMethod}</p>
+          <h2>{coffeeItem.name}</h2>
+          <p>{coffeeItem.method}</p>
 
-        <ItemImage
-          images={coffeeItem.images}
-          item={name}
-          visibility={coffeeItem.price}
-        />
-        <p>{coffeeItem.kind}</p>
-
-        <p className="text-start px-3">{coffeeItem.description}</p>
-
-        <div className="d-flex justify-content-between">
-          <Scale value={coffeeItem.acidity} name="Кислотность" />
-          <Scale value={coffeeItem.density} name="Плотность" />
-        </div>
-        <div className="w-50">
-          <SelectField
-            label=""
-            value={bean.value}
-            defaultOption="Зерно"
-            name="beans"
-            options={beans}
-            onChange={handleChange}
+          <ItemImage
+            images={coffeeItem.images}
+            item={name}
+            visibility={coffeeItem.price}
           />
+          <p>{coffeeItem.kind}</p>
+
+          <p className="text-start px-3">{coffeeItem.description}</p>
         </div>
-        <div className="d-flex justify-content-between align-items-center">
-          <PriceItem item={coffeeItem} onChange={HandleChangeImg} />
-          <BuyButton
-            bought={bought}
-            onOrder={onOrder}
-            onChange={handleSubmit}
-          />
+        <div>
+          <div className="d-flex justify-content-between">
+            <Scale value={coffeeItem.acidity} name="Кислотность" />
+            <Scale value={coffeeItem.density} name="Плотность" />
+          </div>
+          <div className="w-50">
+            <SelectField
+              label=""
+              value={bean.value}
+              defaultOption="Зерно"
+              name="beans"
+              options={beans}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="d-flex justify-content-between align-items-center">
+            <PriceItem item={coffeeItem} onChange={HandleChangeImg} />
+            <BuyButton
+              bought={bought}
+              onOrder={onOrder}
+              onChange={handleSubmit}
+            />
+          </div>
         </div>
       </div>
     </>
