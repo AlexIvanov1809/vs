@@ -140,12 +140,12 @@ const CoffeeMarket = ({ handleOrder }) => {
         />
       </div>
       <div className="row">
-        <div className="col-md-auto m-2">
+        <div className="col-md-auto">
           <CoffeeSideBar onSelect={handleSelectedItems} />
         </div>
         <div className="col">
           {!coffeeItemsLoading ? (
-            <div className="m-auto text-center" style={{ maxWidth: "1200px" }}>
+            <div className="m-auto text-center">
               <div className="w-100 d-flex flex-wrap justify-content-center">
                 {itemsOnPage.map((item) => (
                   <CoffeeCardItem

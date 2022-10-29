@@ -39,49 +39,59 @@ const MarketPlace = () => {
   if (!error && !isloading) {
     return (
       <>
-        <div className="d-flex text-start">
-          <Link
-            className={
-              "m-2 btn btn-" +
-              (currentPage === "coffee" ? "primary" : "secondary")
-            }
-            role="button"
-            onClick={() => hendleClick("coffee")}
-            to={"/market/coffee"}
-          >
-            Coffee
-          </Link>
-          <Link
-            className={
-              "m-2 btn btn-" + (currentPage === "tea" ? "primary" : "secondary")
-            }
-            role="button"
-            onClick={() => hendleClick("tea")}
-            to={"/market/tea"}
-          >
-            Tea
-          </Link>
-        </div>
-        {currentPage === "coffee" ? (
-          <CoffeeMarket handleOrder={handleOrder} />
-        ) : (
-          <TeaMarket handleOrder={handleOrder} />
-        )}
-        <div
-          className={hidden ? "d-none" : "position-absolute text-center"}
-          style={{ top: "5rem", right: "1rem" }}
-        >
-          <p>ТОВАР ДОБАВЛЕН В КОРЗИНУ</p>
-          <div className="m-auto text-center bg-white p-4 zindex-dropdown d-flex flex-column">
-            <Link to={"/basket"} className="btn btn-primary mb-3">
-              Перейти в корзину
-            </Link>
-            <button
-              className="btn btn-primary"
-              onClick={() => handleOrder("continue")}
+        <div className="position-relative w-100 mx-md-5 mx-ms-1 ">
+          <div className="d-flex justify-content-center">
+            <Link
+              className={
+                "m-2 w-50 btn btn-" +
+                (currentPage === "coffee" ? "primary" : "secondary")
+              }
+              role="button"
+              onClick={() => hendleClick("coffee")}
+              to={"/market/coffee"}
             >
-              Продолжить покупки
-            </button>
+              Кофе
+            </Link>
+            <Link
+              className={
+                "m-2 w-50 btn btn-" +
+                (currentPage === "tea" ? "primary" : "secondary")
+              }
+              role="button"
+              onClick={() => hendleClick("tea")}
+              to={"/market/tea"}
+            >
+              Чай
+            </Link>
+          </div>
+
+          {currentPage === "coffee" ? (
+            <CoffeeMarket handleOrder={handleOrder} />
+          ) : (
+            <TeaMarket handleOrder={handleOrder} />
+          )}
+
+          <div
+            className={
+              hidden
+                ? "d-none"
+                : "position-fixed top-50 start-50 translate-middle"
+            }
+          >
+            <div className="card p-4 shadow">
+              <span className="fw-bold">ТОВАР ДОБАВЛЕН В КОРЗИНУ</span>
+              <div className="m-auto text-center  p-4 zindex-dropdown d-flex flex-column">
+                <Link to={"/basket"} className="btn btn-primary mb-3">
+                  Перейти в корзину
+                </Link>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleOrder("continue")}
+                >
+                  Продолжить покупки
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </>

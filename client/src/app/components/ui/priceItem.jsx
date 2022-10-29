@@ -59,7 +59,7 @@ const PriceItem = ({ item, onChange }) => {
         </div>
         <div
           className={
-            "prise mx-4 text-center" +
+            "prise mx-2 text-center" +
             (opacity.kg ? "" : " text-black text-opacity-50")
           }
           hidden={hiddenChecker(item.price.kg)}

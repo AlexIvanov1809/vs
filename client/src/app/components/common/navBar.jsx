@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getStore } from "../../store/consumerBasket";
-// import CountersList from "./counters/countersList";
 import localStorageSevice from "../../service/localStorage.service";
 
 const NavBar = () => {
@@ -10,7 +9,7 @@ const NavBar = () => {
   const basket = useSelector(getStore());
   const userId = localStorageSevice.getUserID();
   const [auth, setAuth] = useState();
-  // const [hid, setHid] = useState(true);
+
   useEffect(() => {
     setAuth(userId);
   }, [userId]);
@@ -19,22 +18,12 @@ const NavBar = () => {
     setAuth("");
     navigate("/");
   };
-  // const handleClick = () => {
-  //   setHid(true);
-  //   if (basket.length > 0) {
-  //     setHid(!hid);
-  //   }
-  // };
   return (
     <div className="position-relative">
       <nav className="navbar navbar-dark bg-primary">
         <div className="logo">
-          <Link className="logo__main" aria-current="page" to="/">
-            <img
-              className="logo__main"
-              src="/img/Venditore logo.png"
-              alt="Logo"
-            />
+          <Link className="h-100" aria-current="page" to="/">
+            <img className="h-100" src="/img/logo.png" alt="Logo" />
           </Link>
         </div>
         <ul className="nav mt-2">
@@ -44,7 +33,7 @@ const NavBar = () => {
               aria-current="page"
               to="/market/coffee"
             >
-              Market
+              Магазин
             </Link>
           </li>
           {auth && (
@@ -55,7 +44,7 @@ const NavBar = () => {
                   aria-current="page"
                   to="/adminPanel/coffee"
                 >
-                  Admin Panel
+                  Панель администратора
                 </Link>
               </li>
               <li className="nav-item">
@@ -65,21 +54,10 @@ const NavBar = () => {
               </li>
             </>
           )}
-          {/* <li className="nav-item">
-            <Link
-              className="nav-link link-light"
-              aria-current="page"
-              to="/login"
-            >
-              Login
-            </Link>
-          </li> */}
           <li className="nav-item">
             <Link
               to="/basket"
-              // onClick={handleClick}
-              // type="button"
-              className="btn btn-primary position-relative me-4"
+              className="btn btn-primary position-relative me-3"
             >
               <i className="bi bi-cart3 fs-4"></i>
               {basket.length > 0 ? (
@@ -94,13 +72,6 @@ const NavBar = () => {
           </li>
         </ul>
       </nav>
-      {/* <div
-        hidden={hid}
-        className="position-absolute"
-        style={{ top: "120%", right: "1rem", zIndex: "100" }}
-      >
-        <CountersList />
-      </div> */}
     </div>
   );
 };

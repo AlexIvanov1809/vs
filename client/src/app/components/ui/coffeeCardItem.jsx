@@ -100,7 +100,7 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   return (
     <>
       <div
-        className="m-2 d-flex flex-column justify-content-between align-items-stretch shadow p-4"
+        className="m-2 d-flex flex-column justify-content-between align-items-stretch shadow p-2"
         style={{ width: "370px" }}
       >
         <div>
@@ -119,7 +119,7 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
           <p className="text-start px-3">{coffeeItem.description}</p>
         </div>
         <div>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-evenly">
             <Scale value={coffeeItem.acidity} name="Кислотность" />
             <Scale value={coffeeItem.density} name="Плотность" />
           </div>

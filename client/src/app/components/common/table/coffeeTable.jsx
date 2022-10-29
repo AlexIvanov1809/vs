@@ -33,16 +33,16 @@ const CoffeeTable = ({ coffeeItems, onSort, selectedSort }) => {
     //   path: "description",
     //   name: "Описание"
     // },
-    acidity: {
-      // path: "acidity",
-      name: "Кислотность",
-      component: (item) => <p>{item.acidity}</p>
-    },
-    density: {
-      // path: "density",
-      name: "Плотность",
-      component: (item) => <p>{item.density}</p>
-    },
+    // acidity: {
+    //   path: "acidity",
+    //   name: "Кислотность",
+    //   component: (item) => <p>{item.acidity}</p>
+    // },
+    // density: {
+    //   path: "density",
+    //   name: "Плотность",
+    //   component: (item) => <p>{item.density}</p>
+    // },
     price: {
       // path: "price",
       name: "Стоимость",

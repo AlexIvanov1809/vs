@@ -103,12 +103,14 @@ const Basket = () => {
     );
   } else {
     return (
-      <>
-        <p>Пустая корзина</p>
-        <Link className="btn btn-primary" to={"/market/coffee"}>
-          Перейти в каталог
-        </Link>
-      </>
+      <div className="position-fixed top-50 start-50 translate-middle">
+        <div className="card p-4 text-center">
+          <span className="fw-bold mb-3">Пустая корзина</span>
+          <Link className="btn btn-primary" to={"/market/coffee"}>
+            Перейти в каталог
+          </Link>
+        </div>
+      </div>
     );
   }
 };
