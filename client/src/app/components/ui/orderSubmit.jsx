@@ -46,7 +46,7 @@ const OrderSubmit = ({ onSubmit }) => {
   };
 
   return (
-    <div className="m-2">
+    <div className="card p-3">
       <form onSubmit={handleSubmit}>
         <TextForm
           label="Имя"
@@ -72,7 +72,7 @@ const OrderSubmit = ({ onSubmit }) => {
           onChange={handleChange}
           error={errors.address}
         />
-        <button className="btn btn-primary w-100">Оформить</button>
+        <button className="btn btn-primary w-100 mt-5">Оформить</button>
       </form>
     </div>
   );

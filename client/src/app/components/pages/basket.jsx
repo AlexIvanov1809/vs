@@ -67,36 +67,40 @@ const Basket = () => {
   if (items.length > 0) {
     return (
       <div className="container">
-        <div className="p-2 d-flex justify-content-center ">
-          <div className="card mx-1" style={{ width: "500px" }}>
-            <OrderSubmit onSubmit={handleSubmit} />
-          </div>
-          <div className="card justify-content-between mx-1">
-            <div>
-              {items.map((count) => (
-                <Counter
-                  key={count._id}
-                  onDelete={handleDelete}
-                  onChange={handleChange}
-                  orderItems={count}
-                />
-              ))}
+        <div className="row justify-content-md-center m-2">
+          <div className="col-lg-auto m-2">
+            <div className="card p-2">
+              <ol>
+                {items.map((count) => (
+                  <Counter
+                    key={count._id}
+                    onDelete={handleDelete}
+                    onChange={handleChange}
+                    orderItems={count}
+                  />
+                ))}
+              </ol>
               <h5 className="ms-2">
                 Общая стоимость:{" "}
                 <span style={{ fontWeight: "900", color: "blue" }}>
                   {total} &#8381;
                 </span>
               </h5>
-              <p className="ms-2">Минимальный заказ для доставки 1000 руб.</p>
+              <p className="ms-2">
+                Минимальный заказ для доставки 1000 руб. <b>*</b>
+              </p>
+              <div className="text-end mx-1">
+                <button
+                  className="btn btn-danger btn-sm m-2"
+                  onClick={handleReset}
+                >
+                  Очистить корзину
+                </button>
+              </div>
             </div>
-            <div className="text-end mx-1">
-              <button
-                className="btn btn-danger btn-sm m-2"
-                onClick={handleReset}
-              >
-                Очистить корзину
-              </button>
-            </div>
+          </div>
+          <div className=" col-xl-5 m-2">
+            <OrderSubmit onSubmit={handleSubmit} />
           </div>
         </div>
       </div>

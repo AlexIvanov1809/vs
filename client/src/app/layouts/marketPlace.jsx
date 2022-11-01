@@ -39,7 +39,7 @@ const MarketPlace = () => {
   if (!error && !isloading) {
     return (
       <>
-        <div className="position-relative w-100 mx-md-5 mx-ms-1 ">
+        <div className="position-relative overflow-hidden mx-md-5 mx-ms-1 ">
           <div className="d-flex justify-content-center">
             <Link
               className={
