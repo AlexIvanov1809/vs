@@ -16,7 +16,7 @@ module.exports = {
     "react/jsx-indent-props": "off",
     "multiline-ternary": "off",
     semi: [2, "always"],
-    "react/prop-types": "off",
+    // "react/prop-types": "off",
     "space-before-function-paren": [
       "error",
       { anonymous: "always", named: "never" }

@@ -4,5 +4,8 @@
 	"accessSecret": "super secret from backend",
 	"refreshSecret": "super refresh key",
 	"token":"5340776846:AAEGyttmKYp-3f0a4n5UF9OjzPreFLd6-SM",
-	"chatId":"677331179"
+	"chatId":"677331179",
+	"mailFrom":"st.razamer@gmail.com",
+	"mailPass":"eixjztzqczomwmnt",
+	"mailTo":"a.ivanov18.09@gmail.com"
 }

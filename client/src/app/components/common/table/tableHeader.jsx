@@ -47,6 +47,7 @@ const TableHeader = ({ columns, onSort, selectedSort }) => {
 
 TableHeader.propTypes = {
   columns: PropTypes.object,
+  selectedSort: PropTypes.object,
   onSort: PropTypes.func
 };
 

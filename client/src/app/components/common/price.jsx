@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Price = ({ price }) => {
   return (
@@ -35,6 +36,10 @@ const Price = ({ price }) => {
       )}
     </>
   );
+};
+
+Price.propTypes = {
+  price: PropTypes.object
 };
 
 export default Price;

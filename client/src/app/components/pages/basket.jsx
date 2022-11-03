@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Counter from "../common/counters/counter";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
   backupBasket,
@@ -86,9 +85,7 @@ const Basket = () => {
                   {total} &#8381;
                 </span>
               </h5>
-              <p className="ms-2">
-                Минимальный заказ для доставки 1000 руб. <b>*</b>
-              </p>
+              <p className="ms-2">Минимальный заказ для доставки 1000 руб.</p>
               <div className="text-end mx-1">
                 <button
                   className="btn btn-danger btn-sm m-2"
@@ -117,10 +114,6 @@ const Basket = () => {
       </div>
     );
   }
-};
-
-Basket.propTypes = {
-  orderItems: PropTypes.array
 };
 
 export default Basket;

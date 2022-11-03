@@ -44,8 +44,8 @@ const Counter = ({ orderItems, onChange, onDelete }) => {
         </div>
       </div>
       <div className="w-100">
-        <hr />
       </div>
+        <hr />
     </li>
   );
 };

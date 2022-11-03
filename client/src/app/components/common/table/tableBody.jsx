@@ -57,6 +57,7 @@ const TableBody = ({ data, columns, type }) => {
 
 TableBody.propTypes = {
   data: PropTypes.array,
+  type: PropTypes.string,
   columns: PropTypes.object.isRequired
 };
 
