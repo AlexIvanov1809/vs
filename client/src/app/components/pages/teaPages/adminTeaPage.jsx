@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Entity from "../../ui/entity";
@@ -6,7 +6,6 @@ import {
   createNewTeaTypesItem,
   getTeaTypesList,
   getTeaTypesLoadingStatus,
-  loadTeaTypesList,
   teaTypesRemove
 } from "../../../store/teaItems/teaType";
 import {
@@ -18,25 +17,18 @@ import {
   createNewTeaBrandsItem,
   getTeaBrandsList,
   getTeaBrandsLoadingStatus,
-  loadTeaBrandsList,
   teaBrandsRemove
 } from "../../../store/teaItems/teaBrands";
 import {
   createNewTeaPackagesItem,
   getTeaPackagesList,
   getTeaPackagesLoadingStatus,
-  loadTeaPackagesList,
   teaPackagesRemove
 } from "../../../store/teaItems/teaPackages";
 import _ from "lodash";
 
 const AdminTeaPage = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadTeaTypesList());
-    dispatch(loadTeaBrandsList());
-    dispatch(loadTeaPackagesList());
-  }, []);
   const teaItemsLoading = useSelector(getTeaItemsLoadingStatus());
   const teaTypesLoading = useSelector(getTeaTypesLoadingStatus());
   const teaBrandsLoading = useSelector(getTeaBrandsLoadingStatus());

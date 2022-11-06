@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getStore, loadBasketList } from "../../store/consumerBasket";
+import { useSelector } from "react-redux";
+import { getStore } from "../../store/consumerBasket";
 import localStorageSevice from "../../service/localStorage.service";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userId = localStorageSevice.getUserID();
   const [auth, setAuth] = useState();
 
   useEffect(() => {
     setAuth(userId);
   }, [userId]);
-
-  useEffect(() => {
-    dispatch(loadBasketList());
-  }, []);
 
   const basket = useSelector(getStore());
 
@@ -55,7 +50,7 @@ const NavBar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <button className="btn btn-danger" onClick={handleLogOut}>
+                <button className="btn btn-danger me-2" onClick={handleLogOut}>
                   Выход
                 </button>
               </li>

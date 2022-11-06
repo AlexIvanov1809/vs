@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../../common/pagination";
 import PropTypes from "prop-types";
 import { paginate } from "../../../utils/pagination";
-import { useDispatch, useSelector } from "react-redux";
-import { loadTeaBrandsList } from "../../../store/teaItems/teaBrands";
-import { loadTeaTypesList } from "../../../store/teaItems/teaType";
-import { loadTeaPackagesList } from "../../../store/teaItems/teaPackages";
+import { useSelector } from "react-redux";
+
 import {
   getTeaItemsList,
   getTeaItemsLoadingStatus
@@ -24,13 +22,6 @@ const TeaMarket = ({ handleOrder }) => {
     package: []
   });
   const pageSize = 12;
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadTeaBrandsList());
-    dispatch(loadTeaTypesList());
-    dispatch(loadTeaPackagesList());
-  }, []);
   const teaItems = useSelector(getTeaItemsList());
   const teaItemsLoading = useSelector(getTeaItemsLoadingStatus());
 

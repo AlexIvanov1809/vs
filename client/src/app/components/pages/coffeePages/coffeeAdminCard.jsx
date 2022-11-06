@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import fileService from "../../../service/file.service";
 import {
   coffeeItemRemove,
@@ -36,7 +36,13 @@ const CoffeeAdminCard = () => {
   };
 
   if (!coffeeItem) {
-    return <Navigate to={"/adminPanel/coffee"} />;
+    return (
+      <div className="d-flex justify-content-center w-100 mt-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className="d-flex justify-content-center mt-2">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SelectField from "../../common/form/selectField";
 import TextForm from "../../common/form/textForm";
@@ -110,7 +110,13 @@ const CreateTeaItem = () => {
     dispatch(createNewTeaItem(data, back));
   };
   if (!brands) {
-    return <Navigate to={"/adminPanel/tea"} />;
+    return (
+      <div className="d-flex justify-content-center w-100 mt-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   } else {
     return (
       <>

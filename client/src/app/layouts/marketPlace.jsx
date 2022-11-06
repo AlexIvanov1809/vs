@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CoffeeMarket from "../components/pages/coffeePages/coffeeMarket";
 import {
   getCoffeeItemsError,
-  getCoffeeItemsLoadingStatus,
-  loadCoffeeItemsList
+  getCoffeeItemsLoadingStatus
 } from "../store/coffeeItems/coffeeItems";
-import { loadTeaItemsList } from "../store/teaItems/teaItems";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import TeaMarket from "../components/pages/teaPages/teaMarket";
 import { Link, useParams } from "react-router-dom";
 
 const MarketPlace = () => {
-  const dispatch = useDispatch();
   const { store } = useParams();
   const [currentPage, setCurrentPage] = useState(store);
   const [hidden, setHidden] = useState(true);
   const [firstOrder, setFirstOrder] = useState(true);
-  useEffect(() => {
-    dispatch(loadCoffeeItemsList());
-    dispatch(loadTeaItemsList());
-  }, []);
+
   const isloading = useSelector(getCoffeeItemsLoadingStatus());
   const error = useSelector(getCoffeeItemsError());
 

@@ -9,29 +9,29 @@ import {
   countriesRemove,
   createNewCountriesItem,
   getCountriesList,
-  getCountriesLoadingStatus,
-  loadCountriesList
+  getCountriesLoadingStatus
+  // loadCountriesList
 } from "../../../store/coffeeItems/countries";
 import {
   brandsRemove,
   createNewBrandsItem,
   getBrandsList,
-  getBrandsLoadingStatus,
-  loadbrandsList
+  getBrandsLoadingStatus
+  // loadbrandsList
 } from "../../../store/coffeeItems/brands";
 import {
   createNewMethodsItem,
   getMethodsList,
   getMethodsLoadingStatus,
-  loadmethodsList,
+  // loadmethodsList,
   methodsRemove
 } from "../../../store/coffeeItems/methods";
 import {
   createNewKindsItem,
   getKindsList,
   getKindsLoadingStatus,
-  kindsRemove,
-  loadkindsList
+  kindsRemove
+  // loadkindsList
 } from "../../../store/coffeeItems/kinds";
 import CoffeeTable from "../../common/table/coffeeTable";
 import Entity from "../../ui/entity";
@@ -40,10 +40,10 @@ import _ from "lodash";
 const AdminCoffeePage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadbrandsList());
-    dispatch(loadCountriesList());
-    dispatch(loadmethodsList());
-    dispatch(loadkindsList());
+    // dispatch(loadbrandsList());
+    // dispatch(loadCountriesList());
+    // dispatch(loadmethodsList());
+    // dispatch(loadkindsList());
   }, []);
 
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());

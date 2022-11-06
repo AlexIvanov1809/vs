@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextForm from "../common/form/textForm";
 import PropTypes from "prop-types";
 import { validator } from "../../utils/validator";
+import TextAreaField from "../common/form/textAreaField";
 
 const OrderSubmit = ({ onSubmit }) => {
-  const defaultData = {
+  const [data, setData] = useState({
     name: "",
     phone: "",
-    address: ""
-  };
-  const [data, setData] = useState(defaultData);
-  const [errors, setErrors] = useState({});
+    address: "",
+    comments: ""
+  });
+  const [errors, setErrors] = useState([]);
+  const [errCheck, setErrCheck] = useState([]);
 
-  const clear = () => {
-    setData(defaultData);
-  };
   const validatorConfig = {
     name: {
       isRequired: { message: "Поле необходимое для заполнения" }
@@ -29,8 +28,12 @@ const OrderSubmit = ({ onSubmit }) => {
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
-    setErrors(errors);
+    setErrCheck(errors);
   };
+
+  useEffect(() => {
+    validate();
+  }, [data]);
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
@@ -38,10 +41,10 @@ const OrderSubmit = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    validate();
-    if (errors.length === 0) {
+    if (Object.keys(errCheck).length === 0) {
       onSubmit(data);
-      clear();
+    } else {
+      setErrors(errCheck);
     }
   };
 
@@ -71,6 +74,12 @@ const OrderSubmit = ({ onSubmit }) => {
           value={data.address}
           onChange={handleChange}
           error={errors.address}
+        />
+        <TextAreaField
+          label="Комментарий к заказу"
+          name="comments"
+          value={data.comments}
+          onChange={handleChange}
         />
         <button className="btn btn-primary w-100 mt-5">Оформить</button>
       </form>

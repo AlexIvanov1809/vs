@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import fileService from "../../../service/file.service";
 import {
   getTeaItemById,
@@ -17,12 +17,6 @@ const TeaAdminCard = () => {
   const created = timeCanger(currenTeaItem ? currenTeaItem.createdAt : null);
   const updated = timeCanger(currenTeaItem ? currenTeaItem.updatedAt : null);
   const price = currenTeaItem ? currentPrice(currenTeaItem) : null;
-  // currenTeaItem.weight === "шт"
-  //   ? currenTeaItem.price
-  //   : Math.ceil(
-  //       (parseInt(currenTeaItem.price) / 1000) *
-  //         parseInt(currenTeaItem.weight)
-  //     );
   const [acception, setAcception] = useState(false);
 
   const handleChange = () => {
@@ -41,7 +35,13 @@ const TeaAdminCard = () => {
     dispatch(teaItemRemove(currenTeaItem._id, back()));
   };
   if (!currenTeaItem) {
-    return <Navigate to={"/adminPanel/tea"} />;
+    return (
+      <div className="d-flex justify-content-center w-100 mt-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className="d-flex justify-content-center mt-2">

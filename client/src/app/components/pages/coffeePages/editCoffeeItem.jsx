@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBrandsList } from "../../../store/coffeeItems/brands";
 import { getCountriesList } from "../../../store/coffeeItems/countries";
@@ -57,7 +57,7 @@ const EditCoffeeItem = () => {
       });
       setImage(currentCoffeeItem.images);
     }
-  }, []);
+  }, [currentCoffeeItem]);
   if (data) {
     delete data.price;
   }
@@ -131,8 +131,14 @@ const EditCoffeeItem = () => {
     delete data.priceQuarter;
     await dispatch(editCoffeeItem(data, back));
   };
-  if (!brands) {
-    return <Navigate to={"/adminPanel/coffee"} />;
+  if (!currentCoffeeItem) {
+    return (
+      <div className="d-flex justify-content-center w-100 mt-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   } else {
     return (
       <>

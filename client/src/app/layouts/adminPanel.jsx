@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AdminCoffeePage from "../components/pages/coffeePages/adminCoffeePage";
-import { useDispatch } from "react-redux";
-import { loadCoffeeItemsList } from "../store/coffeeItems/coffeeItems";
-import { loadTeaItemsList } from "../store/teaItems/teaItems";
 import AdminTeaPage from "../components/pages/teaPages/adminTeaPage";
 import { Link, Navigate, useParams } from "react-router-dom";
 import localStorageSevice from "../service/localStorage.service";
 
 const AdminPanel = () => {
-  const dispatch = useDispatch();
   const { store } = useParams();
   const userId = localStorageSevice.getUserID();
   const [currentPage, setCurrentPage] = useState(!store ? "coffee" : store);
-  useEffect(() => {
-    dispatch(loadCoffeeItemsList());
-    dispatch(loadTeaItemsList());
-  }, []);
 
   const hendleClick = (page) => {
     setCurrentPage(page);

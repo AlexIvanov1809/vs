@@ -3,22 +3,17 @@ import CoffeeCardItem from "../../ui/coffeeCardItem";
 import PropTypes from "prop-types";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/pagination";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getCoffeeItemsList,
   getCoffeeItemsLoadingStatus
 } from "../../../store/coffeeItems/coffeeItems";
-import { loadCountriesList } from "../../../store/coffeeItems/countries";
-import { loadbrandsList } from "../../../store/coffeeItems/brands";
-import { loadmethodsList } from "../../../store/coffeeItems/methods";
-import { loadkindsList } from "../../../store/coffeeItems/kinds";
 import CoffeeSideBar from "../../common/coffeeSidebar";
 
 const CoffeeMarket = ({ handleOrder }) => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [filter, setFilter] = useState([]);
   const [selectedItems, setSelectedItems] = useState({
     brand: [],
@@ -27,16 +22,7 @@ const CoffeeMarket = ({ handleOrder }) => {
     kind: []
   });
   const pageSize = 12;
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadbrandsList());
-    dispatch(loadCountriesList());
-    dispatch(loadmethodsList());
-    dispatch(loadkindsList());
-  }, []);
   const coffeeItems = useSelector(getCoffeeItemsList());
-
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
 
   useEffect(() => {
