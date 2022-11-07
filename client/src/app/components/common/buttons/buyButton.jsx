@@ -14,32 +14,28 @@ const BuyButton = ({ onChange, bought, onOrder }) => {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-center ">
-        <button
-          className="btn btn-white text-primary fs-5"
+      <div className="d-flex align-items-center justify-content-center">
+        <span
+          className="text-primary fs-5"
           role="button"
           onClick={quantity > 1 ? () => handleChange(-1) : () => {}}
         >
           <i className="bi bi-dash-lg"></i>
-        </button>
-        <span className="mx-1 fs-2">{quantity}</span>
-        <button
-          className="btn btn-white text-primary fs-5"
+        </span>
+        <span className="mx-2 fs-3">{quantity}</span>
+        <span
+          className="text-primary fs-5"
           role="button"
           onClick={() => handleChange(1)}
         >
           <i className="bi bi-plus-lg"></i>
-        </button>
+        </span>
       </div>
       <button
         onClick={() => handleSubmit(quantity)}
         className="btn btn-primary"
       >
-        {bought ? (
-          <i className="bi bi-plus-circle fst-normal"> В корзину</i>
-        ) : (
-          "Купить"
-        )}
+        {bought ? "В корзину" : "Купить"}
       </button>
     </div>
   );

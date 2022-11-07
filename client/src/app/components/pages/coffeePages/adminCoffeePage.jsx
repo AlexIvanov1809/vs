@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,20 +10,17 @@ import {
   createNewCountriesItem,
   getCountriesList,
   getCountriesLoadingStatus
-  // loadCountriesList
 } from "../../../store/coffeeItems/countries";
 import {
   brandsRemove,
   createNewBrandsItem,
   getBrandsList,
   getBrandsLoadingStatus
-  // loadbrandsList
 } from "../../../store/coffeeItems/brands";
 import {
   createNewMethodsItem,
   getMethodsList,
   getMethodsLoadingStatus,
-  // loadmethodsList,
   methodsRemove
 } from "../../../store/coffeeItems/methods";
 import {
@@ -31,7 +28,6 @@ import {
   getKindsList,
   getKindsLoadingStatus,
   kindsRemove
-  // loadkindsList
 } from "../../../store/coffeeItems/kinds";
 import CoffeeTable from "../../common/table/coffeeTable";
 import Entity from "../../ui/entity";
@@ -39,13 +35,6 @@ import _ from "lodash";
 
 const AdminCoffeePage = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    // dispatch(loadbrandsList());
-    // dispatch(loadCountriesList());
-    // dispatch(loadmethodsList());
-    // dispatch(loadkindsList());
-  }, []);
-
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
   const brands = useSelector(getBrandsList());
   const brandsLoadingStatus = useSelector(getBrandsLoadingStatus());

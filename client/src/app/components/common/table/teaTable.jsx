@@ -16,10 +16,6 @@ const TeaTable = ({ teaItems, onSort, selectedSort }) => {
       path: "name",
       name: "Название"
     },
-    // description: {
-    //   path: "description",
-    //   name: "Описание"
-    // },
     weight: {
       path: "weight",
       name: "Вес"

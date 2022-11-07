@@ -29,22 +29,7 @@ const CoffeeTable = ({ coffeeItems, onSort, selectedSort }) => {
       path: "preparationMethod",
       name: "Метод приготовления"
     },
-    // description: {
-    //   path: "description",
-    //   name: "Описание"
-    // },
-    // acidity: {
-    //   path: "acidity",
-    //   name: "Кислотность",
-    //   component: (item) => <p>{item.acidity}</p>
-    // },
-    // density: {
-    //   path: "density",
-    //   name: "Плотность",
-    //   component: (item) => <p>{item.density}</p>
-    // },
     price: {
-      // path: "price",
       name: "Стоимость",
       component: (item) => <Price price={item.price} />
     },

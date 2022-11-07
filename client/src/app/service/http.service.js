@@ -7,11 +7,6 @@ const http = axios.create({
 
 http.interceptors.request.use(
   async function (config) {
-    if (configFile.isFireBase) {
-      const containSlash = /\/$/gi.test(config.url);
-      config.url =
-        (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
-    }
     return config;
   },
   function (error) {
@@ -19,19 +14,8 @@ http.interceptors.request.use(
   }
 );
 
-function transformData(data) {
-  return data && !data._id
-    ? Object.keys(data).map((key) => ({
-        ...data[key]
-      }))
-    : data;
-}
-
 http.interceptors.response.use(
   (res) => {
-    if (configFile.isFireBase) {
-      res.data = { content: transformData(res.data) };
-    }
     res.data = { content: res.data };
     return res;
   },

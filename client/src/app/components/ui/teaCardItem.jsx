@@ -53,21 +53,21 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
     }
   };
   return (
-    <div className="div m-2 shadow p-4" style={{ width: "350px" }}>
+    <div className="div m-2 shadow p-5" style={{ width: "350px" }}>
       <div className="d-flex flex-column justify-content-between align-items-stretch">
         <div className="w-100">
           <h4>{teaItem.brand}</h4>
           <p>{teaItem.type}</p>
           <img
             src={"../" + teaItem.images.tea.htmlPath}
-            className="d-block w-75 mx-auto"
+            className="d-block mx-auto"
             alt="Tea"
           />
           <h2>{teaItem.name}</h2>
-          <p className="text-start px-3">{teaItem.description}</p>
+          <p className="text-start ">{teaItem.description}</p>
         </div>
         <div className="d-flex justify-content-between align-items-center">
-          <div className="w-100 d-flex flex-column justify-content-center align-items-start">
+          <div className=" d-flex flex-column justify-content-center align-items-start">
             <div>
               <span className="fw-bold">{unit}</span>
             </div>
@@ -75,7 +75,7 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
               <span>{price} &#8381;</span>
             </div>
           </div>
-          <div className="w-100">
+          <div>
             <BuyButton
               onChange={handleSubmit}
               bought={bought}

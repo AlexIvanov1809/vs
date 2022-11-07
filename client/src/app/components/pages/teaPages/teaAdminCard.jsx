@@ -7,15 +7,15 @@ import {
   teaItemRemove
 } from "../../../store/teaItems/teaItems";
 import currentPrice from "../../../utils/currentPrice";
-import timeCanger from "../../../utils/time";
+import timeChanger from "../../../utils/time";
 
 const TeaAdminCard = () => {
   const { itemId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currenTeaItem = useSelector(getTeaItemById(itemId));
-  const created = timeCanger(currenTeaItem ? currenTeaItem.createdAt : null);
-  const updated = timeCanger(currenTeaItem ? currenTeaItem.updatedAt : null);
+  const created = timeChanger(currenTeaItem ? currenTeaItem.createdAt : null);
+  const updated = timeChanger(currenTeaItem ? currenTeaItem.updatedAt : null);
   const price = currenTeaItem ? currentPrice(currenTeaItem) : null;
   const [acception, setAcception] = useState(false);
 

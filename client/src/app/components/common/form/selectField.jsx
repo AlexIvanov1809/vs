@@ -17,12 +17,7 @@ const SelectField = ({
   const getInputClasses = () => {
     return "form-select" + (error ? " is-invalid" : "");
   };
-  // let optionsArray = [];
-  // if (!Array.isArray(options) && typeof options === "object") {
-  //   Object.values(options).map((item) => optionsArray.push(item));
-  // } else {
-  //   optionsArray = options;
-  // }
+
   return (
     <div className="mb-2">
       <label htmlFor={name} className="form-label">

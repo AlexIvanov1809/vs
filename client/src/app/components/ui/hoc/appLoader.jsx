@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
 import PropTypes from "prop-types";
 import { loadCoffeeItemsList } from "../../../store/coffeeItems/coffeeItems";
 import { loadbrandsList } from "../../../store/coffeeItems/brands";
@@ -27,8 +26,6 @@ const AppLoader = ({ children }) => {
     dispatch(loadTeaPackagesList());
     dispatch(loadBasketList());
   }, []);
-
-  // if (usersStatusLoading) return "Loading...";
 
   return children;
 };

@@ -7,15 +7,15 @@ import {
   getCoffeeItemById
 } from "../../../store/coffeeItems/coffeeItems";
 import Scale from "../../common/scale";
-import timeCanger from "../../../utils/time";
+import timeChanger from "../../../utils/time";
 
 const CoffeeAdminCard = () => {
   const { itemId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const coffeeItem = useSelector(getCoffeeItemById(itemId));
-  const created = timeCanger(coffeeItem ? coffeeItem.createdAt : null);
-  const updated = timeCanger(coffeeItem ? coffeeItem.updatedAt : null);
+  const created = timeChanger(coffeeItem ? coffeeItem.createdAt : null);
+  const updated = timeChanger(coffeeItem ? coffeeItem.updatedAt : null);
   const [acception, setAcception] = useState(false);
 
   const handleChange = () => {

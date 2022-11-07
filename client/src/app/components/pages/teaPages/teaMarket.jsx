@@ -3,7 +3,6 @@ import Pagination from "../../common/pagination";
 import PropTypes from "prop-types";
 import { paginate } from "../../../utils/pagination";
 import { useSelector } from "react-redux";
-
 import {
   getTeaItemsList,
   getTeaItemsLoadingStatus

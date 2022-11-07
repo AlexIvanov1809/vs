@@ -1,4 +1,4 @@
-export default function timeCanger(date) {
+export default function timeChanger(date) {
   if (date) {
     const data = date.replace(/T/g, ".").split(".");
     const arrowTime = data[1].split(":");

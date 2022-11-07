@@ -66,10 +66,10 @@ const Basket = () => {
   if (items.length > 0) {
     return (
       <div className="container">
-        <div className="row justify-content-md-center m-2">
-          <div className="col-lg-auto m-2">
+        <div className="row row-cols-1 row-cols-sm-2 justify-content-md-center m-2">
+          <div className="col m-2 p-0">
             <div className="card p-2">
-              <ol>
+              <ol className="">
                 {items.map((count) => (
                   <Counter
                     key={count._id}
@@ -96,7 +96,7 @@ const Basket = () => {
               </div>
             </div>
           </div>
-          <div className=" col-xl-5 m-2">
+          <div className=" col m-2">
             <OrderSubmit onSubmit={handleSubmit} />
           </div>
         </div>

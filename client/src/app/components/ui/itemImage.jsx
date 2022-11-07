@@ -18,7 +18,7 @@ const ItemImage = ({ item, images }) => {
             >
               <img
                 src={`../${images.quarter.htmlPath}`}
-                className="d-block w-75 mx-auto"
+                className="d-block mx-auto"
                 alt="Coffee 250"
               />
             </div>
@@ -29,7 +29,7 @@ const ItemImage = ({ item, images }) => {
             >
               <img
                 src={`../${images.kg.htmlPath}`}
-                className="d-block w-75 mx-auto"
+                className="d-block mx-auto"
                 alt="Coffee 1000"
               />
             </div>
@@ -40,7 +40,7 @@ const ItemImage = ({ item, images }) => {
             >
               <img
                 src={`../${images.drip.htmlPath}`}
-                className="d-block w-75 mx-auto"
+                className="d-block mx-auto"
                 alt="Coffee drip"
               />
             </div>

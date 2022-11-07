@@ -4,15 +4,9 @@ function messageConverter(data) {
   }`;
 
   data.items.forEach((i, v) => {
-    if (i.beans) {
-      message += `\n${v + 1}.  ${i.brand} ${i.name} ${i.weight} ${i.beans} ${
-        i.quantity
-      } шт. ${i.price} руб.`;
-    } else {
-      message += `\n${v + 1}.  ${i.brand} ${i.name} ${i.weight} ${i.quantity} ${
-        i.price
-      } руб.`;
-    }
+    message += `\n${v + 1}.  ${i.brand} ${i.name} ${i.weight} ${
+      i.beans ? `${i.beans} ` : ""
+    }${i.quantity} шт. ${i.price} руб.`;
   });
 
   message += `\n\nИтого: ${data.total} руб.`;

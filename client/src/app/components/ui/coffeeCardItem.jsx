@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editItemBasket,
   getStore,
-  loadBasketList,
   storeAdding
 } from "../../store/consumerBasket";
 import localStorageSevice from "../../service/localStorage.service";
@@ -18,14 +17,13 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState();
   const [bought, setBought] = useState(false);
-  const [bean, setBean] = useState({ name: "beans", value: "Зерно" });
+  const [bean, setBean] = useState({ name: "beans", value: "в зернах" });
   const beans = [
-    { _id: 1, value: "под чашку" },
-    { _id: 2, value: "под фильтр" },
-    { _id: 3, value: "под эспрессо" }
+    { _id: 1, value: "для чашки" },
+    { _id: 2, value: "для фильтра" },
+    { _id: 3, value: "для эспрессо" }
   ];
   useEffect(() => {
-    dispatch(loadBasketList());
     if (!coffeeItem.price.quarter) {
       if (!coffeeItem.price.kg) {
         if (!coffeeItem.price.drip) {
@@ -100,7 +98,7 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   return (
     <>
       <div
-        className="m-2 d-flex flex-column justify-content-between align-items-stretch shadow p-2"
+        className="m-2 d-flex flex-column justify-content-between align-items-stretch shadow p-4"
         style={{ width: "370px" }}
       >
         <div>
@@ -127,7 +125,7 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
             <SelectField
               label=""
               value={bean.value}
-              defaultOption="Зерно"
+              defaultOption="в зернах"
               name="beans"
               options={beans}
               onChange={handleChange}
