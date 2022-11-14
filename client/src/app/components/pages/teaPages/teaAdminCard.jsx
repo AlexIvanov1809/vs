@@ -44,7 +44,7 @@ const TeaAdminCard = () => {
     );
   } else {
     return (
-      <div className="d-flex justify-content-center mt-2">
+      <div className="d-flex justify-content-center mt-5">
         <button
           className="btn btn-primary"
           style={{ height: "50px" }}
