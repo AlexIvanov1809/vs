@@ -98,7 +98,7 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
   return (
     <>
       <div
-        className="m-2 d-flex flex-column justify-content-between align-items-stretch shadow p-4"
+        className="m-4 d-flex flex-column justify-content-between align-items-stretch shadow p-4"
         style={{ width: "370px" }}
       >
         <div>
@@ -114,7 +114,9 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
           />
           <p>{coffeeItem.kind}</p>
 
-          <p className="text-start px-3">{coffeeItem.description}</p>
+          <p className="" style={{ textAlign: "justify" }}>
+            {coffeeItem.description}
+          </p>
         </div>
         <div>
           <div className="d-flex justify-content-evenly">

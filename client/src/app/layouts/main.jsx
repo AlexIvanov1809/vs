@@ -1,7 +1,8 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
 const Main = () => {
-  return <h1>MAIN</h1>;
+  return <Navigate to={"/market/coffee"} />;
 };
 
 export default Main;

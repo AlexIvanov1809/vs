@@ -16,23 +16,24 @@ const Login = () => {
   };
   return (
     <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 shadow p-4">
-          {formType === "login" ? (
-            <>
-              <h2>Войти</h2>
-              <LoginForm />
-              <p>
-                Нет аккаунта?{" "}
-                <Link to="/registration" onClick={toggleChangeForm}>
-                  Регистрация
-                </Link>
-              </p>
-            </>
-          ) : (
+      <div className="d-flex justify-content-center">
+        {formType === "login" ? (
+          <div className="card p-4" style={{ maxWidth: "400px" }}>
+            <h2>Войти</h2>
+            <LoginForm />
+            <p>
+              Нет аккаунта?{" "}
+              <Link to="/registration" onClick={toggleChangeForm}>
+                Регистрация
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div className="card p-4" style={{ maxWidth: "400px" }}>
+            <h2>Регистрация</h2>
             <RegistrationForm />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

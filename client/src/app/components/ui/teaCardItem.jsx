@@ -53,7 +53,7 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
     }
   };
   return (
-    <div className="div m-2 shadow p-5" style={{ width: "350px" }}>
+    <div className="m-4 shadow" style={{ width: "350px", padding: "32px" }}>
       <div className="d-flex flex-column justify-content-between align-items-stretch">
         <div className="w-100">
           <h4>{teaItem.brand}</h4>
@@ -64,10 +64,12 @@ const TeaCardItem = ({ teaItem, onOrder }) => {
             alt="Tea"
           />
           <h2>{teaItem.name}</h2>
-          <p className="text-start ">{teaItem.description}</p>
+          <p className="" style={{ textAlign: "justify" }}>
+            {teaItem.description}
+          </p>
         </div>
         <div className="d-flex justify-content-between align-items-center">
-          <div className=" d-flex flex-column justify-content-center align-items-start">
+          <div className=" d-flex flex-column justify-content-center align-items-start mt-3">
             <div>
               <span className="fw-bold">{unit}</span>
             </div>

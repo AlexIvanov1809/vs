@@ -77,3 +77,18 @@ code {
 	overflow: hidden;
 	transition: height 0.3s ease;
 }
+
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.basket-block {
+	max-width: 600px;
+}
+
+@media (max-width: 770px) {
+	.grid-container {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}

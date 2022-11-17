@@ -105,19 +105,16 @@ const EditTeaItem = () => {
     return (
       <>
         {data ? (
-          <div className="container mt-5 position-relative">
+          <div className="container mb-5 mt-5 position-relative">
             <button
-              className="btn btn-primary position-absolute t-2"
+              className="btn btn-primary position-absolute t-2 start-25"
               style={{ left: "10%" }}
               onClick={() => navigate(-1)}
             >
               Назад
             </button>
-            <div className="row">
-              <div
-                className="col-md-9 offset-md-3 shadow p-4"
-                style={{ maxWidth: "650px" }}
-              >
+            <div className="d-flex align-items-center justify-content-center">
+              <div className=" shadow p-4" style={{ width: "450px" }}>
                 <label className="fw-700 fs-3 mb-2">Изменить карточку</label>
                 <form onSubmit={handleSubmit}>
                   <ImageLoaderField
@@ -171,12 +168,6 @@ const EditTeaItem = () => {
                     value={data.description || ""}
                     onChange={handleChange}
                     error={errors.description}
-                  />
-                  <TextAreaField
-                    label="Введите способ приготовления (если имеется)"
-                    name="recipe"
-                    value={data.recipe || ""}
-                    onChange={handleChange}
                   />
                   <SelectField
                     label="Выберите вес или шт"

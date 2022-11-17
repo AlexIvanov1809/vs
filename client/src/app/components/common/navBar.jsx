@@ -21,7 +21,7 @@ const NavBar = () => {
     navigate("/");
   };
   return (
-    <div className="position-relative">
+    <div className="position-relative" style={{ zIndex: "9999" }}>
       <nav className="navbar navbar-dark bg-primary">
         <div className="logo">
           <Link className="h-100" aria-current="page" to="/">

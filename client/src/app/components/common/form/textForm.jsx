@@ -26,6 +26,7 @@ const TextForm = ({ label, name, type, value, onChange, error }) => {
           className={getInputClass()}
           id={name}
           value={value}
+          placeholder={type === "tel" ? "(949) 123 45 67" : ""}
           onChange={handleChange}
         />
         {type === "password" && (

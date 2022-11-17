@@ -21,8 +21,21 @@ export function validator(data, config) {
         statusValidation = !containDigit.test(data);
         break;
       }
+      case "onlyDigit": {
+        const containDigit = /^\d+/g;
+        const arrData = data.split("");
+        data[0] === "+" ? arrData.splice(0, 1) : arrData.join("");
+        statusValidation = !containDigit.test(arrData.join(""));
+        break;
+      }
       case "min": {
-        statusValidation = data.length < config.value;
+        statusValidation =
+          (data[0] === "+" ? data.length - 1 : data.length) < config.value;
+        break;
+      }
+      case "max": {
+        statusValidation =
+          (data[0] === "+" ? data.length - 1 : data.length) > config.value;
         break;
       }
       default:

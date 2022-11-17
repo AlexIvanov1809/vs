@@ -45,10 +45,10 @@ const CoffeeAdminCard = () => {
     );
   } else {
     return (
-      <div className="d-flex justify-content-center mt-5">
+      <div className="d-flex justify-content-center mb-5 mt-5">
         <div
           className="d-flex justify-content-center mt-2"
-          style={{ maxWidth: "660px" }}
+          style={{ maxWidth: "650px" }}
         >
           <button
             className="btn btn-primary"

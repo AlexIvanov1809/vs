@@ -14,7 +14,6 @@ router.post("/:key", async (req, res) => {
     // const path = `${__dirname}/../client/img/marketItems/${key}/`;
     const file = req.files.file;
     newFileName = Date.now() + ".jpeg";
-    // file.mv(path + newFileName);
     await sharp(file.data)
       .toFormat("jpeg")
       .resize(200, 200)

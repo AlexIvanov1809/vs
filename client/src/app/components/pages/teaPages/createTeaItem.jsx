@@ -120,7 +120,7 @@ const CreateTeaItem = () => {
   } else {
     return (
       <>
-        <div className="container  position-relative mt-2">
+        <div className="container  position-relative mt-5 mb-5">
           <button
             className="btn btn-primary position-absolute t-2"
             style={{ left: "10%" }}
@@ -128,11 +128,8 @@ const CreateTeaItem = () => {
           >
             Назад
           </button>
-          <div className="row">
-            <div
-              className="col-md-9 offset-md-3 shadow p-4"
-              style={{ maxWidth: "650px" }}
-            >
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="shadow p-4" style={{ maxWidth: "450px" }}>
               <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
               <form onSubmit={handleSubmit}>
                 <ImageLoaderField
@@ -182,12 +179,6 @@ const CreateTeaItem = () => {
                   value={data.description || ""}
                   onChange={handleChange}
                   error={errors.description}
-                />
-                <TextAreaField
-                  label="Введите способ приготовления (если имеется)"
-                  name="recipe"
-                  value={data.recipe || ""}
-                  onChange={handleChange}
                 />
                 <SelectField
                   label="Выберите вес или шт"

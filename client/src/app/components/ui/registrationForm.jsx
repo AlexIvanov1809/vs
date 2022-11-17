@@ -22,8 +22,7 @@ const RegistrationForm = () => {
   };
   if (userId) {
     return (
-      <form className="row g-3 mb-3" onSubmit={handleSubmit}>
-        <h2>Регистрация</h2>
+      <form onSubmit={handleSubmit}>
         <TextForm
           label="Имя"
           name="name"
@@ -38,7 +37,7 @@ const RegistrationForm = () => {
           value={data.password}
           onChange={handleChange}
         />
-        <button className="btn btn-primary w-100 mx-auto" type="submit">
+        <button className="btn btn-primary mt-4 w-100 mx-auto" type="submit">
           submit
         </button>
       </form>

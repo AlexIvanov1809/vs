@@ -54,7 +54,7 @@ const TeaAdminCard = () => {
         </button>
         <div
           className="div  w-75  text-center shadow p-2 ms-5"
-          style={{ maxWidth: "550px" }}
+          style={{ maxWidth: "450px" }}
         >
           <div className="text-start mb-4 ms-5">
             <p>

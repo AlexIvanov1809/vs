@@ -143,7 +143,7 @@ const CreateCoffeeItem = () => {
   } else {
     return (
       <>
-        <div className="container mt-5 position-relative">
+        <div className="container mt-5 mb-5 position-relative">
           <button
             className="btn btn-primary position-absolute t-2"
             style={{ left: "10%" }}
@@ -154,7 +154,7 @@ const CreateCoffeeItem = () => {
           <div className="row">
             <div
               className="col-md-9 offset-md-3 shadow p-4"
-              style={{ maxWidth: "750px" }}
+              style={{ maxWidth: "650px" }}
             >
               <label className="fw-700 fs-3 mb-2">Создать новую карточку</label>
               <form onSubmit={handleSubmit}>
@@ -258,33 +258,36 @@ const CreateCoffeeItem = () => {
                   />
                 </div>
                 <div className="d-flex justify-content-between text-center">
-                  <TextForm
-                    className="w-25"
-                    label="250"
-                    name="priceQuarter"
-                    type="text"
-                    value={data.priceQuarter || ""}
-                    onChange={handleChange}
-                    error={err.all || err.quarter}
-                  />
-                  <TextForm
-                    className="w-25"
-                    label="1000"
-                    name="priceKg"
-                    type="text"
-                    value={data.priceKg || ""}
-                    onChange={handleChange}
-                    error={err.all || err.kg}
-                  />
-                  <TextForm
-                    className="w-25"
-                    label="Дрип шт"
-                    name="priceDrip"
-                    type="text"
-                    value={data.priceDrip || ""}
-                    onChange={handleChange}
-                    error={err.all || err.drip}
-                  />
+                  <div className="w-25">
+                    <TextForm
+                      label="250"
+                      name="priceQuarter"
+                      type="text"
+                      value={data.priceQuarter || ""}
+                      onChange={handleChange}
+                      error={err.all || err.quarter}
+                    />
+                  </div>
+                  <div className="w-25">
+                    <TextForm
+                      label="1000"
+                      name="priceKg"
+                      type="text"
+                      value={data.priceKg || ""}
+                      onChange={handleChange}
+                      error={err.all || err.kg}
+                    />
+                  </div>
+                  <div className="w-25">
+                    <TextForm
+                      label="Дрип шт"
+                      name="priceDrip"
+                      type="text"
+                      value={data.priceDrip || ""}
+                      onChange={handleChange}
+                      error={err.all || err.drip}
+                    />
+                  </div>
                 </div>
                 <CheckBoxField
                   named="active"

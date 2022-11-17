@@ -9,7 +9,7 @@ const CheckBoxField = ({ named, value, onChange, children, error }) => {
     return "form-check-input" + (error ? " is-invalid" : "");
   };
   return (
-    <div className="form-check mb-2">
+    <div className="form-check text-start mb-2">
       <input
         className={getInputClasses()}
         type="checkbox"
@@ -18,7 +18,7 @@ const CheckBoxField = ({ named, value, onChange, children, error }) => {
         onChange={handleChange}
         checked={value}
       />
-      <label className="form-check-label" htmlFor="flexCheckDefault">
+      <label className="form-check-label ms-3" htmlFor="flexCheckDefault">
         {children}
       </label>
       {error && <div className="invalid-feedback">{error}</div>}

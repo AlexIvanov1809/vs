@@ -30,6 +30,7 @@ const MarketPlace = () => {
       }
     }
   };
+  console.log(error);
   if (!error && !isloading) {
     return (
       <>
@@ -91,7 +92,24 @@ const MarketPlace = () => {
       </>
     );
   }
-  return <h1>{error}</h1>;
+  return (
+    <>
+      {error && (
+        <div className="d-flex justify-content-center align-items-center">
+          <div className="card">
+            <p>Что-то пошло не так, перегрузите пожалуйста страницу</p>
+          </div>
+        </div>
+      )}
+      {isloading && (
+        <div className="d-flex justify-content-center w-100 mt-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default MarketPlace;

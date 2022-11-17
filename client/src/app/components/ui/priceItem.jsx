@@ -44,7 +44,7 @@ const PriceItem = ({ item, onChange }) => {
   };
   return (
     <>
-      <div className="d-flex">
+      <div className="d-flex mt-3">
         <div
           className={
             "prise ms-2 text-center" +

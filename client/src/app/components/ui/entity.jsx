@@ -25,7 +25,7 @@ const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
 
   return (
     <div className="card m-1" style={{ overflow: "hidden" }}>
-      <div className="mx-2">
+      <div className="p-2">
         <form className="d-flex align-items-end" onSubmit={handleSubmit}>
           <TextForm
             label={label}
@@ -39,7 +39,10 @@ const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
           </button>
         </form>
         <div style={{ minHeight: "100%", overflow: "auto" }}>
-          <div className="card px-2 mb-1" style={{ height: "250px" }}>
+          <div
+            className="card bg-secondary bg-opacity-25 px-2 mb-2"
+            style={{ height: "250px" }}
+          >
             {!loading ? (
               items ? (
                 items.map((item) => (

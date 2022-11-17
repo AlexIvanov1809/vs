@@ -19,7 +19,10 @@ const OrderSubmit = ({ onSubmit }) => {
       isRequired: { message: "Поле необходимое для заполнения" }
     },
     phone: {
-      isRequired: { message: "Поле необходимое для заполнения" }
+      isRequired: { message: "Поле необходимое для заполнения" },
+      onlyDigit: { message: "Неверный номер телефона dig" },
+      min: { message: "Неверный номер телефона min", value: 10 },
+      max: { message: "Неверный номер телефона max", value: 12 }
     },
     address: {
       isRequired: { message: "Поле необходимое для заполнения" }
