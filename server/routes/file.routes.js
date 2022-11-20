@@ -10,8 +10,8 @@ router.post("/:key", async (req, res) => {
       return res.status(400).json({ message: "Файл не был загружен" });
     }
     const { key } = req.params;
-    // const path = `${__dirname}/../../client/public/img/marketItems/${key}/`;
-    const path = `${__dirname}/../client/img/marketItems/${key}/`;
+    const path = `${__dirname}/../../client/public/img/marketItems/${key}/`;
+    // const path = `${__dirname}/../client/img/marketItems/${key}/`;
     const file = req.files.file;
     newFileName = Date.now() + ".jpeg";
     await sharp(file.data)

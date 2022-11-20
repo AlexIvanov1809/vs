@@ -1,0 +1,11 @@
+{
+	"port":80,
+	"mongoUri":"",
+	"accessSecret": "super secret from backend",
+	"refreshSecret": "super refresh key",
+	"token":"",
+	"chatId":"",
+	"mailFrom":"",
+	"mailPass":"",
+	"mailTo":""
+}

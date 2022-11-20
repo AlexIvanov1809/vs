@@ -13,7 +13,7 @@ const app = express();
 app.use(fileUpload({}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/venditore", routes);
+app.use("/api", routes);
 app.use(cors());
 
 const PORT = config.get("port") ?? 8080;
