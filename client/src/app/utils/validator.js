@@ -28,14 +28,9 @@ export function validator(data, config) {
         statusValidation = !containDigit.test(arrData.join(""));
         break;
       }
-      case "min": {
+      case "minMax": {
         statusValidation =
-          (data[0] === "+" ? data.length - 1 : data.length) < config.value;
-        break;
-      }
-      case "max": {
-        statusValidation =
-          (data[0] === "+" ? data.length - 1 : data.length) > config.value;
+          (data[0] === "+" ? data.length - 2 : data.length) !== config.value;
         break;
       }
       default:

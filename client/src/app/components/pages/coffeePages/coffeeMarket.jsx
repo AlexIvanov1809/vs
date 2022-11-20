@@ -21,7 +21,7 @@ const CoffeeMarket = ({ handleOrder }) => {
     method: [],
     kind: []
   });
-  const pageSize = 12;
+  const pageSize = 6;
   const coffeeItems = useSelector(getCoffeeItemsList());
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
 

@@ -30,7 +30,7 @@ const MarketPlace = () => {
       }
     }
   };
-  console.log(error);
+
   if (!error && !isloading) {
     return (
       <>

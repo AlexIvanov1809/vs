@@ -53,7 +53,7 @@ const CoffeeSideBar = ({ onSelect }) => {
     setReset(!reset);
   };
   return (
-    <aside className="card  m-auto p-3 text-center" style={{ width: "280px" }}>
+    <aside className="card  m-auto p-3 text-center" style={{ width: "300px" }}>
       {!brandsLoadingStatus &&
       !countriesLoadingStatus &&
       !methodsLoadingStatus &&

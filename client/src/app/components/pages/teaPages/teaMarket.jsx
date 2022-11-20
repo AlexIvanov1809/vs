@@ -20,7 +20,7 @@ const TeaMarket = ({ handleOrder }) => {
     type: [],
     package: []
   });
-  const pageSize = 12;
+  const pageSize = 9;
   const teaItems = useSelector(getTeaItemsList());
   const teaItemsLoading = useSelector(getTeaItemsLoadingStatus());
 

@@ -38,10 +38,10 @@ const Entity = ({ items, onDelete, onSubmit, label, name, loading }) => {
             <i className="bi bi-plus-circle"></i>
           </button>
         </form>
-        <div style={{ minHeight: "100%", overflow: "auto" }}>
+        <div>
           <div
             className="card bg-secondary bg-opacity-25 px-2 mb-2"
-            style={{ height: "250px" }}
+            style={{ height: "100%" }}
           >
             {!loading ? (
               items ? (

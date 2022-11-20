@@ -102,9 +102,9 @@ const CoffeeCardItem = ({ coffeeItem, onOrder }) => {
         style={{ width: "370px" }}
       >
         <div>
-          <h4>{coffeeItem.brand}</h4>
+          <h5 className="text-uppercase">{coffeeItem.brand}</h5>
           <p>{coffeeItem.preparationMethod}</p>
-          <h2>{coffeeItem.name}</h2>
+          <h4 className="text-uppercase">{coffeeItem.name}</h4>
           <p>{coffeeItem.method}</p>
 
           <ItemImage
