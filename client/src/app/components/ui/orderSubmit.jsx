@@ -20,7 +20,7 @@ const OrderSubmit = ({ onSubmit }) => {
     },
     phone: {
       isRequired: { message: "Поле необходимое для заполнения" },
-      onlyDigit: { message: "Неверный номер телефона dig" },
+      onlyDigit: { message: "Неверный номер телефона" },
       minMax: { message: "Неверный номер телефона 949ХХХХХХХ", value: 10 }
     },
     address: {

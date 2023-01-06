@@ -17,7 +17,7 @@ const MarketPlace = () => {
   const isloading = useSelector(getCoffeeItemsLoadingStatus());
   const error = useSelector(getCoffeeItemsError());
 
-  const hendleClick = (page) => {
+  const handleClick = (page) => {
     setCurrentPage(page);
   };
   const handleOrder = (type) => {
@@ -42,7 +42,7 @@ const MarketPlace = () => {
                 (currentPage === "coffee" ? "primary" : "secondary")
               }
               role="button"
-              onClick={() => hendleClick("coffee")}
+              onClick={() => handleClick("coffee")}
               to={"/market/coffee"}
             >
               Кофе
@@ -53,7 +53,7 @@ const MarketPlace = () => {
                 (currentPage === "tea" ? "primary" : "secondary")
               }
               role="button"
-              onClick={() => hendleClick("tea")}
+              onClick={() => handleClick("tea")}
               to={"/market/tea"}
             >
               Чай

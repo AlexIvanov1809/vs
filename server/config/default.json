@@ -1,11 +1,11 @@
 {
 	"port":8080,
-	"mongoUri":"",
+	"mongoUri":"mongodb+srv://venditore:qgYwg5wz@cluster0.xffcgt6.mongodb.net/api?retryWrites=true&w=majority",
 	"accessSecret": "super secret from backend",
 	"refreshSecret": "super refresh key",
-	"token":"",
-	"chatId":"",
-	"mailFrom":"",
-	"mailPass":"",
-	"mailTo":""
+	"token":"5340776846:AAEGyttmKYp-3f0a4n5UF9OjzPreFLd6-SM",
+	"chatId":"677331179",
+	"mailFrom":"store.venditore@gmail.com",
+	"mailPass":"xdexgnawzuanvlws",
+	"mailTo":"store.venditore@gmail.com"
 }
