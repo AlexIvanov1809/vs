@@ -1,5 +1,5 @@
-const path = require('path')
+const path = require("path");
 
-const imgDirectory = __dirname
+const imgDirectory = __dirname;
 
 module.exports = imgDirectory;
