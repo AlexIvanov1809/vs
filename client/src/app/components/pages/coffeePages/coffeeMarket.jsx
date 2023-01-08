@@ -9,6 +9,7 @@ import {
   getCoffeeItemsLoadingStatus
 } from "../../../store/coffeeItems/coffeeItems";
 import CoffeeSideBar from "../../common/coffeeSidebar";
+import itemFilter from "../../../utils/itemFilter";
 
 const CoffeeMarket = ({ handleOrder }) => {
   const [coffeeAssortment, setCoffeeAssortment] = useState([]);
@@ -21,7 +22,7 @@ const CoffeeMarket = ({ handleOrder }) => {
     method: [],
     kind: []
   });
-  const pageSize = 6;
+  const pageSize = 9;
   const coffeeItems = useSelector(getCoffeeItemsList());
   const coffeeItemsLoading = useSelector(getCoffeeItemsLoadingStatus());
 
@@ -35,57 +36,15 @@ const CoffeeMarket = ({ handleOrder }) => {
     setCurrentPage(1);
   }, [searchQuery]);
   useEffect(() => {
-    setFilter([]);
-    const selected = {
-      brand: [],
-      country: [],
-      method: [],
-      kind: []
-    };
-    selectedItems.country.length > 0
-      ? selectedItems.country.forEach(
-          (item) =>
-            (selected.country = [
-              ...selected.country,
-              ...coffeeAssortment.filter((i) => i.country === item)
-            ])
-        )
-      : (selected.country = coffeeAssortment);
-
-    selectedItems.brand.length > 0
-      ? selectedItems.brand.forEach(
-          (item) =>
-            (selected.brand = [
-              ...selected.brand,
-              ...selected.country.filter((i) => i.brand === item)
-            ])
-        )
-      : (selected.brand = selected.country);
-
-    selectedItems.method.length > 0
-      ? selectedItems.method.forEach(
-          (item) =>
-            (selected.method = [
-              ...selected.method,
-              ...selected.brand.filter((i) => i.method === item)
-            ])
-        )
-      : (selected.method = selected.brand);
-
-    selectedItems.kind.length > 0
-      ? selectedItems.kind.forEach(
-          (item) =>
-            (selected.kind = [
-              ...selected.kind,
-              ...selected.method.filter((i) => i.kind === item)
-            ])
-        )
-      : (selected.kind = selected.method);
-    setFilter(selected.kind);
+    setCurrentPage(1);
+    const filtered = itemFilter(selectedItems, coffeeAssortment);
+    setFilter(filtered);
   }, [selectedItems]);
 
   const handleCurrentPageSet = (page) => {
+    if (page === currentPage) return;
     setCurrentPage(page);
+    window.scrollTo(0, 0);
   };
 
   const handleSearchQuery = ({ target }) => {
@@ -97,20 +56,20 @@ const CoffeeMarket = ({ handleOrder }) => {
   };
 
   function searchItems(data) {
-    const filtredData = searchQuery
+    const filteredData = searchQuery
       ? data.filter(
           (item) =>
             item.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
         )
       : data;
 
-    return filtredData;
+    return filteredData;
   }
 
-  const filtereditems = searchItems(filter);
+  const filteredItems = searchItems(filter);
 
-  const itemsQty = filtereditems.length;
-  const itemsOnPage = paginate(filtereditems, currentPage, pageSize);
+  const itemsQty = filteredItems.length;
+  const itemsOnPage = paginate(filteredItems, currentPage, pageSize);
 
   return (
     <>

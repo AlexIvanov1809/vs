@@ -17,10 +17,13 @@ const CheckBoxField = ({ named, value, onChange, children, error }) => {
         id={named}
         onChange={handleChange}
         checked={value}
+        role="button"
       />
       <label
         className="form-check-label ms-3 text-wrap"
         htmlFor="flexCheckDefault"
+        onClick={handleChange}
+        role="button"
       >
         {children}
       </label>

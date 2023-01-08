@@ -14,7 +14,7 @@ const MarketPlace = () => {
   const [hidden, setHidden] = useState(true);
   const [firstOrder, setFirstOrder] = useState(true);
 
-  const isloading = useSelector(getCoffeeItemsLoadingStatus());
+  const isLoading = useSelector(getCoffeeItemsLoadingStatus());
   const error = useSelector(getCoffeeItemsError());
 
   const handleClick = (page) => {
@@ -31,7 +31,7 @@ const MarketPlace = () => {
     }
   };
 
-  if (!error && !isloading) {
+  if (!error && !isLoading) {
     return (
       <>
         <div className="position-relative overflow-hidden mx-md-5 mx-ms-1 ">
@@ -101,7 +101,7 @@ const MarketPlace = () => {
           </div>
         </div>
       )}
-      {isloading && (
+      {isLoading && (
         <div className="d-flex justify-content-center w-100 mt-5">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>

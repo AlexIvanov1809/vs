@@ -9,6 +9,7 @@ import {
 } from "../../../store/teaItems/teaItems";
 import TeaCardItem from "../../ui/teaCardItem";
 import TeaSideBar from "../../common/teaSidebar";
+import itemFilter from "../../../utils/itemFilter";
 
 const TeaMarket = ({ handleOrder }) => {
   const [teaAssortment, setTeaAssortment] = useState([]);
@@ -34,46 +35,15 @@ const TeaMarket = ({ handleOrder }) => {
     setCurrentPage(1);
   }, [searchQuery]);
   useEffect(() => {
-    setFilter([]);
-    const selected = {
-      brand: [],
-      type: [],
-      package: []
-    };
-    selectedItems.type.length > 0
-      ? selectedItems.type.forEach(
-          (item) =>
-            (selected.type = [
-              ...selected.type,
-              ...teaAssortment.filter((i) => i.type === item)
-            ])
-        )
-      : (selected.type = teaAssortment);
-
-    selectedItems.brand.length > 0
-      ? selectedItems.brand.forEach(
-          (item) =>
-            (selected.brand = [
-              ...selected.brand,
-              ...selected.type.filter((i) => i.brand === item)
-            ])
-        )
-      : (selected.brand = selected.type);
-
-    selectedItems.package.length > 0
-      ? selectedItems.package.forEach(
-          (item) =>
-            (selected.package = [
-              ...selected.package,
-              ...selected.brand.filter((i) => i.package === item)
-            ])
-        )
-      : (selected.package = selected.brand);
-    setFilter(selected.package);
+    setCurrentPage(1);
+    const filtered = itemFilter(selectedItems, teaAssortment);
+    setFilter(filtered);
   }, [selectedItems]);
 
   const handleCurrentPageSet = (page) => {
+    if (page === currentPage) return;
     setCurrentPage(page);
+    window.scrollTo(0, 0);
   };
 
   const handleSearchQuery = ({ target }) => {
@@ -85,20 +55,20 @@ const TeaMarket = ({ handleOrder }) => {
   };
 
   function searchItems(data) {
-    const filtredData = searchQuery
+    const filteredData = searchQuery
       ? data.filter(
           (item) =>
             item.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
         )
       : data;
 
-    return filtredData;
+    return filteredData;
   }
 
-  const filtereditems = searchItems(filter);
+  const filteredItems = searchItems(filter);
 
-  const itemsQty = filtereditems.length;
-  const itemsOnPage = paginate(filtereditems, currentPage, pageSize);
+  const itemsQty = filteredItems.length;
+  const itemsOnPage = paginate(filteredItems, currentPage, pageSize);
   return (
     <>
       <div className="w-100">
