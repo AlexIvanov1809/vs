@@ -1,54 +1,56 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
-const Token = require("../models/Token");
+const { Token } = require("../models/models");
 
 class TokenService {
-  generate(payload) {
-    const accessToken = jwt.sign(payload, config.get("accessSecret"), {
-      expiresIn: "1h",
+  generateTokens(payload) {
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
+      expiresIn: "10s",
     });
-    const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
+    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
+      expiresIn: "30d",
+    });
 
-    return {
-      accessToken,
-      refreshToken,
-      expiresIn: 3600,
-    };
+    return { accessToken, refreshToken };
   }
 
-  async save(userId, refreshToken) {
-    const data = await Token.findOne({ user: userId });
-    if (data) {
-      data.refreshToken = refreshToken;
-      return data.save();
-    }
+  validateAccessToken(token) {
+    try {
+      const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
-    const token = await Token.create({ user: userId, refreshToken });
+      return userData;
+    } catch (e) {
+      return null;
+    }
+  }
+  validateRefreshToken(token) {
+    try {
+      const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+      return userData;
+    } catch (e) {}
+  }
+
+  async saveToken(userId, refreshToken) {
+    const tokenData = await Token.findOne({ where: { userId } });
+    if (tokenData) {
+      return await Token.update(
+        { refreshToken },
+        { where: { id: tokenData.id } },
+      );
+    }
+    const token = await Token.create({ userId, refreshToken });
+
     return token;
   }
 
-  validateRefresh(refreshToken) {
-    try {
-      return jwt.verify(refreshToken, config.get("refreshSecret"));
-    } catch (error) {
-      return null;
-    }
-  }
+  async removeToken(refreshToken) {
+    const tokenData = await Token.destroy({ where: { refreshToken } });
 
-  validateAccess(accessToken) {
-    try {
-      return jwt.verify(accessToken, config.get("accessSecret"));
-    } catch (error) {
-      return null;
-    }
+    return tokenData;
   }
-
   async findToken(refreshToken) {
-    try {
-      return await Token.findOne({ refreshToken });
-    } catch (error) {
-      return null;
-    }
+    const tokenData = await Token.findOne({ refreshToken });
+
+    return tokenData;
   }
 }
 

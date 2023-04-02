@@ -1,5 +1,0 @@
-checker
-./server/config
-./server/build
-./server/.gitignore
-.gitignore
