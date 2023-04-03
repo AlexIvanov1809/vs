@@ -1,11 +1,11 @@
-const { Item, ItemImg, ItemPrice } = require("../models/models");
+const { Product, ProductImg, ProductPrice } = require("../models/models");
 const ApiError = require("../error/ApiError");
 const uuid = require("uuid");
 const { INCLUDES_MODELS } = require("../constants/consts");
 const makeEntitiesForFilters = require("../utils/makeEntitiesForFilters");
 const { convertAndSavePic, removePic } = require("../utils/saveAndRemovePic");
 
-class ItemController {
+class ProductController {
   async create(req, res, next) {
     try {
       let { price, ...data } = req.body;
@@ -14,36 +14,37 @@ class ItemController {
       }
       let { img } = req.files;
 
-      const item = await Item.create({
+      const product = await Product.create({
         ...data,
       });
 
-      makeEntitiesForFilters(item);
+      makeEntitiesForFilters(product);
 
       if (price) {
         price = JSON.parse(price);
         price.forEach(
           async (i) =>
-            await ItemPrice.create({
+            await ProductPrice.create({
               weight: i.weight,
               value: i.value,
-              ItemId: item.id,
+              productId: product.id,
             }),
         );
       }
 
       Array.isArray(img) ? img : (img = [img]);
-      img.forEach(async (i) => {
+      img.forEach(async (i, index) => {
         let fileName = uuid.v4() + ".jpg";
         convertAndSavePic(i, fileName);
 
-        await ItemImg.create({
+        await ProductImg.create({
           name: fileName,
-          ItemId: item.id,
+          productId: product.id,
+          row: index,
         });
       });
 
-      return res.json(item);
+      return res.json(product);
     } catch (e) {
       next(ApiError.internal(e.message));
     }
@@ -52,33 +53,39 @@ class ItemController {
   async getAll(req, res, next) {
     try {
       let { limit, page, ...data } = req.query;
-      const filterParams = Object.keys(data).reduce((acc, item) => {
-        if (data[item]) {
-          acc[item] = data[item].split("-");
+      const filterParams = Object.keys(data).reduce((acc, product) => {
+        if (data[product]) {
+          acc[product] = data[product].split("-");
         }
         return acc;
       }, {});
 
       let offset = page * limit - limit;
-      let items;
+      let products;
 
       if (!Object.keys(filterParams).length) {
-        items = await Item.findAndCountAll({
+        products = await Product.findAndCountAll({
           include: INCLUDES_MODELS,
-          order: [[{ model: ItemPrice, as: "price" }, "value", "ASC"]],
+          order: [
+            [{ model: ProductPrice, as: "price" }, "value", "ASC"],
+            [{ model: ProductImg, as: "image" }, "row", "ASC"],
+          ],
         });
       }
       if (Object.keys(filterParams).length) {
-        items = await Item.findAndCountAll({
+        products = await Product.findAndCountAll({
           where: { ...filterParams },
           limit,
           offset,
           include: INCLUDES_MODELS,
-          order: [[{ model: ItemPrice, as: "price" }, "value", "ASC"]],
+          order: [
+            [{ model: ProductPrice, as: "price" }, "value", "ASC"],
+            [{ model: ProductImg, as: "image" }, "row", "ASC"],
+          ],
         });
       }
 
-      return res.json(items);
+      return res.json(products);
     } catch (e) {
       next(ApiError.internal(e.message));
     }
@@ -87,11 +94,15 @@ class ItemController {
   async getOne(req, res, next) {
     try {
       const { id } = req.params;
-      const items = await Item.findOne({
+      const products = await Product.findOne({
         where: { id },
         include: INCLUDES_MODELS,
+        order: [
+          [{ model: ProductPrice, as: "price" }, "value", "ASC"],
+          [{ model: ProductImg, as: "image" }, "row", "ASC"],
+        ],
       });
-      return res.json(items);
+      return res.json(products);
     } catch (e) {
       next(ApiError.internal(e.message));
     }
@@ -102,30 +113,30 @@ class ItemController {
       const { id } = req.params;
       let data = req.body;
 
-      await Item.update(data, { where: { id } });
-      const item = await Item.findOne({ where: { id } });
+      await Product.update(data, { where: { id } });
+      const product = await Product.findOne({ where: { id } });
 
-      makeEntitiesForFilters(item);
+      makeEntitiesForFilters(product);
 
       if (data.price) {
         const price = JSON.parse(data.price);
         price.forEach(async (i) =>
-          i.ItemId
-            ? await ItemPrice.update(
+          i.productId
+            ? await ProductPrice.update(
                 {
                   weight: i.weight,
                   value: i.value,
                 },
                 { where: { id: i.id } },
               )
-            : await ItemPrice.create({
+            : await ProductPrice.create({
                 weight: i.weight,
                 value: i.value,
-                ItemId: id,
+                productId: id,
               }),
         );
       }
-      return res.json(item);
+      return res.json(product);
     } catch (e) {
       next(ApiError.internal(e.message));
     }
@@ -134,21 +145,21 @@ class ItemController {
   async delete(req, res, next) {
     try {
       const { id } = req.params;
-      const img = await ItemImg.findAll({ where: { ItemId: id } });
+      const img = await ProductImg.findAll({ where: { productId: id } });
 
       img.forEach(async (i) => {
         await removePic(i.name);
       });
 
       makeEntitiesForFilters(id);
-      await ItemImg.destroy({ where: { ItemId: id } });
-      await ItemPrice.destroy({ where: { ItemId: id } });
-      await Item.destroy({ where: { id } });
-      return res.json("Item was removed");
+      await ProductImg.destroy({ where: { productId: id } });
+      await ProductPrice.destroy({ where: { productId: id } });
+      await Product.destroy({ where: { id } });
+      return res.json("Product was removed");
     } catch (e) {
       next(ApiError.internal(e.message));
     }
   }
 }
 
-module.exports = new ItemController();
+module.exports = new ProductController();

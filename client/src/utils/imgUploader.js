@@ -1,25 +1,32 @@
 import httpService from "../http/productAPI";
 import makeFormDataFile from "./makeFormDataFile";
 
-export default function imgUploader(img, item) {
-  img.forEach((i, index) => {
-    if (item.image[index] && i && item.image[index].name !== i) {
-      const formData = makeFormDataFile(null, [i]);
+export default function imgUploader(img, product) {
+  const imgIds = ["", "", ""];
+  product.image.forEach((img) => {
+    imgIds[img.row] = img.id;
+  });
+
+  img.forEach((file, index) => {
+    if (imgIds[index] && typeof file === "object") {
+      const formData = makeFormDataFile(null, [file]);
       httpService
-        .editItemImage(item.image[index].id, formData)
+        .editProductImage(imgIds[index], formData)
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e));
+    }
+
+    if (!imgIds[index] && typeof file === "object") {
+      const formData = makeFormDataFile(null, [file]);
+      httpService
+        .createProductImage(product.id, index, formData)
         .then((data) => console.log(data))
         .catch((e) => console.log(e.message));
     }
-    if (!item.image[index] && i) {
-      const formData = makeFormDataFile(null, [i]);
+
+    if (imgIds[index] && !file) {
       httpService
-        .createItemImage(item.id, formData)
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e.message));
-    }
-    if (item.image[index] && !i) {
-      httpService
-        .removeItemImage(item.image[index].id)
+        .removeProductImage(imgIds[index])
         .then((data) => console.log(data))
         .catch((e) => console.log(e.message));
     }

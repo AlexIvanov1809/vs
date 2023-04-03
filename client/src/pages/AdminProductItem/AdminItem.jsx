@@ -121,7 +121,11 @@ const AdminItem = observer(() => {
         </div>
       </div>
       {editing && (
-        <EditItemModule item={item} updated={setUpdated} onHide={editHandle} />
+        <EditItemModule
+          product={item}
+          updated={setUpdated}
+          onHide={editHandle}
+        />
       )}
     </div>
   );

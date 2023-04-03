@@ -13,22 +13,24 @@ import { level, DEFAULT, WEIGHT } from "../../../utils/consts";
 import imgUploader from "../../../utils/imgUploader";
 import removedPriceIds from "../../../utils/removerPriceIds";
 
-const EditItemModule = ({ item, onHide, updated }) => {
+const EditItemModule = ({ product, onHide, updated }) => {
   const { products } = useContext(Context);
-  const [data, setData] = useState(item || DEFAULT);
+  const [data, setData] = useState(product || DEFAULT);
   const [img, setImg] = useState(["", "", ""]);
   const [price, setPrice] = useState(
-    item?.price || [{ id: Date.now(), weight: "", value: "" }],
+    product?.price || [{ id: Date.now(), weight: "", value: "" }],
   );
   const [removedPrice, setRemovedPrice] = useState(false);
 
   useEffect(() => {
-    if (item) {
-      item.image.forEach((image, index) => {
-        setImg((img) => img.map((i, ind) => (ind === index ? image.name : i)));
+    if (product) {
+      product.image.forEach((image) => {
+        setImg((img) =>
+          img.map((i, ind) => (ind === image.row ? image.name : i)),
+        );
       });
     }
-  }, [item]);
+  }, [product]);
 
   const changeHandle = ({ name, value }) => {
     setData((prevState) => ({ ...prevState, [name]: value }));
@@ -55,9 +57,9 @@ const EditItemModule = ({ item, onHide, updated }) => {
 
   const submitHandle = (e) => {
     e.preventDefault();
-    if (item) {
+    if (product) {
       if (removedPrice) {
-        const removedPriceId = removedPriceIds(price, item.price);
+        const removedPriceId = removedPriceIds(price, product.price);
         removedPriceId.forEach((i) =>
           httpService
             .removePriceProduct(i)
@@ -65,14 +67,14 @@ const EditItemModule = ({ item, onHide, updated }) => {
             .catch((e) => console.log(e)),
         );
       }
-      imgUploader(img, item);
+      imgUploader(img, product);
       httpService
         .editProduct({ ...data, price: JSON.stringify(price) })
         .then((data) => {
           onHide(false);
           updated(true);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => console.log(e.response.data));
     } else {
       const formData = makeFormDataFile(
         { ...data, price: JSON.stringify(price) },
@@ -90,7 +92,7 @@ const EditItemModule = ({ item, onHide, updated }) => {
   return (
     <div className={styles.edit_module}>
       <div className={styles.edit_container}>
-        <h3>{item ? "Редактировать" : "Создать"}</h3>
+        <h3>{product ? "Редактировать" : "Создать"}</h3>
         <form onSubmit={submitHandle}>
           <div className={styles.edit_items}>
             <div className={styles.edit_img}>
@@ -232,7 +234,7 @@ const EditItemModule = ({ item, onHide, updated }) => {
               Закрыть
             </Button>
             <Button appearance="primary" type="submit">
-              {item ? "Редактировать" : "Создать"}
+              {product ? "Редактировать" : "Создать"}
             </Button>
           </div>
         </form>

@@ -1,6 +1,6 @@
 import { $authHost, $host } from "./index";
 
-const TYPES_ENDPOINT = "api/v1/itemTypes";
+const TYPES_ENDPOINT = "api/v1/productTypes";
 const PRODUCT_ENDPOINT = "api/v1/product";
 const PIC_ENDPOINT = "api/v1/pictures";
 const PRICE_ENDPOINT = "api/v1/price";
@@ -93,9 +93,9 @@ const httpService = {
     return data;
   },
 
-  async createProductImage(productId, payload) {
+  async createProductImage(productId, index, payload) {
     const { data } = await $authHost.post(
-      `${PIC_ENDPOINT}/${productId}`,
+      `${PIC_ENDPOINT}/${productId}/${index}`,
       payload,
     );
 

@@ -1,7 +1,7 @@
 const itemTypesModels = require("../models/models");
 const ApiError = require("../error/ApiError");
 
-class ItemTypesController {
+class ProductTypesController {
   async create(req, res, next) {
     try {
       const { type } = req.params;
@@ -76,4 +76,4 @@ class ItemTypesController {
   }
 }
 
-module.exports = new ItemTypesController();
+module.exports = new ProductTypesController();
