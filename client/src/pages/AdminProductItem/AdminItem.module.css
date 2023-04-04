@@ -25,5 +25,6 @@
 }
 
 .item_buttons {
-	text-align: end;
+	display: flex;
+	justify-content: flex-end;
 }

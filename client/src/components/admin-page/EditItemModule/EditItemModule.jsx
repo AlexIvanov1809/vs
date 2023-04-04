@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./EditItemModule.module.css";
-import SelectField from "../../ui/SelectField/SelectField";
-import { Context } from "../../..";
-import Button from "../../ui/Button/Button";
-import TextAreaField from "../../ui/TextAriaField/TextAreaField";
-import CheckBox from "../../ui/CheckBox/CheckBox";
+import {
+  Button,
+  TextAreaField,
+  CheckBox,
+  TextInput,
+  ImgInput,
+  SelectField,
+} from "../../ui/";
+import AddPriceValue from "../AddPriceValue/AddPriceValue";
 import httpService from "../../../http/productAPI";
-import TextInput from "../../ui/TextInput/TextInput";
-import ImgInput from "../../ui/ImgInput/ImgInput";
-import makeFormDataFile from "../../../utils/makeFormDataFile";
-import { level, DEFAULT, WEIGHT } from "../../../utils/consts";
-import imgUploader from "../../../utils/imgUploader";
-import removedPriceIds from "../../../utils/removerPriceIds";
+import { Context } from "../../..";
+import {
+  makeFormDataFile,
+  imgUploader,
+  removedPriceIds,
+} from "../../../utils/";
+import { level, DEFAULT } from "../../../utils/consts";
 
 const EditItemModule = ({ product, onHide, updated }) => {
   const { products } = useContext(Context);
@@ -203,29 +208,13 @@ const EditItemModule = ({ product, onHide, updated }) => {
                 Добавить цену
               </Button>
               {price.map((p) => (
-                <div key={p.id} className={styles.edit_price}>
-                  <SelectField
-                    _id={p.id}
-                    value={p.weight}
-                    name="weight"
-                    label="Вес"
-                    options={WEIGHT}
-                    onChange={changePrice}
-                  />
-                  <TextInput
-                    _id={p.id}
-                    name="value"
-                    value={p.value}
-                    onChange={changePrice}
-                    placeholder="Цена"
-                  />
-                  <Button
-                    appearance="primary"
-                    onClick={(e) => removePrice(e, p.id)}
-                  >
-                    Удалить
-                  </Button>
-                </div>
+                <AddPriceValue
+                  key={p.id}
+                  price={p}
+                  onChange={changePrice}
+                  removePrice={removePrice}
+                  className={styles.edit_price}
+                />
               ))}
             </div>
           </div>

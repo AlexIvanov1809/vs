@@ -1,12 +1,11 @@
-import { observer } from "mobx-react-lite";
 import React, { useContext, useState } from "react";
+import styles from "./Auth.module.css";
+import { Button, TextInput } from "../../components/ui/";
 import { NavLink, useLocation } from "react-router-dom";
 import { Context } from "../..";
-import Button from "../../components/ui/Button/Button";
-import TextInput from "../../components/ui/TextInput/TextInput";
 import { check, login, logout, registration } from "../../http/userAPI";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
-import styles from "./Auth.module.css";
+import { observer } from "mobx-react-lite";
 
 const Auth = observer(() => {
   const location = useLocation();

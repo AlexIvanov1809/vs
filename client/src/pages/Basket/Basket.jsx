@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Basket.module.css";
+import { Button } from "../../components/ui/";
+import { OrderSubmit, BasketItem } from "../../components/basket-page/";
+import { useNavigate } from "react-router-dom";
+import { sendOrder } from "../../http/orderAPI";
+import { messageConverter } from "../../utils/";
 import { Context } from "../../";
 import { observer } from "mobx-react-lite";
-import Button from "../../components/ui/Button/Button";
-import messageConverter from "../../utils/messageConverter";
-import { sendOrder } from "../../http/orderAPI";
-import OrderSubmit from "../../components/basket-page/OrderSubmit/OrderSubmit";
-import BasketItem from "../../components/basket-page/BasketItem/BasketItem";
-import { useNavigate } from "react-router-dom";
 
 const Basket = observer(() => {
   const navigate = useNavigate();

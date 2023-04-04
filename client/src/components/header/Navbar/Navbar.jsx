@@ -7,8 +7,8 @@ import {
   LOGIN_ROUTE,
   SHOP_ROUTE,
 } from "../../../utils/consts";
-import { observer } from "mobx-react-lite";
 import { Context } from "../../..";
+import { observer } from "mobx-react-lite";
 
 const Navbar = observer(() => {
   const { basket } = useContext(Context);

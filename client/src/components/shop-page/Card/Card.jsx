@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { observer } from "mobx-react-lite";
-import { Context } from "../../..";
-import Scale from "../../ui/Scale/Scale";
 import styles from "./Card.module.css";
-import ImgCarousel from "../ImgCarousel/ImgCarousel";
-import OrderCardBtn from "../OrderCardBtn/OrderCardBtn";
-import CardPrice from "../../ui/CardPrice/CardPrice";
-import SelectField from "../../ui/SelectField/SelectField";
+import { Scale, CardPrice, SelectField } from "../../ui/";
+import { ImgCarousel, OrderCardBtn } from "../";
+import { Context } from "../../..";
 import { BEANS } from "../../../utils/consts";
+import { observer } from "mobx-react-lite";
 
 const Card = observer(({ product }) => {
   const { basket } = useContext(Context);

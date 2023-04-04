@@ -1,16 +1,21 @@
-import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../../..";
-import httpService from "../../../http/productAPI";
-import Button from "../../ui/Button/Button";
-import EntitiesEditor from "../EntitiesEditor/EntitiesEditor";
 import styles from "./EntityContainer.module.css";
+import { Button } from "../../ui/";
+import EntitiesEditor from "../EntitiesEditor/EntitiesEditor";
+import { observer } from "mobx-react-lite";
+import httpService from "../../../http/productAPI";
+import { Context } from "../../..";
+import cn from "classnames";
 
 const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
   const { products } = useContext(Context);
   const [show, setShow] = useState(false);
   const [item, setItem] = useState(null);
   const [refresh, setRefresh] = useState(false);
+
+  const containerName = cn(styles.types_container, {
+    [styles.type_black]: label === "Типы",
+  });
 
   useEffect(() => {
     httpService
@@ -28,9 +33,9 @@ const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
   };
 
   const removeItem = (id) => {
-    httpService
-      .removeEntityItem(endpoint, id)
-      .then((data) => setRefresh(!refresh));
+    httpService.removeEntityItem(endpoint, id).then((data) => {
+      onHide(false);
+    });
   };
 
   const editItem = (item) => {
@@ -40,7 +45,7 @@ const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
 
   return (
     <div>
-      <div className={styles.types_container}>
+      <div className={containerName}>
         <h6>{label}</h6>
         <div className={styles.types_list}>
           {products[getter].map((item) => (
@@ -52,11 +57,6 @@ const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
                   onClick={() => editItem(item)}
                   icon="Edit"
                 />
-                <Button
-                  appearance="danger"
-                  onClick={() => removeItem(item.id)}
-                  icon="Delete"
-                />
               </div>
             </div>
           ))}
@@ -67,6 +67,7 @@ const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
       </div>
       {show && (
         <EntitiesEditor
+          onDelete={removeItem}
           endpoint={endpoint}
           label={item ? "Обновить" : "Создать"}
           onHide={onHide}

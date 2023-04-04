@@ -1,4 +1,4 @@
-function messageConverter(data) {
+export default function messageConverter(data) {
   let message = `${data.name}\n${data.phone}\n${data.address}\n${
     data.comments ? `\n${data.comments}\n` : ""
   }`;
@@ -13,5 +13,3 @@ function messageConverter(data) {
 
   return message;
 }
-
-export default messageConverter;

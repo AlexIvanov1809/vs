@@ -1,7 +1,7 @@
-import { observer } from "mobx-react-lite";
 import React, { useContext } from "react";
-import { Context } from "../../../";
 import styles from "./Pagination.module.css";
+import { Context } from "../../../";
+import { observer } from "mobx-react-lite";
 import cn from "classnames";
 
 const Pagination = observer(({ className }) => {

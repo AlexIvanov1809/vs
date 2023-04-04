@@ -44,7 +44,7 @@ export const ENTITY_TYPES = [
   {
     id: 5,
     endpoint: "ManufacturingMethod",
-    label: "Методы обработки",
+    label: "Особенности кофе",
     getter: "manufacturingMethods",
     setter: "setManufacturingMethods",
     filter: "manufacturingMethodId",

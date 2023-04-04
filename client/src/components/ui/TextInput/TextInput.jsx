@@ -15,7 +15,7 @@ const TextInput = ({
 }) => {
   const handleChange = ({ target }) => {
     const value =
-      type === "tel" ? target.value.replace(/[^\+\d]/g, "") : target.value;
+      type === "tel" ? target.value.replace(/[^+\d]/g, "") : target.value;
 
     onChange({ name: target.name, value }, _id);
   };
@@ -32,6 +32,7 @@ const TextInput = ({
         placeholder={placeholder}
         onChange={handleChange}
       />
+      {error && <span>{error}</span>}
     </div>
   );
 };

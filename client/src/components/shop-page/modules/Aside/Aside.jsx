@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Aside.module.css";
+import { Button } from "../../../ui/";
+import { ShopFilterList } from "../../";
+import { Context } from "../../../../";
 import { observer } from "mobx-react-lite";
 import cn from "classnames";
-import { Context } from "../../../../";
-import ShopFilterList from "../../ShopFilterList/ShopFilterList";
 import { ENTITY_TYPES } from "../../../../utils/consts";
-import Button from "../../../ui/Button/Button";
 
 const Aside = observer(({ className }) => {
   const { products } = useContext(Context);

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import httpService from "../../../http/productAPI";
-import Button from "../../ui/Button/Button";
-import TextInput from "../../ui/TextInput/TextInput";
 import styles from "./EntitiesEditor.module.css";
+import { Button, TextInput } from "../../ui/";
+import DeleteBtn from "../DeleteBtn/DeleteBtn";
+import httpService from "../../../http/productAPI";
 
-const EntitiesEditor = ({ label, onHide, item, endpoint }) => {
+const EntitiesEditor = ({ onDelete, label, onHide, item, endpoint }) => {
   const [value, setValue] = useState({ name: item ? item.name : "" });
 
   const changeHandle = ({ value }) => {
@@ -37,6 +37,7 @@ const EntitiesEditor = ({ label, onHide, item, endpoint }) => {
             placeholder="Enter value"
           />
           <div className={styles.buttons}>
+            {item && <DeleteBtn onDelete={onDelete} id={item.id} />}
             <Button appearance="danger" onClick={() => onHide(false)}>
               Close
             </Button>

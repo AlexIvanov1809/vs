@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styles from "./TypeBar.module.css";
-import cn from "classnames";
 import { Context } from "../../../../";
+import cn from "classnames";
 
 const TypeBar = ({ className }) => {
   const { products } = useContext(Context);

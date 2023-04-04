@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styles from "./OrderSubmit.module.css";
-import Button from "../../ui/Button/Button";
-import TextInput from "../../ui/TextInput/TextInput";
-import TextAreaField from "../../ui/TextAriaField/TextAreaField";
+import { Button, TextInput, TextAreaField } from "../../ui/";
 
 const OrderSubmit = ({ onSubmit }) => {
   const [orderData, setOrderData] = useState({

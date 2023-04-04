@@ -52,11 +52,7 @@ const ImgInput = ({ name, index, onChange, remove, error, path }) => {
           </div>
         )}
       </div>
-      {error && (
-        <p className="text-danger">
-          Поле необходимое для заполнения вместе с ценой
-        </p>
-      )}
+      {error && <p className="text-danger">{error}</p>}
     </div>
   );
 };

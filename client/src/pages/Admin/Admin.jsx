@@ -1,15 +1,16 @@
-import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../..";
-import EntityContainer from "../../components/admin-page/EntityContainer/EntityContainer";
-import httpService from "../../http/productAPI";
 import styles from "./Admin.module.css";
+import { Button, Loader } from "../../components/ui/";
+import {
+  EntityContainer,
+  AdminItemForList,
+  EditItemModule,
+} from "../../components/admin-page/";
+import httpService from "../../http/productAPI";
+import { Context } from "../..";
+import { wayOfSortingItems } from "../../utils/";
 import { ADMIN_ITEM_FIELDS, ENTITY_TYPES } from "../../utils/consts";
-import AdminItemForList from "../../components/admin-page/AdminItemForList/AdminItemForList";
-import Button from "../../components/ui/Button/Button";
-import EditItemModule from "../../components/admin-page/EditItemModule/EditItemModule";
-import wayOfSortingItems from "../../utils/wayOfSortingItems";
-import Loader from "../../components/ui/Loader/Loader";
+import { observer } from "mobx-react-lite";
 
 const Admin = observer(() => {
   const { products } = useContext(Context);

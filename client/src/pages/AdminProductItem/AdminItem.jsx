@@ -7,7 +7,8 @@ import { ADMIN_ROUTE, ENTITY_TYPES } from "../../utils/consts";
 import Button from "../../components/ui/Button/Button";
 import Scale from "../../components/ui/Scale/Scale";
 import EditItemModule from "../../components/admin-page/EditItemModule/EditItemModule";
-import Loader from "../../components/ui/Loader/Loader";
+import { Loader } from "../../components/ui/";
+import { DeleteBtn } from "../../components/admin-page/";
 import { Context } from "../..";
 
 const AdminItem = observer(() => {
@@ -107,12 +108,7 @@ const AdminItem = observer(() => {
         ))}
         <div>{item.active ? "true" : "false"}</div>
         <div className={styles.item_buttons}>
-          <Button
-            appearance="danger"
-            onClick={() => removeHandle(id)}
-            icon="Delete"
-          />
-
+          <DeleteBtn onDelete={removeHandle} id={id} />
           <Button
             appearance="primary"
             onClick={() => editHandle(id)}

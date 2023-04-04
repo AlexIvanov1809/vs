@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./ShopFilterList.module.css";
+import { CheckBox } from "../../ui/";
 import { Context } from "../../..";
-import CheckBox from "../../ui/CheckBox/CheckBox";
 
 const ShopFilterList = ({ refresh, label, list, onChange, filterType }) => {
   const { products } = useContext(Context);
