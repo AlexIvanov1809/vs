@@ -1,5 +1,7 @@
 .text_item {
 	padding-top: 5px;
+	display: grid;
+	grid-template-columns: auto;
 }
 
 .text_item > textarea {

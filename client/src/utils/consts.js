@@ -103,7 +103,7 @@ export const DEFAULT = {
   active: true,
 };
 
-export const level = [
+export const LEVEL = [
   { id: "0", name: 0 },
   { id: "1", name: 1 },
   { id: "2", name: 2 },
@@ -130,3 +130,18 @@ export const WEIGHT = [
   { id: "0.5 л", name: "0.5 л" },
   { id: "1 л", name: "1 л" },
 ];
+
+export const VALIDATOR_CONFIG = {
+  brandId: {
+    isRequired: { message: "Поле необходимое для заполнения" },
+  },
+  typeId: {
+    isRequired: { message: "Поле необходимое для заполнения" },
+  },
+  sortName: {
+    isRequired: { message: "Поле необходимое для заполнения" },
+  },
+  shortDescription: {
+    isRequired: { message: "Поле необходимое для заполнения" },
+  },
+};

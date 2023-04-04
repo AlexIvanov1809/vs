@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./SelectField.module.css";
+import cn from "classnames";
 
 const SelectField = ({
   label,
@@ -15,8 +16,10 @@ const SelectField = ({
     onChange({ name: target.name, value: target.value }, _id);
   };
 
+  const className = cn(styles.select_field, { ["error"]: error });
+
   return (
-    <div className={styles.select_field}>
+    <div className={className}>
       <label htmlFor={name} className={styles.select_label}>
         {label}
       </label>
@@ -39,7 +42,7 @@ const SelectField = ({
             ))}
         </select>
       </div>
-      {error && <div className="invalid-feedback">{error}</div>}
+      {error && <span className="error">{error}</span>}
     </div>
   );
 };

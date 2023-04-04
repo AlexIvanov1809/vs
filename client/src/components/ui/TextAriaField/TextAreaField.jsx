@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./TextAreaField.module.css";
+import cn from "classnames";
 
 const TextAreaField = ({ label, name, value, onChange, error }) => {
   const handleChange = ({ target }) => {
@@ -9,8 +10,10 @@ const TextAreaField = ({ label, name, value, onChange, error }) => {
     return "form-control" + (error ? " is-invalid" : "");
   };
 
+  const className = cn(styles.text_container, { ["error"]: error });
+
   return (
-    <div className={styles.text_container}>
+    <div className={className}>
       <label htmlFor={name}> {label}</label>
       <div className={styles.text_item}>
         <textarea
@@ -22,7 +25,7 @@ const TextAreaField = ({ label, name, value, onChange, error }) => {
           className={getInputClasses()}
         />
 
-        {error && <div className="invalid-feedback ">{error}</div>}
+        {error && <span className="error">{error}</span>}
       </div>
     </div>
   );

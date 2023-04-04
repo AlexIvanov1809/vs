@@ -1,4 +1,4 @@
-export default function makeFormDataFile(item, img, price) {
+export default function makeFormDataFile(item, img) {
   const formData = new FormData();
   if (img) {
     img.forEach((i) => {
@@ -8,9 +8,6 @@ export default function makeFormDataFile(item, img, price) {
     });
   }
 
-  if (price) {
-    formData.append("price", JSON.stringify(price));
-  }
   if (item) {
     for (const key in item) {
       if (item[key] !== "") {

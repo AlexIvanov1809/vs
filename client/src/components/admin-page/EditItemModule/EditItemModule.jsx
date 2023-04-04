@@ -15,8 +15,10 @@ import {
   makeFormDataFile,
   imgUploader,
   removedPriceIds,
+  validator,
+  imgAndPriceValidator,
 } from "../../../utils/";
-import { level, DEFAULT } from "../../../utils/consts";
+import { LEVEL, DEFAULT, VALIDATOR_CONFIG } from "../../../utils/consts";
 
 const EditItemModule = ({ product, onHide, updated }) => {
   const { products } = useContext(Context);
@@ -26,6 +28,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
     product?.price || [{ id: Date.now(), weight: "", value: "" }],
   );
   const [removedPrice, setRemovedPrice] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (product) {
@@ -36,6 +39,19 @@ const EditItemModule = ({ product, onHide, updated }) => {
       });
     }
   }, [product]);
+
+  useEffect(() => {
+    validate();
+  }, [data, price, img]);
+
+  const validate = () => {
+    const errors = {
+      ...validator(data, VALIDATOR_CONFIG),
+      ...imgAndPriceValidator(price, "price"),
+      ...imgAndPriceValidator(img, "image"),
+    };
+    setErrors(errors);
+  };
 
   const changeHandle = ({ name, value }) => {
     setData((prevState) => ({ ...prevState, [name]: value }));
@@ -62,36 +78,39 @@ const EditItemModule = ({ product, onHide, updated }) => {
 
   const submitHandle = (e) => {
     e.preventDefault();
-    if (product) {
-      if (removedPrice) {
-        const removedPriceId = removedPriceIds(price, product.price);
-        removedPriceId.forEach((i) =>
-          httpService
-            .removePriceProduct(i)
-            .then((data) => console.log(data))
-            .catch((e) => console.log(e)),
+    if (Object.keys(errors).length === 0) {
+      const filteredPrice = price.filter((p) => p.weight && p.value);
+      if (product) {
+        if (removedPrice) {
+          const removedPriceId = removedPriceIds(price, product.price);
+          removedPriceId.forEach((i) =>
+            httpService
+              .removePriceProduct(i)
+              .then((data) => console.log(data))
+              .catch((e) => console.log(e)),
+          );
+        }
+        imgUploader(img, product);
+        httpService
+          .editProduct({ ...data, price: JSON.stringify(filteredPrice) })
+          .then((data) => {
+            onHide(false);
+            updated(true);
+          })
+          .catch((e) => console.log(e.response.data));
+      } else {
+        const formData = makeFormDataFile(
+          { ...data, price: JSON.stringify(filteredPrice) },
+          img,
         );
+        httpService
+          .createProduct(formData)
+          .then((data) => {
+            onHide(false);
+            updated(true);
+          })
+          .catch((e) => console.log(e.message));
       }
-      imgUploader(img, product);
-      httpService
-        .editProduct({ ...data, price: JSON.stringify(price) })
-        .then((data) => {
-          onHide(false);
-          updated(true);
-        })
-        .catch((e) => console.log(e.response.data));
-    } else {
-      const formData = makeFormDataFile(
-        { ...data, price: JSON.stringify(price) },
-        img,
-      );
-      httpService
-        .createProduct(formData)
-        .then((data) => {
-          onHide(false);
-          updated(true);
-        })
-        .catch((e) => console.log(e.message));
     }
   };
   return (
@@ -110,6 +129,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
                     onChange={changeImgHandle}
                     remove={true}
                     path={item}
+                    error={errors.image}
                   />
                 ))}
             </div>
@@ -119,6 +139,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
               label="Вид товара"
               options={products.types}
               onChange={changeHandle}
+              error={errors.typeId}
             />
             <SelectField
               value={data.brandId}
@@ -126,6 +147,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
               label="Бренд"
               options={products.brands}
               onChange={changeHandle}
+              error={errors.brandId}
             />
             <SelectField
               value={data.countryId}
@@ -139,6 +161,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
               name="sortName"
               value={data.sortName}
               onChange={changeHandle}
+              error={errors.sortName}
             />
             <SelectField
               value={data.manufacturingMethodId}
@@ -172,14 +195,14 @@ const EditItemModule = ({ product, onHide, updated }) => {
               value={data.acidity}
               name="acidity"
               label="Кислотность"
-              options={level}
+              options={LEVEL}
               onChange={changeHandle}
             />
             <SelectField
               value={data.density}
               name="density"
               label="Плотность"
-              options={level}
+              options={LEVEL}
               onChange={changeHandle}
             />
             <div>
@@ -188,6 +211,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
                 name="shortDescription"
                 value={data.shortDescription}
                 onChange={changeHandle}
+                error={errors.shortDescription}
               />
               <TextAreaField
                 label="Полное описание"
@@ -214,6 +238,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
                   onChange={changePrice}
                   removePrice={removePrice}
                   className={styles.edit_price}
+                  error={errors.price}
                 />
               ))}
             </div>

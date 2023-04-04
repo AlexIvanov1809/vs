@@ -13,6 +13,10 @@ const TextInput = ({
   className,
   _id,
 }) => {
+  const inpClassName = cn(className, styles.inp_container, {
+    ["error"]: error,
+  });
+
   const handleChange = ({ target }) => {
     const value =
       type === "tel" ? target.value.replace(/[^+\d]/g, "") : target.value;
@@ -21,7 +25,7 @@ const TextInput = ({
   };
 
   return (
-    <div className={cn(className, styles.inp_container)}>
+    <div className={inpClassName}>
       <label htmlFor={name}>{label}</label>
       <input
         maxLength={type === "tel" ? "12" : ""}
@@ -32,7 +36,7 @@ const TextInput = ({
         placeholder={placeholder}
         onChange={handleChange}
       />
-      {error && <span>{error}</span>}
+      {error && <span className="error">{error}</span>}
     </div>
   );
 };

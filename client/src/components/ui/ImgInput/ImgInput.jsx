@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./imgInput.module.css";
 import noPic from "../../../assets/noImg.jpg";
+import cn from "classnames";
 
 const ImgInput = ({ name, index, onChange, remove, error, path }) => {
   const [imgUrl, setImgUrl] = useState(noPic);
@@ -8,6 +9,8 @@ const ImgInput = ({ name, index, onChange, remove, error, path }) => {
   reader.onloadend = () => {
     setImgUrl(reader.result);
   };
+
+  const className = cn(styles.img, { [styles.img_error]: error });
 
   useEffect(() => {
     if (path) {
@@ -31,7 +34,7 @@ const ImgInput = ({ name, index, onChange, remove, error, path }) => {
 
   return (
     <div className={styles.img_container}>
-      <div className={styles} style={{ maxWidth: "200px", maxHeight: "200px" }}>
+      <div className={className}>
         <label htmlFor={name}>
           <img width={120} src={imgUrl} alt="No one" className="img-fluid" />
         </label>
@@ -52,7 +55,7 @@ const ImgInput = ({ name, index, onChange, remove, error, path }) => {
           </div>
         )}
       </div>
-      {error && <p className="text-danger">{error}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 };
