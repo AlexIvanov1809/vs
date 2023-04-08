@@ -1,3 +1,4 @@
+// очень странная функция, которая проверяет абсолютно несвязанные вещи
 export default function imgAndPriceValidator(data, type) {
   const errors = { img: true, price: true };
   data.forEach((item) => {

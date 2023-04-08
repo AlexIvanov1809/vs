@@ -6,11 +6,9 @@ const TextAreaField = ({ label, name, value, onChange, error }) => {
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value });
   };
-  const getInputClasses = () => {
-    return "form-control" + (error ? " is-invalid" : "");
-  };
 
   const className = cn(styles.text_container, { ["error"]: error });
+  const inputClassName = cn('form-control', { 'is-invalid': error });
 
   return (
     <div className={className}>
@@ -22,7 +20,7 @@ const TextAreaField = ({ label, name, value, onChange, error }) => {
           name={name}
           value={value || ""}
           onChange={handleChange}
-          className={getInputClasses()}
+          className={inputClassName}
         />
 
         {error && <span className="error">{error}</span>}

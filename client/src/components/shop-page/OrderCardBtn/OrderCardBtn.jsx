@@ -14,7 +14,7 @@ const OrderCardBtn = ({
         <Button
           appearance="primary"
           onClick={() =>
-            setQuantity((prev) => (prev - 1 !== 0 ? prev - 1 : prev))
+            setQuantity((prev) => Math.max(1, prev - 1))
           }
           icon="Minus"
         />

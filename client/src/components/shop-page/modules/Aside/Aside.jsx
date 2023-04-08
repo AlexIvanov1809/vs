@@ -5,6 +5,7 @@ import { ShopFilterList } from "../../";
 import { Context } from "../../../../";
 import { observer } from "mobx-react-lite";
 import cn from "classnames";
+// в проекте нужно настроить path, чтобы не было таких длинных путей
 import { ENTITY_TYPES } from "../../../../utils/consts";
 
 const Aside = observer(({ className }) => {
@@ -14,12 +15,14 @@ const Aside = observer(({ className }) => {
 
   useEffect(() => {
     ENTITY_TYPES.forEach((t) => {
+      // Type вынести в константу для упрощения рефакторинга
       if (t.endpoint !== "Type") {
         setData((prev) => ({ ...prev, [t.filter]: [] }));
       }
     });
   }, [refresh]);
 
+  // почему функция гласит, что она отправляет запрос, но внутри никакой запрос не отправляется?
   const sendRequest = () => {
     if (data) {
       ENTITY_TYPES.forEach((t) => {

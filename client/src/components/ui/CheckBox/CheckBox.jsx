@@ -5,6 +5,7 @@ const CheckBox = ({ name, value, onChange, children, error }) => {
   const handleChange = () => {
     onChange({ name, value: !value });
   };
+  // зачем функция? почему не просто переменная?
   const getInputClasses = () => {
     return "form-check-input" + (error ? " is-invalid" : "");
   };

@@ -11,10 +11,11 @@ const TextInput = ({
   error,
   placeholder,
   className,
+  // зачем нижнее подчеркивание?
   _id,
 }) => {
   const inpClassName = cn(className, styles.inp_container, {
-    ["error"]: error,
+    error, // вроде использовать укороченную запись
   });
 
   const handleChange = ({ target }) => {
@@ -28,6 +29,7 @@ const TextInput = ({
     <div className={inpClassName}>
       <label htmlFor={name}>{label}</label>
       <input
+        // я бы предложил вынести 12 в пропсы
         maxLength={type === "tel" ? "12" : ""}
         type={type || "text"}
         name={name}

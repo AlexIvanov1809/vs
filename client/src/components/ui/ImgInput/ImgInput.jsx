@@ -3,8 +3,12 @@ import styles from "./imgInput.module.css";
 import noPic from "../../../assets/noImg.jpg";
 import cn from "classnames";
 
+// remove - звучит, как глагол\функция, а хранит в себе булеан
 const ImgInput = ({ name, index, onChange, remove, error, path }) => {
-  const [imgUrl, setImgUrl] = useState(noPic);
+  // по внутренним ощущениям, путь к картинке должен быть вполне себе линейно вычисляемым, это не что-то, что
+  // становится известно после каких-то действий
+  // const [imgUrl, setImgUrl] = useState(noPic);
+  const imgSrc = path ? process.env.REACT_APP_API_URL + path : noPic;
   const reader = new FileReader();
   reader.onloadend = () => {
     setImgUrl(reader.result);
@@ -19,16 +23,21 @@ const ImgInput = ({ name, index, onChange, remove, error, path }) => {
   }, [path]);
 
   const handleChange = ({ target }) => {
-    if (!target.files[0]) {
+    const file = target.files[0];
+
+    if (!file) {
       return;
     }
-    const file = target.files[0];
 
     onChange(index, file);
     reader.readAsDataURL(file);
   };
   const handleRemoveImage = () => {
-    setImgUrl(noPic);
+    // здесь логика должна идти из родительского компонента. То есть вызвав колбэк onChange(index, ""), path должен
+    // стать пустым и тогда imgSrc (который я объявил сверху) примет значение noPic
+    // setImgUrl(noPic);
+
+    // я бы добавил отдельный проп для оповещения об удалении - onRemove
     onChange(index, "");
   };
 
@@ -36,7 +45,7 @@ const ImgInput = ({ name, index, onChange, remove, error, path }) => {
     <div className={styles.img_container}>
       <div className={className}>
         <label htmlFor={name}>
-          <img width={120} src={imgUrl} alt="No one" className="img-fluid" />
+          <img width={120} src={imgSrc} alt="No one" className="img-fluid" />
         </label>
         <input
           type="file"

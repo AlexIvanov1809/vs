@@ -1,3 +1,4 @@
+// название функции должно быть глаголом
 export default function wayOfSortingItems(type, state) {
   if (state.type === type && state.sort === "asc") {
     return { type, sort: "desc" };

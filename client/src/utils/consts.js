@@ -1,9 +1,14 @@
+// константы стоит хранить по принципу коллокации, либо в отдельных файлах по принципу единой ответственности, чтобы
+// несколько разработчиков не мешали работе друг друга
+
 export const ADMIN_ROUTE = "/admin";
 export const LOGIN_ROUTE = "/login";
 export const REGISTRATION_ROUTE = "/registration";
 export const SHOP_ROUTE = "/";
 export const BASKET_ROUTE = "/basket";
 export const ITEM_ROUTE = "/admin/item/:id";
+// ненадежная структура, сложно поддающаяся рефакторингу. Нет связи между текстовым названием методы и фактическим
+// методом класса
 export const ENTITY_TYPES = [
   {
     id: 1,
@@ -100,6 +105,7 @@ export const DEFAULT = {
   manufacturingMethodId: "",
   teaTypeId: "",
   packageTypeId: "",
+  // у дэфолтного объекта должно быть всё выключено
   active: true,
 };
 
@@ -117,6 +123,7 @@ export const LEVEL = [
   { id: "10", name: 10 },
 ];
 
+// дублирование id и name. Зачем тут id?
 export const WEIGHT = [
   { id: "шт", name: "шт" },
   { id: "50 г", name: "50 г" },
@@ -131,6 +138,7 @@ export const WEIGHT = [
   { id: "1 л", name: "1 л" },
 ];
 
+// хранить там, где и используется - коллокация
 export const VALIDATOR_CONFIG = {
   brandId: {
     isRequired: { message: "Поле необходимое для заполнения" },

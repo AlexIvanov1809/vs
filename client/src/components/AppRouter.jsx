@@ -15,6 +15,7 @@ const AppRouter = observer(() => {
       {publicRoutes.map(({ path, Component }) => (
         <Route key={path} path={path} element={<Component />} />
       ))}
+      {/* зачем replace? это лишит пользователя возможности вернуться назад */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

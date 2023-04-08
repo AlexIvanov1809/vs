@@ -1,3 +1,5 @@
+// из названия функции и параметра непонятно что во что конвертируется
+// она используется только в одном месте, лучше туда рядом и положить
 export default function messageConverter(data) {
   let message = `${data.name}\n${data.phone}\n${data.address}\n${
     data.comments ? `\n${data.comments}\n` : ""

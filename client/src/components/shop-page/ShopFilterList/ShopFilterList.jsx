@@ -6,6 +6,7 @@ import { Context } from "../../..";
 const ShopFilterList = ({ refresh, label, list, onChange, filterType }) => {
   const { products } = useContext(Context);
   const [data, setData] = useState(null);
+  // проблема с неймигов. Сейчас переменная звучит, как массив каких-то изменений
   const [changes, setChanges] = useState(true);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ const ShopFilterList = ({ refresh, label, list, onChange, filterType }) => {
   }, [products, refresh]);
 
   useEffect(() => {
+    // в замыкании уже существует переменная с таким названием, придумай что-то новое
     const list = [];
     for (const key in data) {
       if (data[key]) {
@@ -22,10 +24,15 @@ const ShopFilterList = ({ refresh, label, list, onChange, filterType }) => {
       }
     }
     onChange(filterType, list);
-  }, [changes]);
+  },
+  // зависимость, которая не используется в useEffect-е это не очень хороший признак
+    [changes]
+  );
 
   const changeHandler = ({ name, value }) => {
     setData((prev) => ({ ...prev, [name]: value }));
+    // не понял, для чего это? чтобы триггерить useEffect? почему
+    // нельзя завязаться на data?
     setChanges(!changes);
   };
   return (

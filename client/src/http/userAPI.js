@@ -28,6 +28,7 @@ export const logout = async () => {
   localStorage.removeItem("token");
 };
 
+// проверить что? делай явно отражающие назначения названия методов
 export const check = async () => {
   const { data } = await $authHost.get(`${ENDPOINT}/refresh`);
   localStorage.setItem("token", data.accessToken);

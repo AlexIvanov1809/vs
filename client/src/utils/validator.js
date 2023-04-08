@@ -1,3 +1,4 @@
+// попробуй для валидации популярные решения, типа zod, ajv
 export default function validator(data, config) {
   const errors = [];
   function validate(validateMethod, data, config) {
@@ -5,6 +6,7 @@ export default function validator(data, config) {
     switch (validateMethod) {
       case "isRequired":
         statusValidation =
+          // почему числа считаются не прошедшими условие обязательности?
           typeof data === "number" ? false : data.trim() === "";
         break;
       case "isEmail": {
@@ -37,6 +39,7 @@ export default function validator(data, config) {
       default:
         break;
     }
+    // не использовать однострочные ифы
     if (statusValidation) return config.message;
   }
 
