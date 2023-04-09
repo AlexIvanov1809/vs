@@ -4,6 +4,7 @@ const $host = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
 
+// зачем второй клиент?
 const $authHost = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });

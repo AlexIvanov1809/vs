@@ -24,16 +24,23 @@ const Auth = observer(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let data;
-      if (isLogin) {
-        data = await login(authData.email, authData.password);
-      } else {
-        data = await registration(
+      // старайся писать код так, чтобы в нём не было let вообще. Наличие let означает мутабельность и витиеватость,
+      // что тяжелее читать. Подобный let можно заменить на самовызывающуюся функцию:
+
+      const data = await (() => {
+        if (isLogin) {
+          return login(authData.email, authData.password);
+        }
+
+        // любой желающий может зарегистрироваться, как админ? обычно админы просто вшиты в бд, как
+        // дэфолтные пользователи
+        return registration(
           authData.email,
           authData.password,
           authData.role,
         );
-      }
+      })();
+
       user.setUser(data);
       user.setIsAuth(true);
       // navigate(SHOP_ROUTE);
@@ -42,6 +49,7 @@ const Auth = observer(() => {
     }
   };
 
+  // handleRefresh
   const onClick = () => {
     check()
       .then((data) => {
@@ -51,6 +59,7 @@ const Auth = observer(() => {
       .catch((e) => e);
   };
 
+  // handleLogout
   const logoutClick = () => {
     logout()
       .then()

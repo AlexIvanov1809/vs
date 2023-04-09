@@ -14,6 +14,8 @@ const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
   const [refresh, setRefresh] = useState(false);
 
   const containerName = cn(styles.types_container, {
+    // так нельзя делать) то есть можно, но это прям не очень. Заведи проп, типа isBlack и в родительском
+    // компоненте передавай туда true для "Типы"
     [styles.type_black]: label === "Типы",
   });
 
@@ -23,6 +25,7 @@ const EntityContainer = observer(({ endpoint, label, getter, setter }) => {
       .then((data) => {
         products[setter](data);
       })
+      // интересная обработка ошибок)
       .catch((e) => e);
   }, [refresh, products]);
 

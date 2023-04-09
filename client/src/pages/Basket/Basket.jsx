@@ -17,7 +17,10 @@ const Basket = observer(() => {
   useEffect(() => {
     setInBasket(basket.order);
     localStorage.setItem("venditore_basket", JSON.stringify(basket.order));
-  }, [basket, basket.order]);
+  },
+    // зачем в зависимостях и basket и basket.order, если внутри используется только basket.order?
+    [basket, basket.order]
+  );
 
   const changeHandler = (id, action) => {
     switch (action) {

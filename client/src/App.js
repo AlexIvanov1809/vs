@@ -14,17 +14,24 @@ const App = observer(() => {
 
   useEffect(() => {
     const productsInBasket = getFromStorage("venditore_basket");
+
     if (productsInBasket) {
+      // эта логика находится не на своём месте. Она должен быть где-то в Basket
       basket.setOrder(productsInBasket);
     }
-    check()
-      .then((data) => {
+
+    // чтобы использовать промисы внутри эффекта в стиле async/await, можно обернуть в самовызывающуюся функцию:
+    (async () => {
+      try {
+        const data = await check();
+
         user.setUser(data);
         user.setIsAuth(true);
-      })
-      .catch((e) => e)
-      .finally(() => setLoading(false));
-  }, [user]);
+      } finally {
+        setLoading(false)
+      }
+    })();
+  });
 
   if (loading) {
     return <Loader />;

@@ -8,6 +8,7 @@ const TypeBar = ({ className }) => {
   return (
     <div className={cn(className, styles.item_container)}>
       {products.types.map((type) => (
+        // кликабельные эллементы лучше делать кнопками для доступности
         <div
           className={styles.item}
           key={type.id}

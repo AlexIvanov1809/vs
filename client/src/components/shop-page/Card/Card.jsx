@@ -37,11 +37,12 @@ const Card = observer(({ product }) => {
   };
 
   const orderHandler = () => {
+    // inBasket - звучит, как булевая переменная
     const inBasket = basket.order;
     const newOrder = {
       id: product.id + "-" + price.weight,
       brand: product.brand?.name,
-      name: `${product.country?.name || ""} ${product.sortName}`,
+      name: `${product.country?.name ?? ""} ${product.sortName}`,
       beans: beans.name,
       weight: price.weight,
       value: +price.value * quantity,
@@ -77,7 +78,7 @@ const Card = observer(({ product }) => {
         <p>{product.description}</p>
         <div>
           <SelectField
-            label="Выберете помол"
+            label="Выберите помол"
             options={BEANS}
             value={beans.id}
             onChange={grindType}

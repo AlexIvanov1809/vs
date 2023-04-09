@@ -16,13 +16,13 @@ const Pagination = observer(({ className }) => {
   return (
     <div className={cn(className, styles.pagination)}>
       {pages.length > 1 &&
-        pages.map((p, i) => (
+        pages.map((page, i) => (
           <div
             key={i}
-            data-active={products.page === p}
-            onClick={() => products.setPage(p)}
+            data-active={products.page === page}
+            onClick={() => products.setPage(page)}
           >
-            {p}
+            {page}
           </div>
         ))}
     </div>

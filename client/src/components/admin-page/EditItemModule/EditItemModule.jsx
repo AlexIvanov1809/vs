@@ -23,9 +23,11 @@ import { LEVEL, DEFAULT, VALIDATOR_CONFIG } from "../../../utils/consts";
 const EditItemModule = ({ product, onHide, updated }) => {
   const { products } = useContext(Context);
   const [data, setData] = useState(product || DEFAULT);
+  // опять странное дэфолтное значение. Почему три пустых строки?
   const [img, setImg] = useState(["", "", ""]);
+  // лишние вычисления при каждом рендере. Нужно обернуть в функцию, чтобы выполнить только 1 раз
   const [price, setPrice] = useState(
-    product?.price || [{ id: Date.now(), weight: "", value: "" }],
+    () => product?.price || [{ id: Date.now(), weight: "", value: "" }],
   );
   const [removedPrice, setRemovedPrice] = useState(false);
   const [errors, setErrors] = useState({});
@@ -53,6 +55,7 @@ const EditItemModule = ({ product, onHide, updated }) => {
     setErrors(errors);
   };
 
+  // handleChange
   const changeHandle = ({ name, value }) => {
     setData((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -76,41 +79,48 @@ const EditItemModule = ({ product, onHide, updated }) => {
     setRemovedPrice(true);
   };
 
+  // rename to handleSubmit
   const submitHandle = (e) => {
     e.preventDefault();
-    if (Object.keys(errors).length === 0) {
-      const filteredPrice = price.filter((p) => p.weight && p.value);
-      if (product) {
-        if (removedPrice) {
-          const removedPriceId = removedPriceIds(price, product.price);
-          removedPriceId.forEach((i) =>
-            httpService
-              .removePriceProduct(i)
-              .then((data) => console.log(data))
-              .catch((e) => console.log(e)),
-          );
-        }
-        imgUploader(img, product);
-        httpService
-          .editProduct({ ...data, price: JSON.stringify(filteredPrice) })
-          .then((data) => {
-            onHide(false);
-            updated(true);
-          })
-          .catch((e) => console.log(e.response.data));
-      } else {
-        const formData = makeFormDataFile(
-          { ...data, price: JSON.stringify(filteredPrice) },
-          img,
+
+    // чтобы избежать лишней вложенности, можно сделать ранний выход из функции, инвертировав условие
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    const filteredPrice = price.filter((p) => p.weight && p.value);
+
+    if (product) {
+      if (removedPrice) {
+        const removedPriceId = removedPriceIds(price, product.price);
+        removedPriceId.forEach((i) =>
+          httpService
+            .removePriceProduct(i)
+            .then((data) => console.log(data))
+            .catch((e) => console.log(e)),
         );
-        httpService
-          .createProduct(formData)
-          .then((data) => {
-            onHide(false);
-            updated(true);
-          })
-          .catch((e) => console.log(e.message));
       }
+      // нет обработки промиса
+      imgUploader(img, product);
+      httpService
+        .editProduct({ ...data, price: JSON.stringify(filteredPrice) })
+        .then((data) => {
+          onHide(false);
+          updated(true);
+        })
+        .catch((e) => console.log(e.response.data));
+    } else {
+      const formData = makeFormDataFile(
+        { ...data, price: JSON.stringify(filteredPrice) },
+        img,
+      );
+      httpService
+        .createProduct(formData)
+        .then((data) => {
+          onHide(false);
+          updated(true);
+        })
+        .catch((e) => console.log(e.message));
     }
   };
   return (

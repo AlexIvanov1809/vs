@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 export default class ProductStore {
   constructor() {
+    // нужно ли хранить всё сразу?
     this._types = [];
     this._brands = [];
     this._countries = [];
@@ -93,6 +94,7 @@ export default class ProductStore {
     this._selectedPackageType = packageType;
   }
 
+  // используется только в админке, но хранится в общем хранилище
   productSorting(type, sort) {
     if (sort === "asc") {
       return this._products.sort((a, b) => {

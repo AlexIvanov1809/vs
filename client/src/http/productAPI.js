@@ -61,6 +61,7 @@ const httpService = {
     return data;
   },
 
+  // если функция принимает много параметров, то стоит обернуть из в объект, иначе не понятен порядок передачи
   async fetchProducts(
     typeId,
     brandId,
@@ -72,6 +73,7 @@ const httpService = {
     page = 1,
     limit = 9,
   ) {
+    // зачем тут шаблонный литерал?
     const { data } = await $host.get(`${PRODUCT_ENDPOINT}`, {
       params: {
         typeId,
@@ -94,6 +96,7 @@ const httpService = {
   },
 
   async createProductImage(productId, index, payload) {
+    // почитай про метод postForm, мне кажется тут нужно его использовать
     const { data } = await $authHost.post(
       `${PIC_ENDPOINT}/${productId}/${index}`,
       payload,

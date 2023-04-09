@@ -5,3 +5,5 @@ export default function getFromStorage(name) {
   }
   return data;
 }
+
+// get вижу, а где set?)

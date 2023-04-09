@@ -77,6 +77,7 @@ const Admin = observer(() => {
         {isLoading ? (
           <Loader />
         ) : (
+          // в общем-то, если в массиве нет элементов, его тоже можно проитерировать; лишнее условие
           products.products.length > 0 &&
           products.products.map((i) => <AdminItemForList key={i.id} item={i} />)
         )}
