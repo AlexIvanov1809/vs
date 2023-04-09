@@ -11,7 +11,9 @@ module.exports = function (role) {
       if (!token) {
         return next(ApiError.UnauthorizedError());
       }
+      // раз уже есть token.service, то работу с jwt нужно вынести туда
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      // при такой записи через запятую первое условие будет проигнорировано
       if ((decoded.role !== role, decoded.role !== "OWNER")) {
         return next(ApiError.forbidden());
       }

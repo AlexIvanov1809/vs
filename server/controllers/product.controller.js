@@ -10,7 +10,7 @@ class ProductController {
     try {
       let { price, ...data } = req.body;
       if (!req.files) {
-        next(ApiError.badRequest("Не отправили фото"));
+        return next(ApiError.badRequest("Не отправили фото"));
       }
       let { img } = req.files;
 
@@ -22,6 +22,7 @@ class ProductController {
 
       if (price) {
         price = JSON.parse(price);
+        // используй map и обработку промисов через Promise.all
         price.forEach(
           async (i) =>
             await ProductPrice.create({
@@ -32,7 +33,10 @@ class ProductController {
         );
       }
 
+      // отрефакторить, чтобы не было тернарника без присваивания
       Array.isArray(img) ? img : (img = [img]);
+
+      // пофиксить необработанные промисы
       img.forEach(async (i, index) => {
         let fileName = uuid.v4() + ".jpg";
         convertAndSavePic(i, fileName);
@@ -116,10 +120,13 @@ class ProductController {
       await Product.update(data, { where: { id } });
       const product = await Product.findOne({ where: { id } });
 
+      // необработанный промис
       makeEntitiesForFilters(product);
 
       if (data.price) {
         const price = JSON.parse(data.price);
+
+        // используй map и обработку промисов через Promise.all
         price.forEach(async (i) =>
           i.productId
             ? await ProductPrice.update(
@@ -147,14 +154,21 @@ class ProductController {
       const { id } = req.params;
       const img = await ProductImg.findAll({ where: { productId: id } });
 
+      // используй map и обработку промисов через Promise.all
       img.forEach(async (i) => {
         await removePic(i.name);
       });
 
+      // необработанный промис
       makeEntitiesForFilters(id);
-      await ProductImg.destroy({ where: { productId: id } });
-      await ProductPrice.destroy({ where: { productId: id } });
-      await Product.destroy({ where: { id } });
+
+      // вместо синхронного удаления используй Promise.all
+      await Promise.all([
+        ProductImg.destroy({ where: { productId: id } }),
+        ProductPrice.destroy({ where: { productId: id } }),
+        Product.destroy({ where: { id } }),
+      ]);
+
       return res.json("Product was removed");
     } catch (e) {
       next(ApiError.internal(e.message));

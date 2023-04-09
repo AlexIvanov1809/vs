@@ -29,13 +29,17 @@ router.post("/", async (req, res) => {
       },
     );
 
-    let transporter = nodemailer.createTransport({
+    // вынести в отдельный файл
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: mailFrom,
         pass: mailPass,
       },
     });
+
+    // я бы не стал использовать await, чтобы не блокировать ответ. Отправка письма это не критичная операция.
+    // Даже, если оно не отправится, заказ-то все равно уже оформлен
     await transporter.sendMail({
       from: mailFrom,
       to: mailTo,
