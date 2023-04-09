@@ -1,6 +1,7 @@
 const { TYPES_FOR_FILTER } = require("../constants/consts");
 
 function makeEntitiesForFilters(item) {
+  // необработанные промисы
   TYPES_FOR_FILTER.forEach(async (t) => {
     if (item[t.id]) {
       const checker = await t.model.findAll({

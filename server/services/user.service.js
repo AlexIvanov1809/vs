@@ -10,6 +10,8 @@ class UserService {
   async registration(email, password, role) {
     const candidate = await User.findOne({ where: { email } });
     if (candidate) {
+      // сервис не знает, что он находится в рамках запроса, поэтому по-хорошему тут нужно бросать
+      // ошибку типа UserAlreadyExistsError, а в контроллере обработать её и уже бросать ApiError.BadRequest
       throw ApiError.BadRequest(
         `Пользователь с почтовым адресом ${email} уже существует`,
       );
@@ -45,7 +47,7 @@ class UserService {
       throw ApiError.BadRequest("Некорректная ссылка активации");
     }
 
-    await User.update({ isActivated: true }, { where: { id: user.id } });
+    return User.update({ isActivated: true }, { where: { id: user.id } });
   }
 
   async login(email, password) {
